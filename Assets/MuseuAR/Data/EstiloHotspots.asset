@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b4aa4d56df3f85479d79613f8acefa2, type: 3}
+  m_Name: EstiloHotspots
+  m_EditorClassIdentifier: Assembly-CSharp::MuseuAR.HotspotStyle
+  lineMaterial: {fileID: 2100000, guid: 2df800b8a9820c046bfc34e3750edb7f, type: 2}
+  markerMaterial: {fileID: 2100000, guid: ea2f5fc3e17776a45847bee942d89a2c, type: 2}
+  font: {fileID: 0}
+  arrowColor: {r: 1, g: 0.78, b: 0.2, a: 1}
+  visitedColor: {r: 0.35, g: 0.9, b: 0.6, a: 1}
+  labelColor: {r: 1, g: 1, b: 1, a: 1}
+  labelOutlineColor: {r: 0, g: 0, b: 0, a: 0.9}
+  labelOutlineWidth: 0.25
+  markerSize: 0.018
+  tapRadius: 0.035
+  lineWidth: 0.0025
+  arrowHeadWidth: 0.012
+  arrowHeadLength: 0.018
+  labelGap: 0.015
+  labelFontSize: 0.3
+  labelBoxSize: {x: 0.35, y: 0.07}
+  pulseUnvisited: 1

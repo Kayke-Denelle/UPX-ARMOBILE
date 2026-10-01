@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a89d71decd1e534a8d581058a8417e2, type: 3}
+  m_Name: CatalogoDoMuseu
+  m_EditorClassIdentifier: Assembly-CSharp::MuseuAR.MuseumCatalog
+  museumName: Museu de Exemplo
+  items:
+  - {fileID: 11400000, guid: 3a2d768e011597b408218badb3fca437, type: 2}
+  - {fileID: 11400000, guid: 93f82888533befb46aa4b42760b77511, type: 2}
