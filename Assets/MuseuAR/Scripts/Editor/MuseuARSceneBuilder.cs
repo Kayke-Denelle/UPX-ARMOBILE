@@ -152,10 +152,75 @@ namespace MuseuAR.EditorTools
             Wire(placement, "hotspotStyle", style);
             Wire(placement, "arCamera", arCamera);
             Wire(input, "arCamera", arCamera);
+            Wire(modes, "imageManager", imageManager);
+            Wire(modes, "planeManager", planeManager);
+            Wire(modes, "imageSpawner", spawner);
 
             EnsureEventSystem();
 
-            // ---------- Canvas ----------
+            var desktop = systems.AddComponent<DesktopSimulator>();
+            Wire(desktop, "imageSpawner", spawner);
+            Wire(desktop, "modes", modes);
+            Wire(desktop, "arCamera", arCamera);
+
+            BuildUI(catalog, placement, modes, desktop);
+
+            AssetDatabase.SaveAssets();
+            EditorSceneManager.MarkSceneDirty(systems.scene);
+            Selection.activeGameObject = systems;
+
+            if (interactive)
+                EditorUtility.DisplayDialog("Museu AR", "Cena base criada!\n\nPróximos passos:\n" +
+                    "1. Adicione imagens (placas) em Assets/MuseuAR/Data/PlacasAR\n" +
+                    "2. Crie as peças (Create > Museu AR > Peça do Acervo)\n" +
+                    "3. Adicione as peças no CatalogoDoMuseu\n" +
+                    "4. (Opcional) Plane Prefab no ARPlaneManager: GameObject > XR > AR Default Plane", "OK");
+            return true;
+        }
+
+        [MenuItem("Museu AR/Reconstruir interface (na cena aberta)", priority = 51)]
+        static void RebuildUIMenu()
+        {
+            if (RebuildUI())
+                EditorUtility.DisplayDialog("Museu AR", "Interface reconstruída. Salve a cena (Ctrl+S).", "OK");
+        }
+
+        /// <summary>
+        /// Apaga o Canvas "MuseuAR_UI" da cena aberta e cria de novo com o layout atual,
+        /// religando AppModeController e DesktopSimulator. Use depois de mudar o layout neste arquivo.
+        /// </summary>
+        public static bool RebuildUI()
+        {
+            var modes = Object.FindAnyObjectByType<AppModeController>();
+            var placement = Object.FindAnyObjectByType<FreePlacementController>();
+            if (!modes || !placement)
+            {
+                Notify(true, "Abra a cena do museu (com MuseuAR_Systems) antes de reconstruir a interface.");
+                return false;
+            }
+
+            var old = GameObject.Find("MuseuAR_UI");
+            if (old) Undo.DestroyObjectImmediate(old);
+
+            var catalog = AssetDatabase.LoadAssetAtPath<MuseumCatalog>($"{DataFolder}/CatalogoDoMuseu.asset");
+            BuildUI(catalog, placement, modes, Object.FindAnyObjectByType<DesktopSimulator>());
+            EditorSceneManager.MarkSceneDirty(modes.gameObject.scene);
+            return true;
+        }
+
+        // ================= Interface =================
+        // Layout em unidades de referência (tela de 1080 x 1920 em pé). Os painéis têm tamanho fixo
+        // e ficam presos às bordas: o centro da tela fica livre para a peça em AR.
+
+        const float Margin = 24f;
+        const float CardWidth = 1032f;
+        const float ModeBarHeight = 88f;
+        const float SheetBottom = Margin + ModeBarHeight + 16f;   // painéis de baixo ficam acima da barra de modos
+
+        static void BuildUI(MuseumCatalog catalog, FreePlacementController placement, AppModeController modes, DesktopSimulator desktop)
+        {
+            rounded = LoadOrCreateRoundedSprite();
+
             var canvasGO = new GameObject("MuseuAR_UI", typeof(RectTransform), typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
             Undo.RegisterCreatedObjectUndo(canvasGO, "Museu AR");
             canvasGO.layer = 5;
@@ -163,102 +228,123 @@ namespace MuseuAR.EditorTools
             var scaler = canvasGO.GetComponent<CanvasScaler>();
             scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
             scaler.referenceResolution = new Vector2(1080, 1920);
-            scaler.matchWidthOrHeight = 0.5f;
+            // Expand: a área de 1080x1920 sempre cabe inteira na tela (em pé, deitado ou tablet)
+            scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
 
             var safe = NewRect("SafeArea", canvasGO.transform);
             Region(safe, 0, 0, 1, 1, 0, 0);
             safe.gameObject.AddComponent<SafeAreaFitter>();
 
-            // Cabeçalho
-            var header = Panel("CabecalhoPeca", safe, PanelColor);
-            Region(header.rectTransform, 0f, 0.8f, 1f, 1f, 24, 16);
-            var title = Label("Titulo", header.transform, "Nome da peça", 54, FontStyles.Bold);
-            Region(title.rectTransform, 0, 0.64f, 1, 1, 32, 8);
-            var subtitle = Label("Subtitulo", header.transform, "Período · Origem · Material", 34);
+            // ---------- Cabeçalho (topo) ----------
+            var header = Panel("CabecalhoPeca", safe, PanelColor, 28);
+            Place(header.rectTransform, new Vector2(0.5f, 1f), new Vector2(0, -Margin), new Vector2(CardWidth, 196));
+            var title = Label("Titulo", header.transform, "Nome da peça", 40, FontStyles.Bold);
+            StretchTop(title.rectTransform, 18, 54, 32, 32);
+            title.overflowMode = TextOverflowModes.Ellipsis;
+            var subtitle = Label("Subtitulo", header.transform, "Período · Origem · Material", 26);
             subtitle.color = MutedText;
-            Region(subtitle.rectTransform, 0, 0.47f, 1, 0.64f, 32, 4);
-            var progress = Label("Progresso", header.transform, "Curiosidades descobertas: 0/0", 32);
+            subtitle.overflowMode = TextOverflowModes.Ellipsis;
+            StretchTop(subtitle.rectTransform, 72, 36, 32, 32);
+            var infoBtn = MakeButton("BtnSobre", header.transform, "Sobre a peça", ButtonColor, 24, 28);
+            Place((RectTransform)infoBtn.transform, new Vector2(0f, 1f), new Vector2(24, -124), new Vector2(200, 56));
+            var pointsBtn = MakeButton("BtnPontos", header.transform, "Pontos", ButtonColor, 24, 28);
+            Place((RectTransform)pointsBtn.transform, new Vector2(0f, 1f), new Vector2(236, -124), new Vector2(140, 56));
+            var resetBtn = MakeButton("BtnResetar", header.transform, "Resetar", ButtonColor, 24, 28);
+            Place((RectTransform)resetBtn.transform, new Vector2(0f, 1f), new Vector2(388, -124), new Vector2(140, 56));
+            var progress = Label("Progresso", header.transform, "Descobertas: 0/0", 24, FontStyles.Bold, TextAlignmentOptions.MidlineRight);
             progress.color = AccentColor;
-            Region(progress.rectTransform, 0, 0.31f, 1, 0.47f, 32, 4);
-            var infoBtn = MakeButton("BtnSobre", header.transform, "Sobre a peça", ButtonColor, 30);
-            Region((RectTransform)infoBtn.transform, 0f, 0.03f, 0.36f, 0.29f, 16, 6);
-            var pointsBtn = MakeButton("BtnPontos", header.transform, "Mostrar/ocultar pontos", ButtonColor, 30);
-            Region((RectTransform)pointsBtn.transform, 0.36f, 0.03f, 0.74f, 0.29f, 8, 6);
-            var resetBtn = MakeButton("BtnResetar", header.transform, "Resetar", ButtonColor, 30);
-            Region((RectTransform)resetBtn.transform, 0.74f, 0.03f, 1f, 0.29f, 16, 6);
+            Place(progress.rectTransform, new Vector2(1f, 1f), new Vector2(-32, -124), new Vector2(440, 56));
 
-            // Painel de detalhes
-            var detail = Panel("PainelDetalhes", safe, PanelColor);
-            Region(detail.rectTransform, 0f, 0.1f, 1f, 0.56f, 24, 8);
-            var dTitle = Label("Titulo", detail.transform, "Título da curiosidade", 46, FontStyles.Bold);
-            Region(dTitle.rectTransform, 0, 0.85f, 0.76f, 1, 32, 8);
-            var closeBtn = MakeButton("BtnFechar", detail.transform, "Fechar", ButtonColor, 30);
-            Region((RectTransform)closeBtn.transform, 0.76f, 0.86f, 1, 0.99f, 20, 6);
-            var dKind = Label("Categoria", detail.transform, "Curiosidade", 30);
+            // ---------- Painel de detalhes (embaixo) ----------
+            var detail = Panel("PainelDetalhes", safe, PanelColor, 28);
+            Place(detail.rectTransform, new Vector2(0.5f, 0f), new Vector2(0, SheetBottom), new Vector2(CardWidth, 600));
+            var dKind = Label("Categoria", detail.transform, "Curiosidade", 22, FontStyles.Bold | FontStyles.UpperCase);
             dKind.color = AccentColor;
-            Region(dKind.rectTransform, 0, 0.77f, 1, 0.86f, 32, 4);
-            var dScroll = MakeScroll(detail.transform, out var dContent, 0);
-            Region((RectTransform)dScroll.transform, 0, 0.2f, 1, 0.77f, 16, 4);
-            var dBody = Label("Corpo", dContent, "Texto da curiosidade...", 36, FontStyles.Normal, TextAlignmentOptions.TopLeft);
-            var relatedHeader = Label("VejaTambem", dContent, "Veja também", 32, FontStyles.Bold);
+            dKind.overflowMode = TextOverflowModes.Ellipsis;
+            StretchTop(dKind.rectTransform, 24, 32, 32, 120);
+            var dTitle = Label("Titulo", detail.transform, "Título da curiosidade", 36, FontStyles.Bold);
+            dTitle.overflowMode = TextOverflowModes.Ellipsis;
+            StretchTop(dTitle.rectTransform, 56, 52, 32, 120);
+            var closeBtn = MakeButton("BtnFechar", detail.transform, "×", ButtonColor, 44, 36);
+            Place((RectTransform)closeBtn.transform, new Vector2(1f, 1f), new Vector2(-20, -20), new Vector2(72, 72));
+            var dScroll = MakeScroll(detail.transform, out var dContent, 8);
+            var dScrollRect = (RectTransform)dScroll.transform;
+            dScrollRect.anchorMin = Vector2.zero;
+            dScrollRect.anchorMax = Vector2.one;
+            dScrollRect.offsetMin = new Vector2(16, 104);   // espaço para o botão de áudio
+            dScrollRect.offsetMax = new Vector2(-16, -116);
+            var dBody = Label("Corpo", dContent, "Texto da curiosidade...", 28, FontStyles.Normal, TextAlignmentOptions.TopLeft);
+            dBody.lineSpacing = 8;
+            var relatedHeader = Label("VejaTambem", dContent, "Veja também", 24, FontStyles.Bold | FontStyles.UpperCase);
             relatedHeader.color = AccentColor;
-            relatedHeader.margin = new Vector4(0, 24, 0, 0);
-            var relatedTemplate = MakeButton("RelacionadaTemplate", dContent, "Ver em 3D", ButtonColor, 32);
+            relatedHeader.margin = new Vector4(0, 16, 0, 0);
+            var relatedTemplate = MakeButton("RelacionadaTemplate", dContent, "Ver em 3D", ButtonColor, 26, 32);
             var relatedLayout = relatedTemplate.gameObject.AddComponent<LayoutElement>();
-            relatedLayout.minHeight = 100;
-            relatedLayout.preferredHeight = 100;
-            var audioBtn = MakeButton("BtnAudio", detail.transform, "Ouvir áudio", AccentColor, 32);
-            Region((RectTransform)audioBtn.transform, 0, 0.03f, 0.42f, 0.18f, 24, 6);
-            var barBg = Panel("BarraAudio", detail.transform, new Color(1, 1, 1, 0.15f));
+            relatedLayout.minHeight = 72;
+            relatedLayout.preferredHeight = 72;
+            var audioBtn = MakeButton("BtnAudio", detail.transform, "Ouvir áudio", AccentColor, 24, 32);
+            audioBtn.GetComponentInChildren<TextMeshProUGUI>().color = new Color(0.1f, 0.08f, 0.05f);
+            Place((RectTransform)audioBtn.transform, new Vector2(0f, 0f), new Vector2(24, 24), new Vector2(240, 64));
+            var barBg = Panel("BarraAudio", detail.transform, new Color(1, 1, 1, 0.15f), 4);
             barBg.raycastTarget = false;
-            Region(barBg.rectTransform, 0.44f, 0.095f, 1f, 0.115f, 32, 0);
-            var barFill = Panel("Preenchimento", barBg.transform, AccentColor);
+            barBg.rectTransform.anchorMin = new Vector2(0f, 0f);
+            barBg.rectTransform.anchorMax = new Vector2(1f, 0f);
+            barBg.rectTransform.pivot = new Vector2(0.5f, 0.5f);
+            barBg.rectTransform.offsetMin = new Vector2(288, 52);
+            barBg.rectTransform.offsetMax = new Vector2(-32, 60);
+            var barFill = Panel("Preenchimento", barBg.transform, AccentColor, 4);
             barFill.raycastTarget = false;
             barFill.rectTransform.anchorMin = Vector2.zero;
             barFill.rectTransform.anchorMax = new Vector2(0f, 1f);
             barFill.rectTransform.offsetMin = Vector2.zero;
             barFill.rectTransform.offsetMax = Vector2.zero;
 
-            // Menu do acervo
-            var catalogPanel = Panel("MenuAcervo", safe, PanelColor);
-            Region(catalogPanel.rectTransform, 0f, 0.1f, 1f, 0.78f, 24, 8);
-            var cTitle = Label("Titulo", catalogPanel.transform, "Acervo digital", 46, FontStyles.Bold);
-            Region(cTitle.rectTransform, 0, 0.89f, 0.74f, 1, 32, 8);
-            var cClose = MakeButton("BtnFechar", catalogPanel.transform, "Fechar", ButtonColor, 30);
-            Region((RectTransform)cClose.transform, 0.74f, 0.9f, 1, 0.99f, 20, 6);
-            var cScroll = MakeScroll(catalogPanel.transform, out var cContent, 16);
-            Region((RectTransform)cScroll.transform, 0, 0.02f, 1, 0.89f, 16, 4);
-            var template = MakeButton("ItemTemplate", cContent, "Peça", ButtonColor, 36);
+            // ---------- Menu do acervo (embaixo) ----------
+            var catalogPanel = Panel("MenuAcervo", safe, PanelColor, 28);
+            Place(catalogPanel.rectTransform, new Vector2(0.5f, 0f), new Vector2(0, SheetBottom), new Vector2(CardWidth, 760));
+            var cTitle = Label("Titulo", catalogPanel.transform, "Acervo digital", 34, FontStyles.Bold);
+            cTitle.overflowMode = TextOverflowModes.Ellipsis;
+            StretchTop(cTitle.rectTransform, 28, 52, 32, 120);
+            var cClose = MakeButton("BtnFechar", catalogPanel.transform, "×", ButtonColor, 44, 36);
+            Place((RectTransform)cClose.transform, new Vector2(1f, 1f), new Vector2(-20, -20), new Vector2(72, 72));
+            var cScroll = MakeScroll(catalogPanel.transform, out var cContent, 12);
+            Region((RectTransform)cScroll.transform, 0, 0, 1, 1, 8, 0);
+            ((RectTransform)cScroll.transform).offsetMin = new Vector2(8, 16);
+            ((RectTransform)cScroll.transform).offsetMax = new Vector2(-8, -100);
+            var template = MakeButton("ItemTemplate", cContent, "Peça", ButtonColor, 28, 20);
             var templateLayout = template.gameObject.AddComponent<LayoutElement>();
-            templateLayout.minHeight = 150;
-            templateLayout.preferredHeight = 150;
+            templateLayout.minHeight = 120;
+            templateLayout.preferredHeight = 120;
             var thumb = Panel("Thumbnail", template.transform, Color.white);
             thumb.raycastTarget = false;
             thumb.preserveAspect = true;
-            var thumbRect = thumb.rectTransform;
-            thumbRect.anchorMin = thumbRect.anchorMax = new Vector2(0f, 0.5f);
-            thumbRect.pivot = new Vector2(0f, 0.5f);
-            thumbRect.anchoredPosition = new Vector2(16f, 0f);
-            thumbRect.sizeDelta = new Vector2(118f, 118f);
+            Place(thumb.rectTransform, new Vector2(0f, 0.5f), new Vector2(12, 0), new Vector2(96, 96));
             var templateLabel = template.GetComponentInChildren<TextMeshProUGUI>();
             templateLabel.alignment = TextAlignmentOptions.MidlineLeft;
             templateLabel.fontStyle = FontStyles.Normal;
-            templateLabel.rectTransform.offsetMin = new Vector2(152f, 6f);
+            templateLabel.rectTransform.offsetMin = new Vector2(128f, 6f);
 
-            // Dica
-            var hint = Panel("Dica", safe, new Color(0f, 0f, 0f, 0.65f));
+            // ---------- Dica (flutua abaixo da área do cabeçalho) ----------
+            var hint = Panel("Dica", safe, new Color(0f, 0f, 0f, 0.7f), 40);
             hint.raycastTarget = false;
-            Region(hint.rectTransform, 0.06f, 0.6f, 0.94f, 0.68f, 0, 0);
-            var hintText = Label("Texto", hint.transform, "Aponte a câmera para a placa AR", 34, FontStyles.Normal, TextAlignmentOptions.Center);
-            Region(hintText.rectTransform, 0, 0, 1, 1, 24, 8);
+            Place(hint.rectTransform, new Vector2(0.5f, 1f), new Vector2(0, -244), new Vector2(920, 96));
+            var hintText = Label("Texto", hint.transform, "Aponte a câmera para a placa AR", 26, FontStyles.Normal, TextAlignmentOptions.Center);
+            hintText.enableAutoSizing = true;
+            hintText.fontSizeMin = 18;
+            hintText.fontSizeMax = 26;
+            Region(hintText.rectTransform, 0, 0, 1, 1, 32, 8);
 
-            // Barra de modos
-            var modeBar = NewRect("BarraModos", safe);
-            Region(modeBar, 0f, 0f, 1f, 0.085f, 24, 12);
-            var visitBtn = MakeButton("BtnModoVisita", modeBar, "Modo Visita", ButtonColor, 36);
-            Region((RectTransform)visitBtn.transform, 0, 0, 0.5f, 1, 8, 0);
-            var collectionBtn = MakeButton("BtnModoAcervo", modeBar, "Modo Acervo", ButtonColor, 36);
-            Region((RectTransform)collectionBtn.transform, 0.5f, 0, 1, 1, 8, 0);
+            // ---------- Barra de modos (rodapé, controle segmentado) ----------
+            var modeBar = Panel("BarraModos", safe, PanelColor, ModeBarHeight * 0.5f);
+            Place(modeBar.rectTransform, new Vector2(0.5f, 0f), new Vector2(0, Margin), new Vector2(640, ModeBarHeight));
+            var visitBtn = MakeButton("BtnModoVisita", modeBar.transform, "Visita", ButtonColor, 28, 36);
+            Region((RectTransform)visitBtn.transform, 0, 0, 0.5f, 1, 0, 0);
+            ((RectTransform)visitBtn.transform).offsetMin = new Vector2(8, 8);
+            ((RectTransform)visitBtn.transform).offsetMax = new Vector2(-4, -8);
+            var collectionBtn = MakeButton("BtnModoAcervo", modeBar.transform, "Acervo", ButtonColor, 28, 36);
+            Region((RectTransform)collectionBtn.transform, 0.5f, 0, 1, 1, 0, 0);
+            ((RectTransform)collectionBtn.transform).offsetMin = new Vector2(4, 8);
+            ((RectTransform)collectionBtn.transform).offsetMax = new Vector2(-8, -8);
 
             // ---------- Scripts de UI + ligações ----------
             var info = canvasGO.AddComponent<InfoPanelUI>();
@@ -290,9 +376,6 @@ namespace MuseuAR.EditorTools
             Wire(catalogUI, "itemButtonTemplate", template);
             Wire(catalogUI, "closeButton", cClose);
 
-            Wire(modes, "imageManager", imageManager);
-            Wire(modes, "planeManager", planeManager);
-            Wire(modes, "imageSpawner", spawner);
             Wire(modes, "freePlacement", placement);
             Wire(modes, "catalogMenu", catalogUI);
             Wire(modes, "hintRoot", hint.gameObject);
@@ -300,26 +383,50 @@ namespace MuseuAR.EditorTools
             Wire(modes, "visitModeButton", visitBtn);
             Wire(modes, "collectionModeButton", collectionBtn);
 
-            var desktop = systems.AddComponent<DesktopSimulator>();
-            Wire(desktop, "imageSpawner", spawner);
-            Wire(desktop, "modes", modes);
-            Wire(desktop, "infoPanel", info);
-            Wire(desktop, "arCamera", arCamera);
-
-            AssetDatabase.SaveAssets();
-            EditorSceneManager.MarkSceneDirty(systems.scene);
-            Selection.activeGameObject = systems;
-
-            if (interactive)
-                EditorUtility.DisplayDialog("Museu AR", "Cena base criada!\n\nPróximos passos:\n" +
-                    "1. Adicione imagens (placas) em Assets/MuseuAR/Data/PlacasAR\n" +
-                    "2. Crie as peças (Create > Museu AR > Peça do Acervo)\n" +
-                    "3. Adicione as peças no CatalogoDoMuseu\n" +
-                    "4. (Opcional) Plane Prefab no ARPlaneManager: GameObject > XR > AR Default Plane", "OK");
-            return true;
+            if (desktop) Wire(desktop, "infoPanel", info);
         }
 
         // ================= Assets =================
+
+        static Sprite rounded;
+
+        /// <summary>
+        /// Círculo branco 128x128 fatiado (9-slice): vira cartão de cantos arredondados ou "pílula".
+        /// O raio de cada elemento é controlado por Image.pixelsPerUnitMultiplier (ver Panel).
+        /// </summary>
+        static Sprite LoadOrCreateRoundedSprite()
+        {
+            string path = $"{DataFolder}/UI_Arredondado.png";
+            var existing = AssetDatabase.LoadAssetAtPath<Sprite>(path);
+            if (existing) return existing;
+
+            const int size = 128;
+            var tex = new Texture2D(size, size, TextureFormat.RGBA32, false);
+            float c = (size - 1) * 0.5f, r = size * 0.5f;
+            for (int y = 0; y < size; y++)
+            for (int x = 0; x < size; x++)
+            {
+                float d = Mathf.Sqrt((x - c) * (x - c) + (y - c) * (y - c));
+                tex.SetPixel(x, y, new Color(1f, 1f, 1f, Mathf.Clamp01(r - d)));   // borda suavizada
+            }
+            tex.Apply();
+            EnsureFolder(DataFolder);
+            System.IO.File.WriteAllBytes(path, tex.EncodeToPNG());
+            Object.DestroyImmediate(tex);
+            AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
+
+            var importer = (TextureImporter)AssetImporter.GetAtPath(path);
+            importer.textureType = TextureImporterType.Sprite;
+            importer.spriteImportMode = SpriteImportMode.Single;
+            importer.spriteBorder = new Vector4(RoundedBorder, RoundedBorder, RoundedBorder, RoundedBorder);
+            importer.mipmapEnabled = false;
+            importer.alphaIsTransparency = true;
+            importer.textureCompression = TextureImporterCompression.Uncompressed;
+            importer.SaveAndReimport();
+            return AssetDatabase.LoadAssetAtPath<Sprite>(path);
+        }
+
+        const float RoundedBorder = 63f;
 
         static void EnsureFolder(string path)
         {
@@ -428,11 +535,38 @@ namespace MuseuAR.EditorTools
             rect.offsetMax = new Vector2(-padX, -padY);
         }
 
-        static Image Panel(string name, Transform parent, Color color)
+        /// <summary>Tamanho fixo, preso a uma âncora do pai (ex.: (0.5, 1) = topo centro). A posição conta a partir da âncora.</summary>
+        static void Place(RectTransform rect, Vector2 anchor, Vector2 position, Vector2 size)
+        {
+            rect.anchorMin = anchor;
+            rect.anchorMax = anchor;
+            rect.pivot = anchor;
+            rect.anchoredPosition = position;
+            rect.sizeDelta = size;
+        }
+
+        /// <summary>Faixa que ocupa a largura do pai (menos as margens), a "top" unidades do topo.</summary>
+        static void StretchTop(RectTransform rect, float top, float height, float left, float right)
+        {
+            rect.anchorMin = new Vector2(0f, 1f);
+            rect.anchorMax = new Vector2(1f, 1f);
+            rect.pivot = new Vector2(0.5f, 1f);
+            rect.offsetMin = new Vector2(left, -top - height);
+            rect.offsetMax = new Vector2(-right, -top);
+        }
+
+        /// <param name="radius">Raio dos cantos em unidades de referência (0 = retângulo).</param>
+        static Image Panel(string name, Transform parent, Color color, float radius = 0f)
         {
             var rect = NewRect(name, parent);
             var image = rect.gameObject.AddComponent<Image>();
             image.color = color;
+            if (radius > 0f && rounded)
+            {
+                image.sprite = rounded;
+                image.type = Image.Type.Sliced;
+                image.pixelsPerUnitMultiplier = RoundedBorder / radius;
+            }
             return image;
         }
 
@@ -450,9 +584,9 @@ namespace MuseuAR.EditorTools
             return tmp;
         }
 
-        static Button MakeButton(string name, Transform parent, string text, Color color, float fontSize)
+        static Button MakeButton(string name, Transform parent, string text, Color color, float fontSize, float radius = 0f)
         {
-            var image = Panel(name, parent, color);
+            var image = Panel(name, parent, color, radius);
             var button = image.gameObject.AddComponent<Button>();
             button.targetGraphic = image;
             var label = Label("Texto", image.transform, text, fontSize, FontStyles.Bold, TextAlignmentOptions.Center);

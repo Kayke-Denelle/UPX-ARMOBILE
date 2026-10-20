@@ -1,0 +1,316 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2698855942238648521
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6083247303761422513}
+  m_Layer: 0
+  m_Name: Vaso
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6083247303761422513
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2698855942238648521}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 524115827497423000}
+  - {fileID: 7876527005213875152}
+  - {fileID: 8280676130401948808}
+  - {fileID: 6055923424806734409}
+  - {fileID: 6530507301358058204}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4547554104735575349
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6530507301358058204}
+  - component: {fileID: 146982511775412513}
+  m_Layer: 0
+  m_Name: "Hotspot - P\xE9"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6530507301358058204
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4547554104735575349}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.045781698, y: 0.0084, z: 0.026311321}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6083247303761422513}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &146982511775412513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4547554104735575349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc6f06cd85c7ca7488caf15564cf6ded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MuseuAR.HotspotPoint
+  title: "P\xE9"
+  kind: 0
+  description: "O anel da base (o \"p\xE9\") d\xE1 estabilidade e costuma ficar sem esmalte, para a pe\xE7a n\xE3o grudar no forno. Especialistas examinam essa \xE1rea para identificar a argila, a t\xE9cnica e at\xE9 a \xE9poca da pe\xE7a."
+  narration: {fileID: 0}
+  labelOffset: {x: 0.13, y: 0.03, z: 0}
+  relatedItem: {fileID: 0}
+--- !u!1 &4580977200829348688
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6055923424806734409}
+  - component: {fileID: 4799465509343416651}
+  m_Layer: 0
+  m_Name: Hotspot - Bojo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6055923424806734409
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4580977200829348688}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.060387865, y: 0.09400001, z: 0.03470567}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6083247303761422513}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4799465509343416651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4580977200829348688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc6f06cd85c7ca7488caf15564cf6ded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MuseuAR.HotspotPoint
+  title: Bojo
+  kind: 4
+  description: "O bojo \xE9 a parte mais larga, onde fica o volume do vaso. Compare com a \xE2nfora romana: a mesma ideia de corpo largo e gargalo estreito, mas pensada para transportar azeite e vinho, n\xE3o para decorar."
+  narration: {fileID: 0}
+  labelOffset: {x: -0.14, y: 0, z: 0}
+  relatedItem: {fileID: 11400000, guid: 3a2d768e011597b408218badb3fca437, type: 2}
+--- !u!1 &5962936605175219222
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7876527005213875152}
+  - component: {fileID: 4018387060694817639}
+  m_Layer: 0
+  m_Name: Hotspot - Boca alargada
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7876527005213875152
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5962936605175219222}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.046727575, y: 0.276, z: 0.026854929}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6083247303761422513}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4018387060694817639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5962936605175219222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc6f06cd85c7ca7488caf15564cf6ded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MuseuAR.HotspotPoint
+  title: Boca alargada
+  kind: 2
+  description: "Vasos assim s\xE3o modelados no torno do oleiro: a argila gira enquanto as m\xE3os sobem e abrem a pe\xE7a. A boca alargada \xE9 aberta no fim, com a argila ainda \xFAmida \u2014 um movimento em falso e a borda deforma."
+  narration: {fileID: 0}
+  labelOffset: {x: -0.13, y: 0.04, z: 0}
+  relatedItem: {fileID: 0}
+--- !u!1 &6862142295011344355
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8280676130401948808}
+  - component: {fileID: 5964937786164551756}
+  m_Layer: 0
+  m_Name: Hotspot - Gargalo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8280676130401948808
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6862142295011344355}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.017955715, y: 0.20160002, z: 0.010319376}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6083247303761422513}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5964937786164551756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6862142295011344355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc6f06cd85c7ca7488caf15564cf6ded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MuseuAR.HotspotPoint
+  title: Gargalo
+  kind: 1
+  description: "O gargalo longo e estreito mant\xE9m hastes e flores em p\xE9 e reduz a evapora\xE7\xE3o da \xE1gua. Ele tamb\xE9m \xE9 o ponto mais fr\xE1gil: \xE9 a primeira parte a quebrar numa queda."
+  narration: {fileID: 0}
+  labelOffset: {x: 0.13, y: 0.03, z: 0}
+  relatedItem: {fileID: 0}
+--- !u!1001 &57616522580440947
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 6083247303761422513}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 6826dd22c1b43fc43b45527d3a252ad7, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.01471068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6826dd22c1b43fc43b45527d3a252ad7, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.01471068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6826dd22c1b43fc43b45527d3a252ad7, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.01471068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6826dd22c1b43fc43b45527d3a252ad7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.09135454
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6826dd22c1b43fc43b45527d3a252ad7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0005675703
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6826dd22c1b43fc43b45527d3a252ad7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.048669852
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6826dd22c1b43fc43b45527d3a252ad7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6826dd22c1b43fc43b45527d3a252ad7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6826dd22c1b43fc43b45527d3a252ad7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6826dd22c1b43fc43b45527d3a252ad7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6826dd22c1b43fc43b45527d3a252ad7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6826dd22c1b43fc43b45527d3a252ad7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6826dd22c1b43fc43b45527d3a252ad7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6826dd22c1b43fc43b45527d3a252ad7, type: 3}
+      propertyPath: m_Name
+      value: Modelo
+      objectReference: {fileID: 0}
+    - target: {fileID: 4464808398254460494, guid: 6826dd22c1b43fc43b45527d3a252ad7, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 1dfc8e6c6f7dec144bef81a9b915eb61, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6826dd22c1b43fc43b45527d3a252ad7, type: 3}
+--- !u!4 &524115827497423000 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6826dd22c1b43fc43b45527d3a252ad7, type: 3}
+  m_PrefabInstance: {fileID: 57616522580440947}
+  m_PrefabAsset: {fileID: 0}

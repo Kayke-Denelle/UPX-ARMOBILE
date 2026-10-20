@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf60ec0652902ad4b80f31a2eb496952, type: 3}
+  m_Name: Vaso
+  m_EditorClassIdentifier: Assembly-CSharp::MuseuAR.MuseumItemData
+  id: vaso-gargalo-longo
+  displayName: Vaso de gargalo longo
+  period: "Per\xEDodo a definir"
+  origin: 
+  material: "Cer\xE2mica vidrada"
+  description: "Vaso decorativo de bojo arredondado e gargalo longo, terminando numa boca alargada. Pe\xE7as de cer\xE2mica vidrada s\xE3o fr\xE1geis e quase sempre ficam atr\xE1s do vidro: aqui voc\xEA pode gir\xE1-la e ver at\xE9 a base.\n\nToque nos pontos pulsantes para descobrir como ela foi feita."
+  referenceImageName: placa-vaso
+  modelPrefab: {fileID: 2698855942238648521, guid: e850f2a948804ae44b6f62b20ce7f56f, type: 3}
+  initialScale: 1
+  spawnOffset: {x: 0, y: 0.02, z: 0}
+  spawnRotation: {x: 0, y: 0, z: 0}
+  introNarration: {fileID: 0}
+  thumbnail: {fileID: 3828791679664003571, guid: 5d6cebb5e0dc1d94bbfc565a6d197932, type: 3}
+  relatedItems:
+  - {fileID: 11400000, guid: 3a2d768e011597b408218badb3fca437, type: 2}

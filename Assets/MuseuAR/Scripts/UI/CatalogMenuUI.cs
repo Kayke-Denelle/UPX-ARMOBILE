@@ -19,6 +19,7 @@ namespace MuseuAR
         [SerializeField] Button closeButton;
 
         bool built;
+        float maxHeight;
 
         public bool IsOpen => menuRoot && menuRoot.activeSelf;
 
@@ -26,12 +27,17 @@ namespace MuseuAR
         {
             if (itemButtonTemplate) itemButtonTemplate.gameObject.SetActive(false);
             if (closeButton) closeButton.onClick.AddListener(Hide);
+            // A altura definida na cena é o máximo; com poucas peças o menu encolhe
+            if (menuRoot) maxHeight = ((RectTransform)menuRoot.transform).sizeDelta.y;
         }
 
         public void Show()
         {
             if (!built) Build();
-            if (menuRoot) menuRoot.SetActive(true);
+            if (!menuRoot) return;
+            menuRoot.SetActive(true);
+            if (listContainer)
+                UIUtils.FitPanelToScroll((RectTransform)menuRoot.transform, listContainer.GetComponentInParent<ScrollRect>(true), maxHeight);
         }
 
         public void Hide()

@@ -26,17 +26,17 @@ namespace MuseuAR
         [Range(0f, 0.5f)] public float labelOutlineWidth = 0.25f;
 
         [Header("Tamanhos no mundo real (metros) — não mudam com o zoom da peça")]
-        public float markerSize = 0.018f;
+        public float markerSize = 0.014f;
         [Tooltip("Raio da área de toque em volta do marcador (maior = mais fácil de tocar).")]
         public float tapRadius = 0.035f;
-        public float lineWidth = 0.0025f;
-        public float arrowHeadWidth = 0.012f;
-        public float arrowHeadLength = 0.018f;
+        public float lineWidth = 0.002f;
+        public float arrowHeadWidth = 0.01f;
+        public float arrowHeadLength = 0.015f;
         [Tooltip("Espaço entre o rótulo e o início da seta.")]
-        public float labelGap = 0.015f;
-        [Tooltip("Tamanho da fonte do TextMeshPro 3D. 0.3 ≈ letras de 3 cm.")]
-        public float labelFontSize = 0.3f;
-        public Vector2 labelBoxSize = new Vector2(0.35f, 0.07f);
+        public float labelGap = 0.008f;
+        [Tooltip("Tamanho da fonte do TextMeshPro 3D. 0.14 ≈ letras de 1,4 cm.")]
+        public float labelFontSize = 0.14f;
+        public Vector2 labelBoxSize = new Vector2(0.22f, 0.04f);
 
         [Header("Animação")]
         public bool pulseUnvisited = true;
