@@ -96,7 +96,7 @@ namespace MuseuAR
             }
 
             ShowHint(visit
-                ? "Aponte a câmera para a placa AR ao lado da peça"
+                ? "Aponte a câmera para o QR code ao lado da peça"
                 : "Escolha uma peça do acervo");
 
             Tint(visitModeButton, visit);

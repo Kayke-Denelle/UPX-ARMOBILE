@@ -5,7 +5,7 @@ namespace MuseuAR
 {
     /// <summary>
     /// MODO PC: permite testar tudo no editor (XR Simulation) sem celular.
-    ///  • Teclas 1–9 = "a câmera viu a placa" da peça 1–9 do catálogo (Modo Visita)
+    ///  • Teclas 1–9 = "a câmera viu o QR code" da peça 1–9 do catálogo (Modo Visita)
     ///  • Mesa virtual = posiciona peças no Modo Acervo mesmo sem superfície detectada
     ///  • Atalhos de teclado e painel de ajuda na tela (H)
     /// Desliga sozinho no celular.
@@ -54,7 +54,7 @@ namespace MuseuAR
         void OnModeChanged(ARMode mode)
         {
             pendingHint = mode == ARMode.Visita
-                ? "PC: aperte 1 ou 2 para simular a placa AR de uma peça"
+                ? "PC: aperte 1, 2, 3... para simular o QR code de uma peça"
                 : "PC: escolha uma peça no menu";
         }
 
@@ -136,14 +136,14 @@ namespace MuseuAR
             var catalog = imageSpawner ? imageSpawner.Catalog : null;
             if (catalog)
                 for (int i = 0; i < catalog.items.Count && i < 9; i++)
-                    if (catalog.items[i]) catalogLines += $"\n  <b>{i + 1}</b> = placa da {catalog.items[i].displayName}";
+                    if (catalog.items[i]) catalogLines += $"\n  <b>{i + 1}</b> = QR da {catalog.items[i].displayName}";
 
             string text =
                 "<color=#FFD24D><b>MODO PC  (H fecha)</b></color>\n" +
                 "<b>Andar:</b> segure o <b>botão DIREITO</b> do mouse\n" +
                 "  + W A S D (Q desce, E sobe, Shift corre)\n" +
                 "  e mova o mouse para olhar\n\n" +
-                "<b>Modo Visita</b> (simular a placa):" + catalogLines + "\n\n" +
+                "<b>Modo Visita</b> (simular o QR code):" + catalogLines + "\n\n" +
                 "<b>Clique</b> = tocar (pontos, botões, mesa)\n" +
                 "<b>Arrastar (esquerdo)</b> ou <b>← →</b> = girar peça\n" +
                 "<b>Roda do mouse</b> ou <b>+ −</b> = zoom\n" +

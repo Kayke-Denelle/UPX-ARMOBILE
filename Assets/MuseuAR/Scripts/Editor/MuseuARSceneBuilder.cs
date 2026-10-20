@@ -328,7 +328,7 @@ namespace MuseuAR.EditorTools
             var hint = Panel("Dica", safe, new Color(0f, 0f, 0f, 0.7f), 40);
             hint.raycastTarget = false;
             Place(hint.rectTransform, new Vector2(0.5f, 1f), new Vector2(0, -244), new Vector2(920, 96));
-            var hintText = Label("Texto", hint.transform, "Aponte a câmera para a placa AR", 26, FontStyles.Normal, TextAlignmentOptions.Center);
+            var hintText = Label("Texto", hint.transform, "Aponte a câmera para o QR code", 26, FontStyles.Normal, TextAlignmentOptions.Center);
             hintText.enableAutoSizing = true;
             hintText.fontSizeMin = 18;
             hintText.fontSizeMax = 26;
