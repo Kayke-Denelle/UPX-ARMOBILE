@@ -48,7 +48,12 @@ namespace MuseuAR
         /// <summary>Visitante tocou numa peça correlacionada. O AppModeController abre essa peça no Modo Acervo.</summary>
         public static event Action<MuseumItemData> RelatedItemRequested;
 
+        [Tooltip("Margem inferior do texto quando NÃO há áudio (o botão some e o texto desce).")]
+        [SerializeField] float scrollBottomNoAudio = 24f;
+
         AudioClip currentClip;
+        float scrollBottomWithAudio;
+        float detailMaxHeight;
         ExhibitController observedExhibit;
         readonly List<Button> relatedButtons = new List<Button>();
 
@@ -58,6 +63,8 @@ namespace MuseuAR
         void Awake()
         {
             if (relatedButtonTemplate) relatedButtonTemplate.gameObject.SetActive(false);
+            if (detailScroll) scrollBottomWithAudio = ((RectTransform)detailScroll.transform).offsetMin.y;
+            if (detailRoot) detailMaxHeight = ((RectTransform)detailRoot.transform).sizeDelta.y;
             if (itemInfoButton) itemInfoButton.onClick.AddListener(ShowActiveItemDetails);
             if (toggleHotspotsButton) toggleHotspotsButton.onClick.AddListener(() =>
             {
@@ -152,13 +159,32 @@ namespace MuseuAR
             if (audioButton) audioButton.gameObject.SetActive(hasAudio);
             if (audioProgressFill && audioProgressFill.parent) audioProgressFill.parent.gameObject.SetActive(hasAudio);
 
+            // Sem áudio, o texto ocupa o espaço do botão
+            if (detailScroll)
+            {
+                var scrollRect = (RectTransform)detailScroll.transform;
+                Vector2 min = scrollRect.offsetMin;
+                min.y = hasAudio ? scrollBottomWithAudio : scrollBottomNoAudio;
+                scrollRect.offsetMin = min;
+            }
+
             SetActive(detailRoot, true);
+            FitDetailHeight();
             if (detailScroll) detailScroll.verticalNormalizedPosition = 1f;
 
             if (hasAudio && autoPlayNarration && NarrationPlayer.Instance)
                 NarrationPlayer.Instance.Play(clip);
 
             RefreshAudioUI();
+        }
+
+        /// <summary>
+        /// O painel "abraça" o texto: textos curtos geram um painel baixo, e a altura configurada
+        /// na cena vira o máximo (a partir dele o texto rola). Assim a peça fica o mais visível possível.
+        /// </summary>
+        void FitDetailHeight()
+        {
+            if (detailRoot) UIUtils.FitPanelToScroll((RectTransform)detailRoot.transform, detailScroll, detailMaxHeight);
         }
 
         public void CloseDetails()
@@ -241,8 +267,8 @@ namespace MuseuAR
             int visited = exhibit.VisitedCount;
             int total = exhibit.Hotspots.Count;
             progressText.text = visited == total
-                ? $"Todas as {total} curiosidades descobertas!"
-                : $"Curiosidades descobertas: {visited}/{total}";
+                ? $"Tudo descoberto! {total}/{total}"
+                : $"Descobertas: {visited}/{total}";
         }
 
         static void SetText(TMP_Text text, string value)

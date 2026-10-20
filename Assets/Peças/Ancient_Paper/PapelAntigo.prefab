@@ -1,0 +1,348 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &709369545108479229
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1566966810788209471}
+  - component: {fileID: 7761274478702752699}
+  m_Layer: 0
+  m_Name: "Hotspot - Hist\xF3ria do papel"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1566966810788209471
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 709369545108479229}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 48.1713, y: 12.657103, z: 38.687897}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6531463211431121970}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7761274478702752699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 709369545108479229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc6f06cd85c7ca7488caf15564cf6ded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MuseuAR.HotspotPoint
+  title: "Hist\xF3ria do papel"
+  kind: 3
+  description: "O papel foi inventado na China h\xE1 cerca de dois mil anos e chegou \xE0 Europa por volta do s\xE9culo XII, pelo mundo \xE1rabe. Antes dele, escrevia-se em pergaminho (pele animal) e papiro."
+  narration: {fileID: 0}
+  labelOffset: {x: 0.1531868, y: 0.055051804, z: 0.015769958}
+  relatedItem: {fileID: 0}
+--- !u!1 &847030877656224343
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6531463211431121970}
+  m_Layer: 0
+  m_Name: Suporte
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6531463211431121970
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 847030877656224343}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.5, y: 0, z: 0, w: 0.8660254}
+  m_LocalPosition: {x: -48.114487, y: 27.21228, z: -30.280886}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1610034998765464452}
+  - {fileID: 783635642164955823}
+  - {fileID: 7391833328593172909}
+  - {fileID: 644517291073910367}
+  - {fileID: 1566966810788209471}
+  m_Father: {fileID: 7375090182237684965}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2816372866616505548
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7391833328593172909}
+  - component: {fileID: 2597737459086445549}
+  m_Layer: 0
+  m_Name: Hotspot - Bordas desgastadas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7391833328593172909
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2816372866616505548}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 47.987232, y: 12.66485, z: 38.64789}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6531463211431121970}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2597737459086445549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2816372866616505548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc6f06cd85c7ca7488caf15564cf6ded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MuseuAR.HotspotPoint
+  title: Bordas desgastadas
+  kind: 1
+  description: "As bordas s\xE3o a parte mais manuseada de um documento \u2014 e a primeira a rasgar. \xC9 por isso que, nos arquivos, pap\xE9is antigos s\xE3o tocados com o m\xEDnimo de contato e guardados em pastas de papel neutro."
+  narration: {fileID: 0}
+  labelOffset: {x: -0.11274719, y: 0.041326523, z: 0.006137848}
+  relatedItem: {fileID: 0}
+--- !u!1 &5862998316788630594
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 783635642164955823}
+  - component: {fileID: 5268177403229555290}
+  m_Layer: 0
+  m_Name: Hotspot - Canto dobrado
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &783635642164955823
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5862998316788630594}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 48.040165, y: 12.71087, z: 38.54231}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6531463211431121970}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5268177403229555290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5862998316788630594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc6f06cd85c7ca7488caf15564cf6ded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MuseuAR.HotspotPoint
+  title: Canto dobrado
+  kind: 2
+  description: "Cada dobra rompe as fibras do papel, e o vinco nunca some por completo. Para desdobrar uma folha antiga, conservadores-restauradores primeiro a umidificam devagar, deixando as fibras flex\xEDveis, e s\xF3 depois a planificam sob peso."
+  narration: {fileID: 0}
+  labelOffset: {x: -0.025676727, y: 0.07298756, z: -0.062828064}
+  relatedItem: {fileID: 0}
+--- !u!1 &6502755031526086432
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7375090182237684965}
+  m_Layer: 0
+  m_Name: PapelAntigo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7375090182237684965
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6502755031526086432}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6531463211431121970}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7692195072184638285
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 644517291073910367}
+  - component: {fileID: 5868285787550197381}
+  m_Layer: 0
+  m_Name: Hotspot - Amarelamento
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &644517291073910367
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7692195072184638285}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 48.111774, y: 12.656029, z: 38.616997}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6531463211431121970}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5868285787550197381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7692195072184638285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc6f06cd85c7ca7488caf15564cf6ded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MuseuAR.HotspotPoint
+  title: Amarelamento
+  kind: 0
+  description: "O tom amarelado e as manchas v\xEAm da oxida\xE7\xE3o: luz, calor e umidade degradam as fibras com o tempo. Por isso documentos antigos s\xE3o expostos com pouca luz e por per\xEDodos curtos."
+  narration: {fileID: 0}
+  labelOffset: {x: 0.08271408, y: 0.15514755, z: -0.14483643}
+  relatedItem: {fileID: 0}
+--- !u!1001 &1287263341858901103
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 6531463211431121970}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 6ff37d4c4e974f145a0bb065bffd9265, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.0017125322
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff37d4c4e974f145a0bb065bffd9265, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.0017125322
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff37d4c4e974f145a0bb065bffd9265, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.0017125322
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff37d4c4e974f145a0bb065bffd9265, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 48.12582
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff37d4c4e974f145a0bb065bffd9265, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 12.654382
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff37d4c4e974f145a0bb065bffd9265, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 38.62939
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff37d4c4e974f145a0bb065bffd9265, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.6556469
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff37d4c4e974f145a0bb065bffd9265, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.020071458
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff37d4c4e974f145a0bb065bffd9265, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.75465703
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff37d4c4e974f145a0bb065bffd9265, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.01473171
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff37d4c4e974f145a0bb065bffd9265, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff37d4c4e974f145a0bb065bffd9265, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6ff37d4c4e974f145a0bb065bffd9265, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6ff37d4c4e974f145a0bb065bffd9265, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 93bca26211bc2b247813e6c7209ef92c, type: 2}
+    - target: {fileID: 919132149155446097, guid: 6ff37d4c4e974f145a0bb065bffd9265, type: 3}
+      propertyPath: m_Name
+      value: Modelo
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6ff37d4c4e974f145a0bb065bffd9265, type: 3}
+--- !u!4 &1610034998765464452 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6ff37d4c4e974f145a0bb065bffd9265, type: 3}
+  m_PrefabInstance: {fileID: 1287263341858901103}
+  m_PrefabAsset: {fileID: 0}

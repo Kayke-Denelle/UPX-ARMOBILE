@@ -137,6 +137,27 @@ namespace MuseuAR
             UpdateArrow(parentScale);
         }
 
+        /// <summary>
+        /// Distância (metros) do centro do rótulo até a borda do texto, na direção da seta.
+        /// Assim a seta começa na borda do texto e não passa por cima das letras.
+        /// </summary>
+        float LabelEdgeDistance(Vector3 localDir)
+        {
+            Vector3 extents = label.textBounds.extents;
+            if (extents.x <= 0f) return 0f;
+
+            Vector3 scale = labelRoot.lossyScale;
+            float halfW = extents.x * scale.x, halfH = extents.y * scale.y;
+            Vector3 worldDir = transform.TransformDirection(localDir).normalized;
+            float dx = Mathf.Abs(Vector3.Dot(worldDir, labelRoot.right));
+            float dy = Mathf.Abs(Vector3.Dot(worldDir, labelRoot.up));
+
+            float tx = dx > 1e-4f ? halfW / dx : float.MaxValue;
+            float ty = dy > 1e-4f ? halfH / dy : float.MaxValue;
+            float t = Mathf.Min(tx, ty);
+            return t == float.MaxValue ? 0f : t;
+        }
+
         void UpdateArrow(float parentScale)
         {
             // Tudo em espaço local deste objeto (origem = ponto de interesse)
@@ -145,7 +166,7 @@ namespace MuseuAR
             if (length < 1e-5f) { line.enabled = false; return; }
 
             Vector3 dir = -labelPos / length;                       // do rótulo para o ponto
-            float gapStart = style.labelGap / parentScale;
+            float gapStart = (LabelEdgeDistance(dir) + style.labelGap) / parentScale;
             float gapEnd = style.markerSize * 0.75f / parentScale;
             if (gapStart + gapEnd >= length) { line.enabled = false; return; }
             line.enabled = true;

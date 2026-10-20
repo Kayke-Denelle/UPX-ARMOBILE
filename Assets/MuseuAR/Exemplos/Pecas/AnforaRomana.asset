@@ -24,6 +24,7 @@ MonoBehaviour:
   spawnOffset: {x: 0, y: 0.02, z: 0}
   spawnRotation: {x: 0, y: 0, z: 0}
   introNarration: {fileID: 0}
-  thumbnail: {fileID: 0}
+  thumbnail: {fileID: 3930113690878544568, guid: 10bfbed9439261b46a14ffb007ce96cb, type: 3}
   relatedItems:
   - {fileID: 11400000, guid: 93f82888533befb46aa4b42760b77511, type: 2}
+  - {fileID: 11400000, guid: 14a5c0be5964e5642b411f8121647ce5, type: 2}

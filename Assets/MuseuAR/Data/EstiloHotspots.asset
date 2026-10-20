@@ -20,12 +20,12 @@ MonoBehaviour:
   labelColor: {r: 1, g: 1, b: 1, a: 1}
   labelOutlineColor: {r: 0, g: 0, b: 0, a: 0.9}
   labelOutlineWidth: 0.25
-  markerSize: 0.018
+  markerSize: 0.014
   tapRadius: 0.035
-  lineWidth: 0.0025
-  arrowHeadWidth: 0.012
-  arrowHeadLength: 0.018
-  labelGap: 0.015
-  labelFontSize: 0.3
-  labelBoxSize: {x: 0.35, y: 0.07}
+  lineWidth: 0.002
+  arrowHeadWidth: 0.01
+  arrowHeadLength: 0.015
+  labelGap: 0.008
+  labelFontSize: 0.14
+  labelBoxSize: {x: 0.22, y: 0.04}
   pulseUnvisited: 1

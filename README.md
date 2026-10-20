@@ -92,7 +92,16 @@ O projeto usa o **XR Simulation**: no Play, o Unity finge ser um celular dentro 
 
 Nenhuma linha de código é necessária: tudo é feito por *assets*.
 
-1. **Modelo 3D:** importe o `.fbx`/`.glb` da peça (fotogrametria com Polycam/RealityScan, Sketchfab com licença, ou modelado no Blender).
+Cada peça fica numa pasta própria dentro de **`Assets/Peças/`**, com o modelo, o material, o prefab, a ficha e a placa:
+
+```
+Assets/Peças/
+├── Vaso/            vase_01.obj · Vaso_CeramicaVidrada.mat · Vaso.prefab · Vaso.asset · placa-vaso.png
+└── Ancient_Paper/   paper.3DS + texturas · PapelAntigo.mat · PapelAntigo.prefab · PapelAntigo.asset · placa-papel.png
+```
+
+1. **Modelo 3D:** importe a peça em **`.fbx` ou `.obj`** (fotogrametria com Polycam/RealityScan, Sketchfab com licença, ou modelado no Blender).
+   - **Não funcionam direto:** `.max` (precisa do 3ds Max instalado; exporte como `.fbx`), `.igs`/`.step` (CAD; converta no Rhino/FreeCAD) e `.glb` (precisa do pacote *glTFast*).
    - Crie um **prefab** com a origem na **base da peça** e o eixo **+Z** virado para "a frente".
    - Mantenha o modelo leve: **< 50 mil triângulos** e texturas de até 2K.
 2. **Hotspots:** dentro do prefab, crie objetos vazios no ponto que quer destacar e adicione **`HotspotPoint`**:
@@ -105,7 +114,9 @@ Nenhuma linha de código é necessária: tudo é feito por *assets*.
    - Boas placas têm muito contraste, muitos cantos e nenhuma repetição. Evite fotos lisas e fundos brancos grandes.
 5. Arraste a ficha para **`Assets/MuseuAR/Data/CatalogoDoMuseu`**.
 
-Use `Assets/MuseuAR/Exemplos` como referência (ânfora e lamparina já configuradas).
+Use como referência `Assets/Peças/Vaso` (modelo importado) e `Assets/MuseuAR/Exemplos` (ânfora e lamparina).
+
+> **Textos provisórios:** o vaso e o documento antigo têm período "a definir" e curiosidades gerais sobre cerâmica e papel. Troque pelos dados reais da peça com a equipe do museu.
 
 **Áudio:** grave narrações curtas (30–60 s) em `.mp3`/`.ogg`. Para protótipo, um gerador de voz (TTS) já resolve. Nas configurações de importação, use *Load Type: Streaming* ou *Compressed In Memory*.
 
@@ -189,4 +200,6 @@ Decisões importantes:
 | Os rótulos se sobrepõem | Afaste os `labelOffset` dos hotspots, para lados diferentes da peça. |
 | Não consigo me mexer no PC | Clique dentro da Game view e **segure o botão direito** enquanto usa WASD. |
 | Teclas não respondem no PC | A Game view precisa estar em foco: clique nela uma vez. |
-| Menus no topo da Unity | **Museu AR › 1. Criar cena do museu**, **2. Criar peças de exemplo**, **Montar cena base (na cena aberta)**. |
+| Menus no topo da Unity | **Museu AR › 1. Criar cena do museu**, **2. Criar peças de exemplo**, **Montar cena base (na cena aberta)**, **Reconstruir interface (na cena aberta)**. |
+| Quero mudar o layout da interface | O layout fica em `MuseuARSceneBuilder.BuildUI` (tamanhos em unidades de uma tela 1080x1920). Depois de editar, use **Museu AR › Reconstruir interface** e salve a cena. |
+| A interface parece enorme no PC | A Game view está deitada ou baixa. Use uma resolução em retrato (ex.: 1080x1920). |

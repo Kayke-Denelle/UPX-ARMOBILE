@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf60ec0652902ad4b80f31a2eb496952, type: 3}
+  m_Name: PapelAntigo
+  m_EditorClassIdentifier: Assembly-CSharp::MuseuAR.MuseumItemData
+  id: documento-papel-antigo
+  displayName: Documento antigo
+  period: "Per\xEDodo a definir"
+  origin: 
+  material: Papel
+  description: "Folha de papel envelhecida, com bordas desgastadas e um canto dobrado. Documentos assim s\xE3o sens\xEDveis \xE0 luz, \xE0 umidade e ao toque: por isso ficam em vitrines com pouca luz e quase nunca podem ser manuseados.\n\nToque nos pontos para ver o que o tempo deixou marcado nesta folha."
+  referenceImageName: placa-papel
+  modelPrefab: {fileID: 6502755031526086432, guid: 69f5f9a3e68024b4b89554e28f44c177, type: 3}
+  initialScale: 1
+  spawnOffset: {x: 0, y: 0.02, z: 0}
+  spawnRotation: {x: 0, y: 0, z: 0}
+  introNarration: {fileID: 0}
+  thumbnail: {fileID: 2572307237138777778, guid: 195e322466a0ab146a6be4698d144285, type: 3}
+  relatedItems: []

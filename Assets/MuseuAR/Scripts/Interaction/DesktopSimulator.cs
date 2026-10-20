@@ -16,7 +16,7 @@ namespace MuseuAR
         [SerializeField] AppModeController modes;
         [SerializeField] InfoPanelUI infoPanel;
         [SerializeField] Camera arCamera;
-        [SerializeField] bool showHelpOnStart = true;
+        [SerializeField] bool showHelpOnStart = false;
         [Tooltip("Graus por segundo ao girar a peça com as setas do teclado.")]
         [SerializeField] float keyRotateSpeed = 90f;
 
@@ -127,7 +127,7 @@ namespace MuseuAR
 
             if (!showHelp)
             {
-                GUI.Label(new Rect(8 * scale, Screen.height * 0.5f, 400 * scale, 24 * scale),
+                GUI.Label(new Rect(8 * scale, Screen.height - 28 * scale, 400 * scale, 24 * scale),
                     "<color=#FFD24D><b>[H] Ajuda do modo PC</b></color>", textStyle);
                 return;
             }
