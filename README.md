@@ -508,7 +508,7 @@ A interface foi desenhada para celular em pé. O app abre numa **tela inicial** 
 | Interface em retrato | Captura 1080x1920 | Peça visível entre cabeçalho e painel | Ver seção 21 | ✅ |
 | Leitura dos QR codes | Ler as placas com o leitor ZXing | Conteúdo correto | Todas corretas, também reduzidas a 256 px | ✅ |
 | QR com links longos | Gerar e ler textos de 24 a 138 caracteres | Conteúdo idêntico | 4/4 idênticos (versões 2 a 8) | ✅ |
-| Build Android | Menu "4. Gerar APK" | APK gerado | BUILD_RESULTADO | ✅ |
+| Build Android | Menu "4. Gerar APK" | APK gerado sem erros | `MuseuAR.apk` 1.1.0 (42 MB) em 7 min 58 s; 3 erros de compilação de shader por falta de memória no PC (variantes não usadas pelo app) | 🚧 |
 
 ### 22.2 Testes no celular — Xiaomi POCO X7 Pro
 
@@ -529,6 +529,7 @@ A interface foi desenhada para celular em pé. O app abre numa **tela inicial** 
 | C09 | Placa fora do quadro | Aproximar a câmera da peça | Peça continua visível | Peça mantida na posição | 🧪 |
 | C10 | Gestos | Arrastar e fazer pinça | Gira e amplia | Rotação e zoom suaves | 🧪 |
 | C11 | Pontos de interesse | Tocar nos 4 pontos do vaso | Painel abre; pontos ficam verdes; "Tudo descoberto! 4/4" | Funcionou nos 4 pontos | 🧪 |
+| C11b | Visual dos pontos | Observar marcadores, setas e rótulos | Marcadores amarelos/verdes e setas visíveis (sem cor rosa) | Exibidos corretamente | 🧪 |
 | C12 | Modo Acervo | Escolher peça e tocar numa mesa | Superfície detectada; peça posicionada | Mesa detectada em ~3 s; peça posicionada | 🧪 |
 | C13 | Desempenho | 5 min de uso contínuo | Sem travamentos | Fluido, sem travamentos; aquecimento leve | 🧪 |
 | C14 | Bateria | 10 min de uso contínuo | Consumo aceitável | ~3% de bateria | 🧪 |
@@ -664,6 +665,12 @@ test: valida placas impressas em iluminação baixa
 **Problema:** QR codes puros têm padrão repetitivo e são rastreados de forma instável pelo ARCore.  
 **Causa:** o Image Tracking depende de cantos e detalhes únicos.  
 **Solução:** placa híbrida: QR no centro (para a câmera comum) e moldura ilustrada única por peça (para o rastreamento). Os QR codes foram validados com o leitor ZXing.
+
+### Problema 6 — Unity fechando e erros de "out of memory"
+
+**Problema:** a Unity fechou sozinha (gerando a pasta `Assets/_Recovery`), reabriu na cena errada e o build 1.1.0 registrou erros de compilação de shader.  
+**Causa:** memória do Windows esgotada — arquivo de paginação fixo e pequeno (5,5 GB) para 16 GB de RAM, com a Unity usando mais de 4 GB.  
+**Solução:** aumentar o arquivo de paginação (ou deixá-lo gerenciado pelo Windows), fechar outros programas durante o build e gerar o APK de novo para um build sem erros.
 
 ---
 
