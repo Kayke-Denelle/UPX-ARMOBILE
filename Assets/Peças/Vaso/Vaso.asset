@@ -25,5 +25,4 @@ MonoBehaviour:
   spawnRotation: {x: 0, y: 0, z: 0}
   introNarration: {fileID: 0}
   thumbnail: {fileID: 3828791679664003571, guid: 5d6cebb5e0dc1d94bbfc565a6d197932, type: 3}
-  relatedItems:
-  - {fileID: 11400000, guid: 3a2d768e011597b408218badb3fca437, type: 2}
+  relatedItems: []

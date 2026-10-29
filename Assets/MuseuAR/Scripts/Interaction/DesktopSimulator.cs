@@ -77,6 +77,14 @@ namespace MuseuAR
 
             if (keyboard.hKey.wasPressedThisFrame || keyboard.f1Key.wasPressedThisFrame) showHelp = !showHelp;
 
+            // Tela inicial aberta: só Enter/Espaço (= botão Iniciar)
+            if (modes && !modes.Started)
+            {
+                if (keyboard.enterKey.wasPressedThisFrame || keyboard.numpadEnterKey.wasPressedThisFrame || keyboard.spaceKey.wasPressedThisFrame)
+                    modes.RequestStart();
+                return;
+            }
+
             for (int i = 0; i < 9; i++)
             {
                 if (keyboard[Key.Digit1 + i].wasPressedThisFrame || keyboard[Key.Numpad1 + i].wasPressedThisFrame)
@@ -140,6 +148,7 @@ namespace MuseuAR
 
             string text =
                 "<color=#FFD24D><b>MODO PC  (H fecha)</b></color>\n" +
+                "<b>Enter</b> = botão Iniciar (tela inicial)\n" +
                 "<b>Andar:</b> segure o <b>botão DIREITO</b> do mouse\n" +
                 "  + W A S D (Q desce, E sobe, Shift corre)\n" +
                 "  e mova o mouse para olhar\n\n" +
