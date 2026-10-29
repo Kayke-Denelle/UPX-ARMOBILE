@@ -33,6 +33,8 @@ namespace MuseuAR
 
         [Header("Início")]
         [SerializeField] ARMode startMode = ARMode.Visita;
+        [Tooltip("Opcional. Com tela inicial, a experiência só começa ao tocar em \"Iniciar\".")]
+        [SerializeField] StartScreenUI startScreen;
 
         public ARMode Mode { get; private set; }
         public event System.Action<ARMode> ModeChanged;
@@ -59,7 +61,44 @@ namespace MuseuAR
             InfoPanelUI.RelatedItemRequested -= OpenInCollection;
         }
 
-        void Start() => SetMode(startMode);
+        /// <summary>A experiência já começou (o visitante passou da tela inicial).</summary>
+        public bool Started { get; private set; }
+
+        void Start()
+        {
+            if (startScreen)
+            {
+                PauseUntilStart();
+                startScreen.Show(Begin);
+            }
+            else Begin();
+        }
+
+        /// <summary>Começa a experiência no modo inicial. Chamado pelo botão "Iniciar".</summary>
+        public void Begin()
+        {
+            if (Started) return;
+            Started = true;
+            SetMode(startMode);
+        }
+
+        /// <summary>Equivale a tocar em "Iniciar" (usado pelo atalho Enter no PC).</summary>
+        public void RequestStart()
+        {
+            if (startScreen && startScreen.IsOpen) startScreen.Begin();
+            else Begin();
+        }
+
+        // Com a tela inicial aberta, nenhuma peça aparece por trás dela. O rastreamento de imagens
+        // continua ligado (desligar no primeiro frame dessincroniza o AR Foundation); as peças só ficam ocultas.
+        void PauseUntilStart()
+        {
+            if (imageSpawner) imageSpawner.SetExhibitsVisible(false);
+            if (planeManager) planeManager.enabled = false;
+            if (freePlacement) freePlacement.enabled = false;
+            if (catalogMenu) catalogMenu.Hide();
+            HideHint();
+        }
 
         public void SetVisitMode() => SetMode(ARMode.Visita);
         public void SetCollectionMode() => SetMode(ARMode.Acervo);

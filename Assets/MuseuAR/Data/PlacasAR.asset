@@ -18,26 +18,6 @@ MonoBehaviour:
     m_Storage: []
   m_Images:
   - m_SerializedGuid:
-      m_GuidLow: 4815380475139369475
-      m_GuidHigh: 3212012329095856563
-    m_SerializedTextureGuid:
-      m_GuidLow: 8603179903211273880
-      m_GuidHigh: 14330714952062485162
-    m_Size: {x: 0.15, y: 0.15}
-    m_SpecifySize: 1
-    m_Name: placa-anfora
-    m_Texture: {fileID: 2800000, guid: 55affe98a28a7764aa42104f52ede0c6, type: 3}
-  - m_SerializedGuid:
-      m_GuidLow: 4899389012344377276
-      m_GuidHigh: 11592292935562323895
-    m_SerializedTextureGuid:
-      m_GuidLow: 1811800574929887737
-      m_GuidHigh: 4279461886770850905
-    m_Size: {x: 0.15, y: 0.15}
-    m_SpecifySize: 1
-    m_Name: placa-lamparina
-    m_Texture: {fileID: 2800000, guid: 088b61f9cf06192459accc96e9b3633b, type: 3}
-  - m_SerializedGuid:
       m_GuidLow: 5490858972360839115
       m_GuidHigh: 4191420978408313480
     m_SerializedTextureGuid:

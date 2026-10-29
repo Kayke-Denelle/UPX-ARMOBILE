@@ -80,7 +80,7 @@ namespace MuseuAR.EditorTools
             EditorBuildSettings.scenes = scenes.ToArray();
 
             Notify(interactive, "Cena do museu criada em " + MuseumScenePath + "\n\n" +
-                "Próximo passo: menu Museu AR > 2. Criar peças de exemplo.");
+                "Próximo passo: cadastre as peças (veja docs/documents/guia-de-conteudo.md).");
             return true;
         }
 
@@ -346,6 +346,9 @@ namespace MuseuAR.EditorTools
             ((RectTransform)collectionBtn.transform).offsetMin = new Vector2(4, 8);
             ((RectTransform)collectionBtn.transform).offsetMax = new Vector2(-8, -8);
 
+            // ---------- Tela inicial (por cima de tudo) ----------
+            var start = BuildStartScreen(canvasGO.transform, out var startButton, out var startTitle, out var startThumb);
+
             // ---------- Scripts de UI + ligações ----------
             var info = canvasGO.AddComponent<InfoPanelUI>();
             Wire(info, "headerRoot", header.gameObject);
@@ -383,7 +386,94 @@ namespace MuseuAR.EditorTools
             Wire(modes, "visitModeButton", visitBtn);
             Wire(modes, "collectionModeButton", collectionBtn);
 
+            var startUI = canvasGO.AddComponent<StartScreenUI>();
+            Wire(startUI, "root", start);
+            Wire(startUI, "startButton", startButton);
+            Wire(startUI, "catalog", catalog);
+            Wire(startUI, "titleText", startTitle);
+            Wire(startUI, "thumbnailTemplate", startThumb);
+            Wire(modes, "startScreen", startUI);
+
             if (desktop) Wire(desktop, "infoPanel", info);
+        }
+
+        static readonly string[] StartSteps =
+        {
+            "Aponte a câmera para o QR code ao lado da peça",
+            "Arraste para girar e faça pinça para ampliar",
+            "Toque nos pontos para descobrir curiosidades",
+        };
+
+        /// <summary>Tela cheia com nome do museu, miniaturas das peças, passos de uso e botão "Iniciar".</summary>
+        static GameObject BuildStartScreen(Transform canvas, out Button startButton, out TextMeshProUGUI title, out GameObject thumbTemplate)
+        {
+            var background = Panel("TelaInicial", canvas, new Color(0.06f, 0.06f, 0.08f, 1f));
+            Region(background.rectTransform, 0, 0, 1, 1, 0, 0);
+            background.gameObject.AddComponent<CanvasGroup>();
+
+            var content = NewRect("Conteudo", background.transform);
+            Region(content, 0, 0, 1, 1, 0, 0);
+            content.gameObject.AddComponent<SafeAreaFitter>();
+
+            var eyebrow = Label("Chamada", content, "Realidade aumentada", 26, FontStyles.Bold | FontStyles.UpperCase, TextAlignmentOptions.Center);
+            eyebrow.color = AccentColor;
+            eyebrow.characterSpacing = 8;
+            StretchTop(eyebrow.rectTransform, 220, 40, 80, 80);
+
+            title = Label("Titulo", content, "Museu AR", 96, FontStyles.Bold, TextAlignmentOptions.Center);
+            title.enableAutoSizing = true;
+            title.fontSizeMin = 56;
+            title.fontSizeMax = 96;
+            StretchTop(title.rectTransform, 268, 124, 60, 60);
+
+            var subtitle = Label("Subtitulo", content, "Veja em 3D as peças que não podem ser tocadas", 34, FontStyles.Normal, TextAlignmentOptions.Center);
+            subtitle.color = MutedText;
+            StretchTop(subtitle.rectTransform, 400, 100, 120, 120);
+
+            // Miniaturas das peças (preenchidas pelo StartScreenUI a partir do catálogo)
+            var row = NewRect("Miniaturas", content);
+            StretchTop(row, 548, 200, 40, 40);
+            var rowLayout = row.gameObject.AddComponent<HorizontalLayoutGroup>();
+            rowLayout.childAlignment = TextAnchor.MiddleCenter;
+            rowLayout.spacing = 24;
+            rowLayout.childControlWidth = false;
+            rowLayout.childControlHeight = false;
+            rowLayout.childForceExpandWidth = false;
+            rowLayout.childForceExpandHeight = false;
+            var thumbFrame = Panel("MiniaturaTemplate", row, ButtonColor, 32);
+            thumbFrame.rectTransform.sizeDelta = new Vector2(200, 200);
+            thumbFrame.gameObject.AddComponent<Mask>().showMaskGraphic = true;
+            var photo = Panel("Foto", thumbFrame.transform, Color.white);
+            photo.raycastTarget = false;
+            photo.preserveAspect = true;
+            Region(photo.rectTransform, 0, 0, 1, 1, 0, 0);
+            thumbTemplate = thumbFrame.gameObject;
+
+            // Como usar: 3 passos numerados
+            for (int i = 0; i < StartSteps.Length; i++)
+            {
+                var card = Panel($"Passo{i + 1}", content, new Color(1f, 1f, 1f, 0.06f), 28);
+                Place(card.rectTransform, new Vector2(0.5f, 1f), new Vector2(0, -(820 + i * 144)), new Vector2(CardWidth - 48, 124));
+                var badge = Panel("Numero", card.transform, AccentColor, 36);
+                Place(badge.rectTransform, new Vector2(0f, 0.5f), new Vector2(26, 0), new Vector2(72, 72));
+                var number = Label("Texto", badge.transform, (i + 1).ToString(), 36, FontStyles.Bold, TextAlignmentOptions.Center);
+                number.color = new Color(0.1f, 0.08f, 0.05f);
+                Region(number.rectTransform, 0, 0, 1, 1, 0, 0);
+                var text = Label("Texto", card.transform, StartSteps[i], 30);
+                Region(text.rectTransform, 0, 0, 1, 1, 0, 0);
+                text.rectTransform.offsetMin = new Vector2(124, 8);
+                text.rectTransform.offsetMax = new Vector2(-28, -8);
+            }
+
+            startButton = MakeButton("BtnIniciar", content, "Iniciar", AccentColor, 44, 64);
+            startButton.GetComponentInChildren<TextMeshProUGUI>().color = new Color(0.1f, 0.08f, 0.05f);
+            Place((RectTransform)startButton.transform, new Vector2(0.5f, 0f), new Vector2(0, 150), new Vector2(640, 128));
+
+            var note = Label("Aviso", content, "Permita o acesso à câmera quando o app pedir.", 24, FontStyles.Normal, TextAlignmentOptions.Center);
+            note.color = MutedText;
+            Place(note.rectTransform, new Vector2(0.5f, 0f), new Vector2(0, 80), new Vector2(CardWidth, 44));
+
+            return background.gameObject;
         }
 
         // ================= Assets =================

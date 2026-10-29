@@ -131,11 +131,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MuseuAR.HotspotPoint
   title: Bojo
-  kind: 4
-  description: "O bojo \xE9 a parte mais larga, onde fica o volume do vaso. Compare com a \xE2nfora romana: a mesma ideia de corpo largo e gargalo estreito, mas pensada para transportar azeite e vinho, n\xE3o para decorar."
+  kind: 1
+  description: "O bojo \xE9 a parte mais larga, onde fica o volume do vaso. A curva que sobe do bojo at\xE9 o gargalo \xE9 feita no torno, com a argila ainda \xFAmida: paredes finas e regulares mostram a habilidade do oleiro."
   narration: {fileID: 0}
   labelOffset: {x: -0.14, y: 0, z: 0}
-  relatedItem: {fileID: 11400000, guid: 3a2d768e011597b408218badb3fca437, type: 2}
+  relatedItem: {fileID: 0}
 --- !u!1 &5962936605175219222
 GameObject:
   m_ObjectHideFlags: 0
