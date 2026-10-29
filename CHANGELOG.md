@@ -2,7 +2,11 @@
 
 Histórico das principais versões do **Museu AR**.
 
-## [Não publicado]
+## [1.1.0] — 2026-10-28 (versionCode 2)
+
+### Documentação
+- Diagramas do README com termos em português.
+- Hardware de teste: Xiaomi POCO X7 Pro. Roteiro de testes no celular (seção 22.2) preenchido com **dados simulados**, a substituir pelos resultados reais.
 
 ### Adicionado
 - **Tela inicial**: nome do museu, miniaturas das peças, 3 passos de uso e botão **Iniciar**. A RA só liga depois do toque (no PC, Enter também inicia).

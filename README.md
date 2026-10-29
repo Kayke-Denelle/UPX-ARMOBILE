@@ -145,7 +145,7 @@ Desenvolver um aplicativo de Realidade Aumentada que reconheça uma placa ao lad
 
 | Equipamento | Modelo | Característica relevante | Utilização |
 |---|---|---|---|
-| Smartphone | *Preencher* | Android 10+ com ARCore | Execução e testes |
+| Smartphone | Xiaomi POCO X7 Pro | MediaTek Dimensity 8400-Ultra, tela AMOLED 6,67" 1220x2712, câmera principal de 50 MP, Android 15 (HyperOS 2), RAM *preencher (8 ou 12 GB)* | Execução e testes |
 | Computador | Notebook — AMD Ryzen 7 4800H | 16 GB RAM, NVIDIA GeForce GTX 1650, Windows 11 | Desenvolvimento e build |
 
 ---
@@ -154,26 +154,28 @@ Desenvolver um aplicativo de Realidade Aumentada que reconheça uma placa ao lad
 
 ```mermaid
 flowchart TB
-    subgraph Conteudo["Conteúdo (assets, sem código)"]
-        CAT["CatalogoDoMuseu<br/>lista de peças"]
-        FICHA["MuseumItemData<br/>ficha da peça"]
-        PREFAB["Prefab 3D + HotspotPoint"]
-        PLACAS["PlacasAR<br/>biblioteca de imagens"]
+    subgraph Conteudo["Conteúdo cadastrado (sem programação)"]
+        CAT["Catálogo do museu<br/>lista de peças"]
+        FICHA["Ficha da peça<br/>nome, período, textos, áudio"]
+        MODELO["Modelo 3D<br/>com pontos de interesse"]
+        PLACAS["Biblioteca de placas<br/>imagens de referência"]
     end
 
-    subgraph App["Aplicação (Assets/MuseuAR/Scripts)"]
-        UI["Interface<br/>InfoPanelUI · CatalogMenuUI"]
-        MODOS["AppModeController<br/>Visita / Acervo"]
-        TOQUE["TouchInputRouter<br/>toque, arrastar, pinça"]
-        PECA["ExhibitController<br/>peça na cena"]
-        HS["HotspotView<br/>marcador, seta, rótulo"]
-        AUDIO["NarrationPlayer"]
-        RA["ImageTrackingSpawner<br/>FreePlacementController"]
+    subgraph App["Aplicativo"]
+        INICIO["Tela inicial<br/>botão Iniciar"]
+        UI["Interface<br/>cabeçalho, painel, menu do acervo"]
+        MODOS["Controle de modos<br/>Visita / Acervo"]
+        TOQUE["Leitura de gestos<br/>toque, arrastar, pinça"]
+        RA["Posicionamento da peça<br/>sobre a placa ou na mesa"]
+        PECA["Peça na cena<br/>girar, ampliar, manter em pé"]
+        HS["Pontos de interesse<br/>marcador, seta, rótulo"]
+        AUDIO["Narração em áudio"]
     end
 
-    ARF["AR Foundation 6.6"] --> ARC["ARCore"] --> HW["Câmera e sensores"]
+    ARF["Biblioteca de realidade aumentada<br/>(AR Foundation 6.6)"] --> ARC["Serviço de RA do Android<br/>(ARCore)"] --> HW["Câmera e sensores<br/>do celular"]
 
-    CAT --> FICHA --> PREFAB
+    CAT --> FICHA --> MODELO
+    INICIO --> MODOS
     UI --> MODOS
     MODOS --> RA
     TOQUE --> PECA
@@ -190,15 +192,16 @@ flowchart TB
 ```text
 Visitante
    ↓
-Interface (cabeçalho, painel, barra de modos)
+Interface (tela inicial, cabeçalho, painel, barra de modos)
    ↓
-Controle da experiência (AppModeController, ExhibitController)
+Controle da experiência (modos Visita/Acervo, peça na cena)
    ↓
-AR Foundation (Image Tracking, Plane Detection, Raycast)
+Biblioteca de realidade aumentada (reconhecimento de imagens,
+detecção de superfícies, projeção do toque na cena)
    ↓
-ARCore
+Serviço de RA do Android (ARCore)
    ↓
-Câmera / Sensores
+Câmera e sensores
    ↓
 Placa com QR code ao lado da vitrine
 ```
@@ -209,36 +212,36 @@ Placa com QR code ao lado da vitrine
 
 ### 11.1 Técnicas utilizadas
 
-- **Image Tracking** (Modo Visita): cada placa impressa está cadastrada na biblioteca `PlacasAR` com o tamanho real (15 cm). A placa tem uma **moldura ilustrada**, rica em cantos e contraste, que o ARCore rastreia, e um **QR code** no centro, legível pela câmera comum do celular.
-- **Plane Detection + Raycast** (Modo Acervo): o app detecta superfícies horizontais e posiciona a peça onde o visitante toca.
+- **Reconhecimento de imagens** (*Image Tracking*, Modo Visita): cada placa impressa está cadastrada na biblioteca `PlacasAR` com o tamanho real (15 cm). A placa tem uma **moldura ilustrada**, rica em cantos e contraste, que o ARCore rastreia, e um **QR code** no centro, legível pela câmera comum do celular.
+- **Detecção de superfícies e projeção do toque** (*Plane Detection* e *Raycast*, Modo Acervo): o app detecta superfícies horizontais e posiciona a peça onde o visitante toca.
 
 ### 11.2 Fluxo técnico
 
 ```mermaid
 sequenceDiagram
     actor V as Visitante
-    participant C as Câmera / ARCore
-    participant T as ImageTrackingSpawner
-    participant E as ExhibitController
-    participant U as InfoPanelUI
+    participant C as Câmera e ARCore
+    participant R as Reconhecimento da placa
+    participant P as Peça na cena
+    participant I as Painel de informações
 
     V->>C: Aponta para a placa
-    C->>T: Imagem reconhecida (nome + posição)
-    T->>T: Busca a peça no catálogo pelo nome da placa
-    T->>E: Spawn(peça) sobre a placa
-    E->>E: Cria a peça em pé, virada para o visitante
-    E->>E: Cria marcador, seta e rótulo de cada HotspotPoint
-    V->>E: Arrasta / pinça
-    E->>E: Gira / amplia
-    V->>U: Toca num ponto
-    U->>V: Painel com texto, áudio e "Ver em 3D"
+    C->>R: Placa reconhecida (nome e posição)
+    R->>R: Procura no catálogo a peça dessa placa
+    R->>P: Cria a peça sobre a placa
+    P->>P: Deixa a peça em pé, virada para o visitante
+    P->>P: Cria marcador, seta e rótulo de cada ponto de interesse
+    V->>P: Arrasta ou faz pinça
+    P->>P: Gira ou amplia
+    V->>I: Toca num ponto
+    I->>V: Mostra texto, áudio e peças relacionadas
 ```
 
 1. O app inicia a câmera e o rastreamento de imagens.
 2. O ARCore compara a imagem da câmera com as placas cadastradas.
-3. Quando reconhece uma placa, o `ImageTrackingSpawner` encontra a peça correspondente no catálogo.
+3. Quando reconhece uma placa, o app encontra a peça correspondente no catálogo (script `ImageTrackingSpawner`).
 4. A peça é criada sobre a placa, **em pé e virada para o visitante** (mesmo com a placa na parede).
-5. Cada `HotspotPoint` do modelo vira um marcador, uma seta e um rótulo 3D de tamanho fixo no mundo real.
+5. Cada ponto de interesse do modelo (`HotspotPoint`) vira um marcador, uma seta e um rótulo 3D de tamanho fixo no mundo real.
 6. A peça continua visível se a placa sair do enquadramento, para o visitante poder chegar perto e girar.
 
 ### 11.3 Elementos virtuais
@@ -263,9 +266,9 @@ UPX-ARMOBILE/
 │   │   ├── Scenes/        MuseuAR.unity (cena do app)
 │   │   └── Scripts/       código do app e ferramentas de editor
 │   ├── Peças/
-│   │   ├── Vaso/          modelo, material, prefab, ficha, placa
-│   │   └── Ancient_Paper/ modelo, texturas, prefab, ficha, placa
-│   ├── MobileARTemplateAssets/, Samples/, XR/   (template AR Mobile da Unity)
+│   │   ├── Vaso/          modelo, material, objeto pronto (prefab), ficha, placa
+│   │   └── Ancient_Paper/ modelo, texturas, objeto pronto (prefab), ficha, placa
+│   ├── MobileARTemplateAssets/, Samples/, XR/   (modelo de projeto AR Mobile da Unity)
 │   └── Settings/          URP
 │
 ├── Packages/
@@ -417,7 +420,7 @@ flowchart TD
     E --> G[Visitante toca num ponto]
     G --> H[Painel com curiosidade]
     H --> I{Tem peça relacionada?}
-    I -- Sim --> J[Ver em 3D: Modo Acervo]
+    I -- Sim --> J[Botão Ver em 3D: Modo Acervo]
     J --> K[Toca na mesa: peça posicionada]
     I -- Não --> G
     K --> L[Fim]
@@ -433,21 +436,22 @@ flowchart LR
     V(["👤 Visitante"])
     M(["👤 Equipe do museu"])
 
-    subgraph App["Museu AR"]
+    subgraph App["Aplicativo Museu AR"]
+        UC0(["Iniciar a experiência"])
         UC1(["Ver peça em 3D pela placa"])
         UC2(["Girar e ampliar a peça"])
-        UC3(["Ler/ouvir curiosidades"])
-        UC4(["Ver peça correlacionada"])
+        UC3(["Ler ou ouvir curiosidades"])
+        UC4(["Ver peça relacionada"])
         UC5(["Escolher peça no acervo"])
     end
 
-    subgraph Editor["Unity (sem programação)"]
-        UC6(["Cadastrar peça e pontos"])
+    subgraph Editor["Editor do projeto (sem programação)"]
+        UC6(["Cadastrar peça e pontos de interesse"])
         UC7(["Gerar placas com QR code"])
-        UC8(["Gerar APK"])
+        UC8(["Gerar o instalador do app"])
     end
 
-    V --- UC1 & UC2 & UC3 & UC4 & UC5
+    V --- UC0 & UC1 & UC2 & UC3 & UC4 & UC5
     M --- UC6 & UC7 & UC8
 ```
 
@@ -491,6 +495,8 @@ A interface foi desenhada para celular em pé. O app abre numa **tela inicial** 
 
 ## 22. Testes Técnicos
 
+### 22.1 Testes no Editor (XR Simulation)
+
 | Teste | Procedimento | Resultado esperado | Resultado obtido | Status |
 |---|---|---|---|---|
 | Compilação | Abrir o projeto na Unity | Sem erros de compilação | Sem erros | ✅ |
@@ -502,10 +508,32 @@ A interface foi desenhada para celular em pé. O app abre numa **tela inicial** 
 | Interface em retrato | Captura 1080x1920 | Peça visível entre cabeçalho e painel | Ver seção 21 | ✅ |
 | Leitura dos QR codes | Ler as placas com o leitor ZXing | Conteúdo correto | Todas corretas, também reduzidas a 256 px | ✅ |
 | QR com links longos | Gerar e ler textos de 24 a 138 caracteres | Conteúdo idêntico | 4/4 idênticos (versões 2 a 8) | ✅ |
-| Build Android | Menu "4. Gerar APK" | APK gerado | `MuseuAR.apk` (43 MB), 0 erros | ✅ |
-| Instalação no celular | Instalar o APK | App abre e pede a câmera | Não realizado | ⬜ |
-| Reconhecimento real | Apontar para a placa impressa | Peça aparece estável | Não realizado | ⬜ |
-| Gestos no celular | Arrastar e pinça | Gira e amplia | Não realizado | ⬜ |
+| Build Android | Menu "4. Gerar APK" | APK gerado | BUILD_RESULTADO | ✅ |
+
+### 22.2 Testes no celular — Xiaomi POCO X7 Pro
+
+> ⚠️ **Dados simulados (mock).** Os resultados desta tabela são **ilustrativos** e ainda **não foram medidos** no aparelho. Eles servem de roteiro de teste e devem ser **substituídos pelos resultados reais** (e o marcador 🧪 trocado por ✅, 🚧 ou ❌) antes da entrega.
+
+**Condições previstas:** APK versão 1.1.0 · placas impressas com 15 cm em papel fosco · sala com luz ambiente · celular na mão, em pé.
+
+| ID | Teste | Procedimento | Resultado esperado | Resultado obtido | Status |
+|---|---|---|---|---|---|
+| C01 | Instalação | Instalar `MuseuAR.apk` (1.1.0) | App instala e abre | Instalado; pediu permissão de câmera na primeira abertura | 🧪 |
+| C02 | Serviço de RA | Primeira abertura do app | Google Play Services for AR disponível | Serviço já instalado e atualizado | 🧪 |
+| C03 | Tela inicial | Abrir o app | Tela inicial com as 2 peças e botão Iniciar | Exibida em ~2 s | 🧪 |
+| C04 | Reconhecimento — vaso | Apontar para `placa-vaso` a ~40 cm | Vaso aparece sobre a placa | Reconhecido em ~1,5 s; peça estável | 🧪 |
+| C05 | Reconhecimento — documento | Apontar para `placa-papel` a ~40 cm | Documento aparece sobre a placa | Reconhecido em ~1,8 s; peça estável | 🧪 |
+| C06 | Distância | Aproximar e afastar de 20 cm a 1,5 m | Reconhece na faixa de uso | Reconhece de ~25 cm a ~1,2 m | 🧪 |
+| C07 | Ângulo | Inclinar o celular em relação à placa | Reconhece com placa inclinada | Reconhece até ~50° de inclinação | 🧪 |
+| C08 | Pouca luz | Sala com luz baixa | Reconhece, ainda que mais devagar | Reconhecimento em ~4 s; leve tremor da peça | 🧪 |
+| C09 | Placa fora do quadro | Aproximar a câmera da peça | Peça continua visível | Peça mantida na posição | 🧪 |
+| C10 | Gestos | Arrastar e fazer pinça | Gira e amplia | Rotação e zoom suaves | 🧪 |
+| C11 | Pontos de interesse | Tocar nos 4 pontos do vaso | Painel abre; pontos ficam verdes; "Tudo descoberto! 4/4" | Funcionou nos 4 pontos | 🧪 |
+| C12 | Modo Acervo | Escolher peça e tocar numa mesa | Superfície detectada; peça posicionada | Mesa detectada em ~3 s; peça posicionada | 🧪 |
+| C13 | Desempenho | 5 min de uso contínuo | Sem travamentos | Fluido, sem travamentos; aquecimento leve | 🧪 |
+| C14 | Bateria | 10 min de uso contínuo | Consumo aceitável | ~3% de bateria | 🧪 |
+
+**Legenda:** ✅ aprovado · 🚧 parcial · ❌ reprovado · 🧪 dado simulado, a substituir
 
 ---
 
@@ -513,14 +541,15 @@ A interface foi desenhada para celular em pé. O app abre numa **tela inicial** 
 
 | Dispositivo | Sistema | Versão | Resultado |
 |---|---|---|---|
-| Editor Unity (XR Simulation) | Windows 11 | Unity 6000.6.0f1 | Funcionamento verificado (seção 22) |
-| *Preencher* | Android | *Preencher* | Teste em celular pendente |
+| Editor Unity (XR Simulation) | Windows 11 | Unity 6000.6.0f1 | Funcionamento verificado (seção 22.1) |
+| Xiaomi POCO X7 Pro | Android 15 (HyperOS 2) | APK 1.1.0 | 🧪 Dados simulados (seção 22.2) — teste real pendente |
 
 ---
 
 ## 24. Limitações Conhecidas
 
-- **Ainda não testado em celular real**: o APK foi gerado, mas reconhecimento, estabilidade e desempenho no aparelho não foram medidos.
+- **Resultados no celular ainda simulados**: os testes da seção 22.2 (POCO X7 Pro) são dados ilustrativos; reconhecimento, estabilidade e desempenho reais ainda precisam ser medidos.
+- Teste previsto em **um único modelo de celular**; outros aparelhos podem ter desempenho diferente.
 - **Somente Android**: o ARKit está instalado, mas o build para iPhone exige um Mac com Xcode.
 - **Somente celulares compatíveis com ARCore**, com Android 10 ou superior.
 - O reconhecimento depende de **boa iluminação**, de placa **fosca** e impressa com **15 cm**.
@@ -571,7 +600,7 @@ A interface foi desenhada para celular em pé. O app abre numa **tela inicial** 
 | Peças reais (vaso e documento) | *Preencher* | ✅ |
 | Placas com QR code | *Preencher* | ✅ |
 | Build Android (APK) | *Preencher* | ✅ |
-| Testes em celular | Equipe | ⬜ |
+| Testes em celular (POCO X7 Pro) | Equipe | 🚧 roteiro pronto, resultados simulados |
 | Textos reais e narrações | Equipe | ⬜ |
 | Link definitivo do QR code | Equipe | ⬜ |
 | Documentação | Equipe | 🚧 |
@@ -699,7 +728,7 @@ Os modelos 3D de terceiros mantêm as licenças de seus autores. O template AR M
 - [x] Procedimento de execução testado (no Editor)
 - [x] Screenshots reais adicionados (Editor)
 - [x] Testes registrados
-- [ ] Dispositivos testados informados (celular pendente)
+- [ ] Dispositivos testados informados (POCO X7 Pro informado; resultados ainda simulados)
 - [x] Limitações conhecidas documentadas
 - [ ] Evidência de funcionamento adicionada (vídeo no celular pendente)
 - [x] Commits representam a evolução do projeto
