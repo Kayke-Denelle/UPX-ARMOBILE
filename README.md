@@ -15,10 +15,10 @@
 | Item | Informação |
 |---|---|
 | **Projeto** | Museu AR — Realidade Aumentada para museus |
-| **Equipe** | *Preencher* |
-| **Curso** | *Preencher* |
+| **Equipe** | Inovar |
+| **Curso** | Engenharia da  computação |
 | **Disciplina** | UPX — Realidade Aumentada |
-| **Professor** | *Preencher* |
+| **Professor** | Daniel Ohata |
 | **Semestre** | 2026.2 |
 
 ### Integrantes
