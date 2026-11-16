@@ -388,7 +388,7 @@ A lista completa de atalhos está no [guia de conteúdo](docs/documents/guia-de-
 
 ### No celular (Android)
 
-1. Menu **Museu AR › 4. Gerar APK (Android)** → `Builds/MuseuAR.apk`.
+1. **APK pronto:** baixe [`apk/MuseuAR.apk`](apk/MuseuAR.apk) (versão 1.2.0) ou a página [Releases](https://github.com/Kayke-Denelle/UPX-ARMOBILE/releases/latest). Para gerar de novo: menu **Museu AR › 4. Gerar APK (Android)** → `Builds/MuseuAR.apk`.
 2. Copie o APK para o celular e instale (permita "instalar apps desconhecidos").
 3. Imprima as folhas A4 de `docs/placas/` em tamanho real (seção 17).
 
@@ -521,7 +521,7 @@ Toda a interface usa a mesma paleta fosca da tela inicial: painéis em azul-graf
 | Interface em retrato | Captura 1080x1920 | Peça visível entre cabeçalho e painel | Ver seção 21 | ✅ |
 | Leitura dos QR codes | Ler as placas com o leitor ZXing | Conteúdo correto | Todas corretas, também reduzidas a 256 px | ✅ |
 | QR com links longos | Gerar e ler textos de 24 a 138 caracteres | Conteúdo idêntico | 4/4 idênticos (versões 2 a 8) | ✅ |
-| Build Android | Menu "4. Gerar APK" | APK gerado sem erros | `MuseuAR.apk` 1.1.0 (42 MB) em 7 min 58 s; 3 erros de compilação de shader por falta de memória no PC (variantes não usadas pelo app) | 🚧 |
+| Build Android | Menu "4. Gerar APK" | APK gerado sem erros | `MuseuAR.apk` 1.2.0 (44 MB) em 3 min 3 s; 2 avisos de shader por falta de memória no PC, só na variante de sombra das setas (não usada pelo app) | ✅ |
 
 ### 22.2 Testes no celular — Xiaomi POCO X7 Pro
 
@@ -594,7 +594,7 @@ Toda a interface usa a mesma paleta fosca da tela inicial: painéis em azul-graf
 | Recurso | Link |
 |---|---|
 | Código-fonte | <https://github.com/Kayke-Denelle/UPX-ARMOBILE> |
-| Download do APK | <https://github.com/Kayke-Denelle/UPX-ARMOBILE/releases/latest> |
+| Download do APK | [apk/MuseuAR.apk](apk/MuseuAR.apk) e <https://github.com/Kayke-Denelle/UPX-ARMOBILE/releases/latest> |
 | Placas para imprimir | [docs/placas](docs/placas) |
 | Guia de conteúdo | [docs/documents/guia-de-conteudo.md](docs/documents/guia-de-conteudo.md) |
 | Histórico de versões | [CHANGELOG.md](CHANGELOG.md) |

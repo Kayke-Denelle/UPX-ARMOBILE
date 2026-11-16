@@ -115,3 +115,6 @@ InitTestScene*.unity*
 
 # Arquivos temporários criados pela Unity durante o build (Performance Testing)
 /[Aa]ssets/[Rr]esources/PerformanceTestRun*.json*
+
+# APK publicado no repositório (pasta apk/); os builds em Builds/ continuam ignorados
+!/apk/*.apk

@@ -4,7 +4,7 @@ Histórico das principais versões do **Museu AR**.
 
 ## [1.2.0] — 2026-11-16 (versionCode 3)
 
-APK publicado em <https://github.com/Kayke-Denelle/UPX-ARMOBILE/releases>.
+APK no repositório: [`apk/MuseuAR.apk`](apk/MuseuAR.apk) (44 MB). Os QR codes apontam para <https://github.com/Kayke-Denelle/UPX-ARMOBILE/releases/latest>.
 
 ### Adicionado
 - **Botões com ícones** desenhados no projeto (`UiIcons.cs`): informações, pontos, resetar, fechar, tocar/pausar (troca sozinho), ver em 3D, visita e acervo; seta (›) em cada item do acervo.
