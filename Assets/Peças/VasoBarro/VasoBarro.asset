@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf60ec0652902ad4b80f31a2eb496952, type: 3}
+  m_Name: VasoBarro
+  m_EditorClassIdentifier: Assembly-CSharp::MuseuAR.MuseumItemData
+  id: vaso-barro
+  displayName: Vaso de barro
+  period: "Per\xEDodo a definir"
+  origin: 
+  material: "Cer\xE2mica (terracota)"
+  description: "Vaso de barro com bojo largo e gargalo estreito, sem esmalte. A superf\xEDcie fosca e porosa \xE9 t\xEDpica da cer\xE2mica de uso cotidiano.\n\nToque nos pontos para descobrir como ele foi feito."
+  referenceImageName: placa-vaso-barro
+  modelPrefab: {fileID: 7487830526550039048, guid: f0a40d02692be0c4391d5f0241f01ed4, type: 3}
+  initialScale: 1
+  spawnOffset: {x: 0, y: 0.02, z: 0}
+  spawnRotation: {x: 0, y: 0, z: 0}
+  introNarration: {fileID: 0}
+  thumbnail: {fileID: 8380552591051080394, guid: 5656d9122c20c8a489c33fdef412081b, type: 3}
+  relatedItems:
+  - {fileID: 11400000, guid: 14a5c0be5964e5642b411f8121647ce5, type: 2}

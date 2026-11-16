@@ -28,8 +28,10 @@ namespace MuseuAR
         [SerializeField] TMP_Text hintText;
         [SerializeField] Button visitModeButton;
         [SerializeField] Button collectionModeButton;
-        [SerializeField] Color selectedButtonColor = new Color(0.95f, 0.62f, 0.1f, 1f);
-        [SerializeField] Color normalButtonColor = new Color(0.18f, 0.18f, 0.22f, 0.95f);
+        [SerializeField] Color selectedButtonColor = new Color(0.831f, 0.659f, 0.416f, 1f);   // areia
+        [SerializeField] Color normalButtonColor = new Color(0.227f, 0.267f, 0.337f, 0f);
+        [SerializeField] Color selectedTextColor = new Color(0.106f, 0.122f, 0.153f, 1f);
+        [SerializeField] Color normalTextColor = new Color(0.655f, 0.678f, 0.722f, 1f);
 
         [Header("Início")]
         [SerializeField] ARMode startMode = ARMode.Visita;
@@ -174,8 +176,12 @@ namespace MuseuAR
 
         void Tint(Button button, bool selected)
         {
-            if (button && button.targetGraphic)
-                button.targetGraphic.color = selected ? selectedButtonColor : normalButtonColor;
+            if (!button) return;
+            if (button.targetGraphic) button.targetGraphic.color = selected ? selectedButtonColor : normalButtonColor;
+            var label = button.GetComponentInChildren<TMP_Text>();
+            if (label) label.color = selected ? selectedTextColor : normalTextColor;
+            var icon = button.transform.Find("Icone");   // ícone segue a cor do texto
+            if (icon && icon.TryGetComponent(out Image iconImage)) iconImage.color = selected ? selectedTextColor : normalTextColor;
         }
     }
 }

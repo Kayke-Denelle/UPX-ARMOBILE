@@ -31,6 +31,10 @@ namespace MuseuAR
         [SerializeField] ScrollRect detailScroll;
         [SerializeField] Button audioButton;
         [SerializeField] TMP_Text audioButtonLabel;
+        [Tooltip("Opcional: ícone do botão de áudio, trocado entre tocar e pausar.")]
+        [SerializeField] Image audioButtonIcon;
+        [SerializeField] Sprite playIcon;
+        [SerializeField] Sprite pauseIcon;
         [Tooltip("Barra de progresso: RectTransform com anchorMin (0,0). O script ajusta anchorMax.x.")]
         [SerializeField] RectTransform audioProgressFill;
         [SerializeField] Button closeButton;
@@ -245,6 +249,7 @@ namespace MuseuAR
             bool playing = isMine && player.IsPlaying;
 
             if (audioButtonLabel) audioButtonLabel.text = playing ? "Pausar áudio" : "Ouvir áudio";
+            if (audioButtonIcon && playIcon && pauseIcon) audioButtonIcon.sprite = playing ? pauseIcon : playIcon;
 
             if (audioProgressFill)
             {

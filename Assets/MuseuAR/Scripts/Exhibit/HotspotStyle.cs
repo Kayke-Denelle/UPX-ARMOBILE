@@ -19,10 +19,10 @@ namespace MuseuAR
         public TMP_FontAsset font;
 
         [Header("Cores")]
-        public Color arrowColor = new Color(1f, 0.78f, 0.2f);
-        public Color visitedColor = new Color(0.35f, 0.9f, 0.6f);
-        public Color labelColor = Color.white;
-        public Color labelOutlineColor = new Color(0f, 0f, 0f, 0.9f);
+        public Color arrowColor = new Color(0.831f, 0.659f, 0.416f);    // areia (mesma paleta da interface)
+        public Color visitedColor = new Color(0.561f, 0.702f, 0.659f);  // verde-sálvia
+        public Color labelColor = new Color(0.925f, 0.906f, 0.871f);     // branco quente
+        public Color labelOutlineColor = new Color(0.078f, 0.094f, 0.122f, 0.9f);
         [Range(0f, 0.5f)] public float labelOutlineWidth = 0.25f;
 
         [Header("Tamanhos no mundo real (metros) — não mudam com o zoom da peça")]

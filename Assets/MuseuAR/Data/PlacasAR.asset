@@ -37,3 +37,43 @@ MonoBehaviour:
     m_SpecifySize: 1
     m_Name: placa-papel
     m_Texture: {fileID: 2800000, guid: 98c00158e8fa7c6408a4b24417915088, type: 3}
+  - m_SerializedGuid:
+      m_GuidLow: 4693020121877889347
+      m_GuidHigh: 11611005488150177445
+    m_SerializedTextureGuid:
+      m_GuidLow: 807369665417905086
+      m_GuidHigh: 161583054795143961
+    m_Size: {x: 0.15, y: 0.15}
+    m_SpecifySize: 1
+    m_Name: placa-vaso-barro
+    m_Texture: {fileID: 2800000, guid: dda903be5a6e0b34197bc9a6ee0e3e02, type: 3}
+  - m_SerializedGuid:
+      m_GuidLow: 5588803865290653369
+      m_GuidHigh: 10405132689858046129
+    m_SerializedTextureGuid:
+      m_GuidLow: 7540154714671624878
+      m_GuidHigh: 1193798229198669977
+    m_Size: {x: 0.15, y: 0.15}
+    m_SpecifySize: 1
+    m_Name: placa-urna
+    m_Texture: {fileID: 2800000, guid: 777d32ae02c368a49988e0182a399110, type: 3}
+  - m_SerializedGuid:
+      m_GuidLow: 5120505609209219890
+      m_GuidHigh: 14037226259355854262
+    m_SerializedTextureGuid:
+      m_GuidLow: 379543361048042057
+      m_GuidHigh: 13120604565094485208
+    m_Size: {x: 0.15, y: 0.15}
+    m_SpecifySize: 1
+    m_Name: placa-fruteira
+    m_Texture: {fileID: 2800000, guid: 0c205a4968ad0544d84cd30456c015b6, type: 3}
+  - m_SerializedGuid:
+      m_GuidLow: 5075625375410505019
+      m_GuidHigh: 4374142747957667977
+    m_SerializedTextureGuid:
+      m_GuidLow: 14729304916507775
+      m_GuidHigh: 16954318798159967160
+    m_Size: {x: 0.15, y: 0.15}
+    m_SpecifySize: 1
+    m_Name: placa-facas
+    m_Texture: {fileID: 2800000, guid: 8b563c7f54390034b8730d7d1ed749eb, type: 3}

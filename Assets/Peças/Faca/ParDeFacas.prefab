@@ -1,0 +1,312 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1692491606717229667
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5197359049620099000}
+  - component: {fileID: 2470690614953093342}
+  m_Layer: 0
+  m_Name: "Hotspot - Conserva\xE7\xE3o"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5197359049620099000
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1692491606717229667}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.084376335, y: 0.044035815, z: 0.0009227728}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2888477131054652006}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2470690614953093342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1692491606717229667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc6f06cd85c7ca7488caf15564cf6ded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MuseuAR.HotspotPoint
+  title: "Conserva\xE7\xE3o"
+  kind: 0
+  description: "O a\xE7o enferruja com a umidade e com o suor das m\xE3os. Por isso objetos de metal s\xE3o guardados com umidade controlada e manuseados s\xF3 com luvas."
+  narration: {fileID: 0}
+  labelOffset: {x: 0.06, y: -0.04, z: 0}
+  relatedItem: {fileID: 0}
+--- !u!1 &2016616581429757129
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7408672133160355287}
+  - component: {fileID: 1904797461385155194}
+  m_Layer: 0
+  m_Name: Hotspot - Cabo de madeira
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7408672133160355287
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2016616581429757129}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.100666724, y: 0.04854139, z: 0.0062943078}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2888477131054652006}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1904797461385155194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2016616581429757129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc6f06cd85c7ca7488caf15564cf6ded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MuseuAR.HotspotPoint
+  title: Cabo de madeira
+  kind: 1
+  description: "O cabo \xE9 feito de duas placas de madeira presas por rebites \xE0 espiga, a parte da l\xE2mina que entra no cabo."
+  narration: {fileID: 0}
+  labelOffset: {x: -0.08, y: -0.04, z: 0}
+  relatedItem: {fileID: 0}
+--- !u!1 &2113358013658521123
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2888477131054652006}
+  m_Layer: 0
+  m_Name: ParDeFacas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2888477131054652006
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2113358013658521123}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7789111314678308459}
+  - {fileID: 5509383483255321132}
+  - {fileID: 1899968031643215560}
+  - {fileID: 7408672133160355287}
+  - {fileID: 5197359049620099000}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2579176387376005417
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5509383483255321132}
+  - component: {fileID: 8177465139269640248}
+  m_Layer: 0
+  m_Name: "Hotspot - L\xE2mina"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5509383483255321132
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2579176387376005417}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.06898713, y: 0.14928058, z: 0.0009227728}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2888477131054652006}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8177465139269640248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2579176387376005417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc6f06cd85c7ca7488caf15564cf6ded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MuseuAR.HotspotPoint
+  title: "L\xE2mina"
+  kind: 2
+  description: "A l\xE2mina de a\xE7o \xE9 forjada, temperada e depois afiada. A t\xEAmpera, um resfriamento r\xE1pido, deixa o a\xE7o duro o bastante para manter o fio."
+  narration: {fileID: 0}
+  labelOffset: {x: 0.04, y: 0.07, z: 0}
+  relatedItem: {fileID: 0}
+--- !u!1 &3694399152281315106
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1899968031643215560}
+  - component: {fileID: 2327749053718110770}
+  m_Layer: 0
+  m_Name: Hotspot - Guarda
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1899968031643215560
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3694399152281315106}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.015450347, y: 0.14850463, z: 0.0009227728}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2888477131054652006}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2327749053718110770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3694399152281315106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc6f06cd85c7ca7488caf15564cf6ded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MuseuAR.HotspotPoint
+  title: Guarda
+  kind: 1
+  description: "A guarda separa o cabo da l\xE2mina e protege a m\xE3o. Na faca de baixo ela \xE9 de lat\xE3o, liga de cobre e zinco que resiste bem \xE0 corros\xE3o e \xE9 f\xE1cil de trabalhar."
+  narration: {fileID: 0}
+  labelOffset: {x: -0.02, y: 0.08, z: 0}
+  relatedItem: {fileID: 0}
+--- !u!1001 &7751471238037191040
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2888477131054652006}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 1a52c6d713a381b4a9a614e2fd685b99, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.043186832
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1a52c6d713a381b4a9a614e2fd685b99, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.043186832
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1a52c6d713a381b4a9a614e2fd685b99, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.043186832
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1a52c6d713a381b4a9a614e2fd685b99, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.026039228
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1a52c6d713a381b4a9a614e2fd685b99, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.040878195
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1a52c6d713a381b4a9a614e2fd685b99, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.000012524426
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1a52c6d713a381b4a9a614e2fd685b99, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1a52c6d713a381b4a9a614e2fd685b99, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1a52c6d713a381b4a9a614e2fd685b99, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1a52c6d713a381b4a9a614e2fd685b99, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1a52c6d713a381b4a9a614e2fd685b99, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1a52c6d713a381b4a9a614e2fd685b99, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1a52c6d713a381b4a9a614e2fd685b99, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1a52c6d713a381b4a9a614e2fd685b99, type: 3}
+      propertyPath: m_Name
+      value: Modelo
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1a52c6d713a381b4a9a614e2fd685b99, type: 3}
+--- !u!4 &7789111314678308459 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1a52c6d713a381b4a9a614e2fd685b99, type: 3}
+  m_PrefabInstance: {fileID: 7751471238037191040}
+  m_PrefabAsset: {fileID: 0}

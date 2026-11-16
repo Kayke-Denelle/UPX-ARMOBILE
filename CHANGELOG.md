@@ -2,6 +2,31 @@
 
 Histórico das principais versões do **Museu AR**.
 
+## [1.2.0] — 2026-11-16 (versionCode 3)
+
+APK publicado em <https://github.com/Kayke-Denelle/UPX-ARMOBILE/releases>.
+
+### Adicionado
+- **Botões com ícones** desenhados no projeto (`UiIcons.cs`): informações, pontos, resetar, fechar, tocar/pausar (troca sozinho), ver em 3D, visita e acervo; seta (›) em cada item do acervo.
+- **QR codes apontando para o download do app** (`.../releases/latest#<id da peça>`).
+- **Folhas A4 para impressão** em `docs/placas/` (nome da peça, instruções e placa com 15 cm) e menu **Museu AR › 5. Exportar placas para impressão (A4)**.
+- **4 peças novas** no acervo (agora são 6): vaso de barro, urna com frisos florais, fruteira de pedra e par de facas — cada uma com 4 pontos de interesse, ficha, placa com QR code e miniatura.
+- Peças relacionadas: vaso de barro ↔ vaso de gargalo longo; urna ↔ fruteira.
+- Pasta `ModelosOriginais/` com os arquivos baixados (`.zip`, `.rar`, `.blend`).
+
+### Alterado
+- **Interface do app na mesma paleta fosca da tela inicial**: painéis em azul-grafite, botões grafite, destaques em areia (categoria, progresso, áudio, modo selecionado), textos em branco quente e cinza suave.
+- Barra de modos: o modo selecionado fica em areia com texto escuro; o outro se mistura à barra.
+- Pontos de interesse em 3D: areia (não vistos) e verde-sálvia (visitados), no lugar do amarelo e do verde vivos.
+- Miniaturas do acervo refeitas com fundo grafite.
+
+### Corrigido
+- Marcadores dos pontos aparecendo rosa (erro do shader `URP/Unlit` salvo no cache por falta de memória).
+
+- **Tela inicial redesenhada**, com visual fosco e discreto: fundo em degradê suave azul-grafite (sem brilhos), emblema "AR" com contorno fino, passos de uso em cartões grafite com números em tons foscos (verde-sálvia, rosa antigo, areia) e botão **Iniciar** em cor sólida areia, sem brilho.
+- Miniaturas das peças retiradas da tela inicial.
+- Fundo da tela inicial gerado pelo editor (`StartScreenArt.cs`, onde fica a paleta de cores) em `Assets/MuseuAR/Data/UI/`.
+
 ## [1.1.0] — 2026-10-28 (versionCode 2)
 
 ### Documentação

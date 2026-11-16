@@ -1,0 +1,312 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1037745626011146607
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1076268721478447374}
+  - component: {fileID: 1317641106794678237}
+  m_Layer: 0
+  m_Name: Hotspot - Pedestal
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1076268721478447374
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1037745626011146607}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.077357136, y: 0.008438967, z: 0.07735714}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1146187278021002395}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1317641106794678237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1037745626011146607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc6f06cd85c7ca7488caf15564cf6ded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MuseuAR.HotspotPoint
+  title: Pedestal
+  kind: 0
+  description: "A base quadrada d\xE1 estabilidade e eleva a pe\xE7a. Em exposi\xE7\xF5es, objetos assim costumam ser presos com cera especial ou suportes discretos para n\xE3o tombarem."
+  narration: {fileID: 0}
+  labelOffset: {x: -0.12, y: 0.02, z: 0}
+  relatedItem: {fileID: 0}
+--- !u!1 &4539604322597868694
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1146187278021002395}
+  m_Layer: 0
+  m_Name: Urna
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1146187278021002395
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4539604322597868694}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 792668555206369169}
+  - {fileID: 1020569536861828584}
+  - {fileID: 7433506288046270897}
+  - {fileID: 3983265793968476596}
+  - {fileID: 1076268721478447374}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6100036689101948101
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7433506288046270897}
+  - component: {fileID: 5699144414291180333}
+  m_Layer: 0
+  m_Name: Hotspot - Forma de urna
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7433506288046270897
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6100036689101948101}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.088780515, y: 0.22314623, z: 0.017659537}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1146187278021002395}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5699144414291180333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6100036689101948101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc6f06cd85c7ca7488caf15564cf6ded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MuseuAR.HotspotPoint
+  title: Forma de urna
+  kind: 3
+  description: "Vasos em forma de urna, com ta\xE7a larga sobre um p\xE9, foram muito usados na decora\xE7\xE3o neocl\xE1ssica, inspirada em pe\xE7as da Antiguidade grega e romana."
+  narration: {fileID: 0}
+  labelOffset: {x: 0.13, y: 0.03, z: 0}
+  relatedItem: {fileID: 0}
+--- !u!1 &7928684043871799472
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3983265793968476596}
+  - component: {fileID: 797449580065380657}
+  m_Layer: 0
+  m_Name: "Hotspot - P\xE9 torneado"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3983265793968476596
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7928684043871799472}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.024518045, y: 0.0712408, z: 0.02451804}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1146187278021002395}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &797449580065380657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7928684043871799472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc6f06cd85c7ca7488caf15564cf6ded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MuseuAR.HotspotPoint
+  title: "P\xE9 torneado"
+  kind: 2
+  description: "O p\xE9 estreito com an\xE9is \xE9 feito em partes e unido \xE0 ta\xE7a. \xC9 o ponto mais fr\xE1gil da pe\xE7a: muitas urnas antigas t\xEAm o p\xE9 colado ou restaurado."
+  narration: {fileID: 0}
+  labelOffset: {x: 0.12, y: 0.02, z: 0}
+  relatedItem: {fileID: 0}
+--- !u!1 &8454235935867663426
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1020569536861828584}
+  - component: {fileID: 5138711832782617187}
+  m_Layer: 0
+  m_Name: Hotspot - Frisos florais
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1020569536861828584
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8454235935867663426}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.04706063, y: 0.31611046, z: 0.113614306}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1146187278021002395}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5138711832782617187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8454235935867663426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc6f06cd85c7ca7488caf15564cf6ded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MuseuAR.HotspotPoint
+  title: Frisos florais
+  kind: 1
+  description: "As faixas decorativas com flores e folhas, chamadas frisos, repetem o mesmo desenho ao redor da pe\xE7a. Para manter o padr\xE3o regular, o artes\xE3o marcava a superf\xEDcie antes de pintar."
+  narration: {fileID: 0}
+  labelOffset: {x: -0.13, y: 0.05, z: 0}
+  relatedItem: {fileID: 0}
+--- !u!1001 &903717901080459386
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1146187278021002395}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: e33d373f0ff33c045a67be39b35a70d6, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.00028129868
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e33d373f0ff33c045a67be39b35a70d6, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.00028129868
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e33d373f0ff33c045a67be39b35a70d6, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.00028129868
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e33d373f0ff33c045a67be39b35a70d6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.00017556548
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e33d373f0ff33c045a67be39b35a70d6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.000000014901161
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e33d373f0ff33c045a67be39b35a70d6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e33d373f0ff33c045a67be39b35a70d6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e33d373f0ff33c045a67be39b35a70d6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e33d373f0ff33c045a67be39b35a70d6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e33d373f0ff33c045a67be39b35a70d6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e33d373f0ff33c045a67be39b35a70d6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e33d373f0ff33c045a67be39b35a70d6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e33d373f0ff33c045a67be39b35a70d6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e33d373f0ff33c045a67be39b35a70d6, type: 3}
+      propertyPath: m_Name
+      value: Modelo
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e33d373f0ff33c045a67be39b35a70d6, type: 3}
+--- !u!4 &792668555206369169 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e33d373f0ff33c045a67be39b35a70d6, type: 3}
+  m_PrefabInstance: {fileID: 903717901080459386}
+  m_PrefabAsset: {fileID: 0}

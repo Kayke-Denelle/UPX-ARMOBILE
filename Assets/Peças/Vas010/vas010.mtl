@@ -1,0 +1,38 @@
+# 
+# Wavefront material file
+# Converted by the DEEP Exploration  Deep Exploration 5 5.0.5.1846 Release
+# Right Hemisphere, LTD
+# http://www.righthemisphere.com/
+# 
+
+newmtl vas010_texture__
+Ka 0 0 0
+Kd 1 1 1
+Ks 0.784314 0.784314 0.784314
+illum 2
+Ns 256
+map_Kd VAS01001.jpg
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl vas010_ground
+Ka 0 0 0
+Kd 1 1 1
+Ks 0.784314 0.784314 0.784314
+illum 2
+Ns 4
+map_Kd VAS01002.jpg
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 

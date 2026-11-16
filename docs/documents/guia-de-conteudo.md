@@ -12,6 +12,7 @@ Nenhuma etapa exige programação: tudo é feito por *assets* e pelos menus **Mu
 | **Museu AR › 1. Criar cena do museu** | Cria `Assets/MuseuAR/Scenes/MuseuAR.unity` a partir do template AR (só é necessário se a cena não existir). |
 | **Museu AR › 3. Gerar placas com QR code** | Gera uma placa por peça do catálogo e registra na biblioteca de imagens AR. |
 | **Museu AR › 4. Gerar APK (Android)** | Gera `Builds/MuseuAR.apk`. |
+| **Museu AR › 5. Exportar placas para impressão (A4)** | Gera uma folha A4 por peça em `docs/placas/` (nome, instruções e placa com 15 cm). |
 | **Museu AR › Montar cena base (na cena aberta)** | Monta sistemas e interface numa cena que já tenha AR Session + XR Origin. |
 | **Museu AR › Reconstruir interface (na cena aberta)** | Recria a interface depois de mudar o layout em `MuseuARSceneBuilder.BuildUI`. |
 
@@ -24,11 +25,20 @@ Cada peça fica numa pasta própria dentro de **`Assets/Peças/`**:
 ```text
 Assets/Peças/
 ├── Vaso/            vase_01.obj · Vaso_CeramicaVidrada.mat · Vaso.prefab · Vaso.asset · placa-vaso.png
-└── Ancient_Paper/   paper.3DS + texturas · PapelAntigo.mat · PapelAntigo.prefab · PapelAntigo.asset · placa-papel.png
+├── Ancient_Paper/   paper.3DS + texturas · PapelAntigo.mat · PapelAntigo.prefab · PapelAntigo.asset · placa-papel.png
+├── VasoBarro/       vase.obj · VasoBarro.mat · VasoBarro.prefab · VasoBarro.asset · placa-vaso-barro.png
+├── Vas008/          vas008.obj + .mtl + texturas · Urna.prefab · Urna.asset · placa-urna.png
+├── Vas010/          vas010.obj + .mtl + texturas · Fruteira.prefab · Fruteira.asset · placa-fruteira.png
+└── Faca/            Knife.obj · texture.jpg · Faca.mat · ParDeFacas.prefab · ParDeFacas.asset · placa-facas.png
 ```
 
+Os arquivos baixados (`.zip`, `.rar`, `.blend`) ficam em **`ModelosOriginais/`**, na raiz do projeto, fora da pasta `Assets` (a Unity não tenta importá-los).
+
 1. **Modelo 3D:** importe a peça em **`.fbx` ou `.obj`** (fotogrametria com Polycam/RealityScan, Sketchfab com licença ou Blender).
-   - **Não funcionam direto:** `.max` (precisa do 3ds Max; exporte como `.fbx`), `.igs`/`.step` (CAD; converta no Rhino/FreeCAD) e `.glb` (precisa do pacote *glTFast*).
+   - Se vier compactado (`.zip`, `.rar`), extraia e copie para a pasta da peça só o modelo, o `.mtl` e as texturas.
+   - **Não funcionam direto:** `.max` (precisa do 3ds Max; exporte como `.fbx`), `.blend` (precisa do Blender instalado), `.igs`/`.step` (CAD; converta no Rhino/FreeCAD) e `.glb` (precisa do pacote *glTFast*).
+   - Se o `.mtl` apontar para pastas de outro computador (ex.: `C:\Users\...`), a textura não carrega: crie um material e aplique a textura à mão.
+   - Modelos exportados "deitados" (eixo Z para cima, comum no 3ds Max) precisam de rotação −90° em X no prefab.
    - Crie um **prefab** com a origem na **base da peça** e o eixo **+Z** virado para a frente.
    - Mantenha o modelo leve: **menos de 50 mil triângulos** e texturas de até 2K.
 2. **Hotspots:** dentro do prefab, crie objetos vazios nos pontos de interesse e adicione o componente **`HotspotPoint`**:
@@ -52,7 +62,7 @@ Assets/Peças/
 Cada placa tem um **QR code no centro** e uma **moldura ilustrada**:
 
 - **A moldura** é o que o app rastreia (Image Tracking). O ARCore precisa de muitos cantos e contraste; um QR sozinho tende a ser rastreado de forma instável.
-- **O QR** é lido pela câmera comum do celular. Hoje contém um identificador provisório (`MUSEUAR:<id da peça>`).
+- **O QR** é lido pela câmera comum do celular e abre a página de download do app (`https://github.com/Kayke-Denelle/UPX-ARMOBILE/releases/latest#<id da peça>`).
 - **Para trocar o conteúdo do QR:** em `CatalogoDoMuseu`, altere o campo **Qr Content** (ex.: `https://meumuseu.org/app` ou `https://meumuseu.org/pecas/{id}`; `{id}` é trocado pelo id de cada peça). Depois rode o menu 3, gere o APK de novo e reimprima.
 - A moldura de cada peça é sempre a mesma; ao gerar de novo, só o QR muda.
 - **Impressão:** 15 cm de largura, papel fosco, placa inteira (com a moldura). O tamanho está registrado na biblioteca e define a escala da peça.
@@ -61,6 +71,10 @@ Cada placa tem um **QR code no centro** e uma **moldura ilustrada**:
 |---|---|
 | Vaso de gargalo longo | `Assets/Peças/Vaso/placa-vaso.png` |
 | Documento antigo | `Assets/Peças/Ancient_Paper/placa-papel.png` |
+| Vaso de barro | `Assets/Peças/VasoBarro/placa-vaso-barro.png` |
+| Urna com frisos florais | `Assets/Peças/Vas008/placa-urna.png` |
+| Fruteira de pedra | `Assets/Peças/Vas010/placa-fruteira.png` |
+| Par de facas | `Assets/Peças/Faca/placa-facas.png` |
 
 ---
 

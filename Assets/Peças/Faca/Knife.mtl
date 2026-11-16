@@ -1,0 +1,60 @@
+# Materiais do par de facas (corrigido para o Museu AR).
+# O arquivo original apontava para texturas em outro computador (C:\Users\Gabriel Ferreira\...).
+# - Partes que usavam texture.jpg (incluída): mantêm a textura.
+# - Partes que usavam wood.jpg, iron.jpg, iron2.jpg, gold.jpg e madeira.jpg (não incluídas):
+#   cores sólidas próximas do original (madeira, aço e latão).
+
+newmtl Knife
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+illum 1
+map_Kd texture.jpg
+
+newmtl madeira
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+illum 1
+map_Kd texture.jpg
+
+newmtl metal
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+illum 1
+map_Kd texture.jpg
+
+newmtl metal2
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+illum 1
+map_Kd texture.jpg
+
+newmtl metal3
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+illum 1
+map_Kd texture.jpg
+
+newmtl madeira_NONE
+Kd 0.560000 0.330000 0.180000
+Ks 0.000000 0.000000 0.000000
+illum 1
+
+newmtl metal3_madeira.jpg
+Kd 0.560000 0.330000 0.180000
+Ks 0.000000 0.000000 0.000000
+illum 1
+
+newmtl metal_NONE
+Kd 0.700000 0.720000 0.750000
+Ks 0.000000 0.000000 0.000000
+illum 1
+
+newmtl metal2_NONE
+Kd 0.620000 0.640000 0.670000
+Ks 0.000000 0.000000 0.000000
+illum 1
+
+newmtl metal3_NONE
+Kd 0.780000 0.600000 0.200000
+Ks 0.000000 0.000000 0.000000
+illum 1

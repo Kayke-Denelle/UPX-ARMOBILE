@@ -1,5 +1,6 @@
 using System.IO;
 using System.Text;
+using TMPro;
 using UnityEditor;
 using UnityEditor.XR.ARSubsystems;
 using UnityEngine;
@@ -81,6 +82,137 @@ namespace MuseuAR.EditorTools
             }
             string folder = Path.GetDirectoryName(AssetDatabase.GetAssetPath(item)).Replace('\\', '/');
             return $"{folder}/{item.referenceImageName}.png";
+        }
+
+        // ================= Folhas para impressão (A4) =================
+
+        const string PrintFolder = "docs/placas";
+        const int A4Width = 1654, A4Height = 2339;            // A4 a 200 DPI
+        const float PixelsPerCm = 200f / 2.54f;
+
+        [MenuItem("Museu AR/5. Exportar placas para impressão (A4)", priority = -6)]
+        static void ExportPrintSheetsMenu()
+        {
+            string report = ExportPrintSheets();
+            if (report != null)
+                EditorUtility.DisplayDialog("Museu AR", report + "\nImprima em A4, tamanho real (100%, sem \"ajustar à página\").", "OK");
+        }
+
+        /// <summary>
+        /// Uma folha A4 (PNG, 200 DPI) por peça: nome, instrução, placa com 15 cm e linha de corte.
+        /// Salva em docs/placas/ (fora da Unity, para ir ao GitHub e ser impressa direto).
+        /// </summary>
+        public static string ExportPrintSheets()
+        {
+            var catalog = AssetDatabase.LoadAssetAtPath<MuseumCatalog>(CatalogPath);
+            var library = AssetDatabase.LoadAssetAtPath<XRReferenceImageLibrary>(LibraryPath);
+            if (!catalog || !library) return null;
+            Directory.CreateDirectory(PrintFolder);
+
+            var report = new StringBuilder("Folhas para impressão:\n");
+            foreach (var item in catalog.items)
+            {
+                if (!item) continue;
+                Texture2D plate = null;
+                for (int i = 0; i < library.count; i++)
+                    if (library[i].name == item.referenceImageName) plate = library[i].texture;
+                if (!plate) { report.AppendLine($"• {item.displayName}: sem placa (rode o menu 3)"); continue; }
+
+                string path = $"{PrintFolder}/placa-{item.id}.png";
+                RenderSheet(item.displayName, plate, catalog.museumName, path);
+                report.AppendLine($"• {item.displayName}: {path}");
+            }
+            Debug.Log("[Museu AR] " + report);
+            return report.ToString();
+        }
+
+        static void RenderSheet(string title, Texture2D plate, string museum, string path)
+        {
+            var scene = UnityEditor.SceneManagement.EditorSceneManager.NewPreviewScene();
+            var camGO = new GameObject("Camera");
+            UnityEditor.SceneManagement.EditorSceneManager.MoveGameObjectToScene(camGO, scene);
+            var cam = camGO.AddComponent<Camera>();
+            cam.scene = scene;
+            cam.clearFlags = CameraClearFlags.SolidColor;
+            cam.backgroundColor = Color.white;
+            cam.orthographic = true;
+            var rt = new RenderTexture(A4Width, A4Height, 24, RenderTextureFormat.ARGB32) { antiAliasing = 4 };
+            cam.targetTexture = rt;
+
+            var canvasGO = new GameObject("Folha", typeof(RectTransform), typeof(Canvas));
+            UnityEditor.SceneManagement.EditorSceneManager.MoveGameObjectToScene(canvasGO, scene);
+            var canvas = canvasGO.GetComponent<Canvas>();
+            canvas.renderMode = RenderMode.ScreenSpaceCamera;
+            canvas.worldCamera = cam;
+            canvas.planeDistance = 1f;
+            var root = (RectTransform)canvasGO.transform;
+
+            Color ink = new Color(0.11f, 0.12f, 0.15f), gray = new Color(0.42f, 0.45f, 0.5f), line = new Color(0.75f, 0.77f, 0.8f);
+            float plateSize = PlateSizeMeters * 100f * PixelsPerCm;   // 15 cm em pixels
+            float plateTop = 430f;
+
+            Text(root, (museum ?? "Museu AR").ToUpperInvariant(), 30, gray, FontStyles.Bold, 140, 50, 10);
+            Text(root, title, 76, ink, FontStyles.Bold, 200, 110, 0);
+            Text(root, "Aponte a câmera do app Museu AR para a placa abaixo", 34, gray, FontStyles.Normal, 320, 60, 0);
+
+            // Linha de corte (1 mm fora da placa) + placa em tamanho real
+            Box(root, plateTop - 8, plateSize + 16, line);
+            Box(root, plateTop - 5, plateSize + 10, Color.white);
+            var plateImage = new GameObject("Placa", typeof(RectTransform), typeof(UnityEngine.UI.RawImage));
+            plateImage.transform.SetParent(root, false);
+            plateImage.GetComponent<UnityEngine.UI.RawImage>().texture = plate;
+            TopCenter((RectTransform)plateImage.transform, plateTop, plateSize, plateSize);
+
+            float below = plateTop + plateSize + 60f;
+            Text(root, "Recorte na linha cinza. A placa deve medir 15 cm de largura.", 30, gray, FontStyles.Normal, below, 50, 0);
+            Text(root, "Ainda não tem o app? Leia o QR code com a câmera do celular para baixar.", 30, gray, FontStyles.Normal, below + 60, 50, 0);
+            Text(root, "Imprima em A4, tamanho real (100%), em papel fosco.", 26, line * 0.8f, FontStyles.Italic, A4Height - 120, 40, 0);
+
+            Canvas.ForceUpdateCanvases();
+            foreach (var tmp in canvasGO.GetComponentsInChildren<TMPro.TextMeshProUGUI>()) tmp.ForceMeshUpdate();
+            cam.Render();
+            RenderTexture.active = rt;
+            var tex = new Texture2D(A4Width, A4Height, TextureFormat.RGB24, false);
+            tex.ReadPixels(new Rect(0, 0, A4Width, A4Height), 0, 0);
+            tex.Apply();
+            RenderTexture.active = null;
+            cam.targetTexture = null;
+            File.WriteAllBytes(path, tex.EncodeToPNG());
+            Object.DestroyImmediate(tex);
+            rt.Release();
+            UnityEditor.SceneManagement.EditorSceneManager.ClosePreviewScene(scene);
+        }
+
+        static void Text(RectTransform parent, string text, float size, Color color, TMPro.FontStyles style, float top, float height, float spacing)
+        {
+            var go = new GameObject("Texto", typeof(RectTransform));
+            go.transform.SetParent(parent, false);
+            var tmp = go.AddComponent<TMPro.TextMeshProUGUI>();
+            tmp.text = text;
+            tmp.fontSize = size;
+            tmp.color = color;
+            tmp.fontStyle = style;
+            tmp.characterSpacing = spacing;
+            tmp.alignment = TMPro.TextAlignmentOptions.Center;
+            tmp.textWrappingMode = TMPro.TextWrappingModes.Normal;
+            TopCenter((RectTransform)go.transform, top, A4Width - 200, height);
+        }
+
+        static void Box(RectTransform parent, float top, float size, Color color)
+        {
+            var go = new GameObject("Moldura", typeof(RectTransform), typeof(UnityEngine.UI.Image));
+            go.transform.SetParent(parent, false);
+            go.GetComponent<UnityEngine.UI.Image>().color = color;
+            TopCenter((RectTransform)go.transform, top, size, size);
+        }
+
+        /// <summary>Posiciona a partir do topo da folha, centralizado na horizontal (em pixels da folha).</summary>
+        static void TopCenter(RectTransform rect, float top, float width, float height)
+        {
+            rect.anchorMin = rect.anchorMax = new Vector2(0.5f, 1f);
+            rect.pivot = new Vector2(0.5f, 1f);
+            rect.anchoredPosition = new Vector2(0, -top);
+            rect.sizeDelta = new Vector2(width, height);
         }
 
         // ================= Desenho =================

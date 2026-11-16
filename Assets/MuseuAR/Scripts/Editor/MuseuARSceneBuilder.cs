@@ -20,10 +20,11 @@ namespace MuseuAR.EditorTools
     {
         const string DataFolder = "Assets/MuseuAR/Data";
 
-        static readonly Color PanelColor = new Color(0.07f, 0.07f, 0.09f, 0.9f);
-        static readonly Color ButtonColor = new Color(0.18f, 0.18f, 0.22f, 0.95f);
-        static readonly Color AccentColor = new Color(0.95f, 0.62f, 0.1f, 1f);
-        static readonly Color MutedText = new Color(0.8f, 0.8f, 0.85f, 1f);
+        // Mesma paleta fosca da tela inicial (StartScreenArt)
+        static readonly Color PanelColor = WithAlpha(StartScreenArt.BackgroundTop, 0.94f);
+        static readonly Color ButtonColor = StartScreenArt.Outline;
+        static readonly Color AccentColor = StartScreenArt.Sand;
+        static readonly Color MutedText = StartScreenArt.TextMuted;
 
         public const string MuseumScenePath = "Assets/MuseuAR/Scenes/MuseuAR.unity";
         const string TemplateScenePath = "Assets/Scenes/SampleScene.unity";
@@ -245,15 +246,19 @@ namespace MuseuAR.EditorTools
             subtitle.color = MutedText;
             subtitle.overflowMode = TextOverflowModes.Ellipsis;
             StretchTop(subtitle.rectTransform, 72, 36, 32, 32);
+            // Botões secundários: grafite, ícone + texto
             var infoBtn = MakeButton("BtnSobre", header.transform, "Sobre a peça", ButtonColor, 24, 28);
-            Place((RectTransform)infoBtn.transform, new Vector2(0f, 1f), new Vector2(24, -124), new Vector2(200, 56));
+            WithIcon(infoBtn, UiIcons.Info(), 26);
+            Place((RectTransform)infoBtn.transform, new Vector2(0f, 1f), new Vector2(24, -124), new Vector2(232, 56));
             var pointsBtn = MakeButton("BtnPontos", header.transform, "Pontos", ButtonColor, 24, 28);
-            Place((RectTransform)pointsBtn.transform, new Vector2(0f, 1f), new Vector2(236, -124), new Vector2(140, 56));
+            WithIcon(pointsBtn, UiIcons.Points(), 26);
+            Place((RectTransform)pointsBtn.transform, new Vector2(0f, 1f), new Vector2(268, -124), new Vector2(164, 56));
             var resetBtn = MakeButton("BtnResetar", header.transform, "Resetar", ButtonColor, 24, 28);
-            Place((RectTransform)resetBtn.transform, new Vector2(0f, 1f), new Vector2(388, -124), new Vector2(140, 56));
+            WithIcon(resetBtn, UiIcons.Reset(), 26);
+            Place((RectTransform)resetBtn.transform, new Vector2(0f, 1f), new Vector2(444, -124), new Vector2(172, 56));
             var progress = Label("Progresso", header.transform, "Descobertas: 0/0", 24, FontStyles.Bold, TextAlignmentOptions.MidlineRight);
             progress.color = AccentColor;
-            Place(progress.rectTransform, new Vector2(1f, 1f), new Vector2(-32, -124), new Vector2(440, 56));
+            Place(progress.rectTransform, new Vector2(1f, 1f), new Vector2(-32, -124), new Vector2(360, 56));
 
             // ---------- Painel de detalhes (embaixo) ----------
             var detail = Panel("PainelDetalhes", safe, PanelColor, 28);
@@ -265,7 +270,8 @@ namespace MuseuAR.EditorTools
             var dTitle = Label("Titulo", detail.transform, "Título da curiosidade", 36, FontStyles.Bold);
             dTitle.overflowMode = TextOverflowModes.Ellipsis;
             StretchTop(dTitle.rectTransform, 56, 52, 32, 120);
-            var closeBtn = MakeButton("BtnFechar", detail.transform, "×", ButtonColor, 44, 36);
+            var closeBtn = MakeButton("BtnFechar", detail.transform, "", ButtonColor, 44, 36);
+            WithIcon(closeBtn, UiIcons.Close(), 28);
             Place((RectTransform)closeBtn.transform, new Vector2(1f, 1f), new Vector2(-20, -20), new Vector2(72, 72));
             var dScroll = MakeScroll(detail.transform, out var dContent, 8);
             var dScrollRect = (RectTransform)dScroll.transform;
@@ -279,12 +285,16 @@ namespace MuseuAR.EditorTools
             relatedHeader.color = AccentColor;
             relatedHeader.margin = new Vector4(0, 16, 0, 0);
             var relatedTemplate = MakeButton("RelacionadaTemplate", dContent, "Ver em 3D", ButtonColor, 26, 32);
+            WithIcon(relatedTemplate, UiIcons.Cube(), 32, 24);
+            relatedTemplate.GetComponentInChildren<TextMeshProUGUI>().fontStyle = FontStyles.Normal;
             var relatedLayout = relatedTemplate.gameObject.AddComponent<LayoutElement>();
             relatedLayout.minHeight = 72;
             relatedLayout.preferredHeight = 72;
+            // Botão principal: areia sólida, como o "Iniciar"
             var audioBtn = MakeButton("BtnAudio", detail.transform, "Ouvir áudio", AccentColor, 24, 32);
-            audioBtn.GetComponentInChildren<TextMeshProUGUI>().color = new Color(0.1f, 0.08f, 0.05f);
-            Place((RectTransform)audioBtn.transform, new Vector2(0f, 0f), new Vector2(24, 24), new Vector2(240, 64));
+            var audioIcon = WithIcon(audioBtn, UiIcons.Play(), 24, 24);
+            SetContentColor(audioBtn, StartScreenArt.Ink);
+            Place((RectTransform)audioBtn.transform, new Vector2(0f, 0f), new Vector2(24, 24), new Vector2(248, 64));
             var barBg = Panel("BarraAudio", detail.transform, new Color(1, 1, 1, 0.15f), 4);
             barBg.raycastTarget = false;
             barBg.rectTransform.anchorMin = new Vector2(0f, 0f);
@@ -305,7 +315,8 @@ namespace MuseuAR.EditorTools
             var cTitle = Label("Titulo", catalogPanel.transform, "Acervo digital", 34, FontStyles.Bold);
             cTitle.overflowMode = TextOverflowModes.Ellipsis;
             StretchTop(cTitle.rectTransform, 28, 52, 32, 120);
-            var cClose = MakeButton("BtnFechar", catalogPanel.transform, "×", ButtonColor, 44, 36);
+            var cClose = MakeButton("BtnFechar", catalogPanel.transform, "", ButtonColor, 44, 36);
+            WithIcon(cClose, UiIcons.Close(), 28);
             Place((RectTransform)cClose.transform, new Vector2(1f, 1f), new Vector2(-20, -20), new Vector2(72, 72));
             var cScroll = MakeScroll(catalogPanel.transform, out var cContent, 12);
             Region((RectTransform)cScroll.transform, 0, 0, 1, 1, 8, 0);
@@ -323,9 +334,15 @@ namespace MuseuAR.EditorTools
             templateLabel.alignment = TextAlignmentOptions.MidlineLeft;
             templateLabel.fontStyle = FontStyles.Normal;
             templateLabel.rectTransform.offsetMin = new Vector2(128f, 6f);
+            templateLabel.rectTransform.offsetMax = new Vector2(-64f, -6f);
+            var chevron = Panel("Seta", template.transform, MutedText);
+            chevron.sprite = UiIcons.Chevron();
+            chevron.raycastTarget = false;
+            chevron.preserveAspect = true;
+            Place(chevron.rectTransform, new Vector2(1f, 0.5f), new Vector2(-24, 0), new Vector2(26, 26));
 
             // ---------- Dica (flutua abaixo da área do cabeçalho) ----------
-            var hint = Panel("Dica", safe, new Color(0f, 0f, 0f, 0.7f), 40);
+            var hint = Panel("Dica", safe, WithAlpha(StartScreenArt.BackgroundBottom, 0.88f), 40);
             hint.raycastTarget = false;
             Place(hint.rectTransform, new Vector2(0.5f, 1f), new Vector2(0, -244), new Vector2(920, 96));
             var hintText = Label("Texto", hint.transform, "Aponte a câmera para o QR code", 26, FontStyles.Normal, TextAlignmentOptions.Center);
@@ -338,16 +355,18 @@ namespace MuseuAR.EditorTools
             var modeBar = Panel("BarraModos", safe, PanelColor, ModeBarHeight * 0.5f);
             Place(modeBar.rectTransform, new Vector2(0.5f, 0f), new Vector2(0, Margin), new Vector2(640, ModeBarHeight));
             var visitBtn = MakeButton("BtnModoVisita", modeBar.transform, "Visita", ButtonColor, 28, 36);
+            WithIcon(visitBtn, UiIcons.Scan(), 30, 88);
             Region((RectTransform)visitBtn.transform, 0, 0, 0.5f, 1, 0, 0);
             ((RectTransform)visitBtn.transform).offsetMin = new Vector2(8, 8);
             ((RectTransform)visitBtn.transform).offsetMax = new Vector2(-4, -8);
             var collectionBtn = MakeButton("BtnModoAcervo", modeBar.transform, "Acervo", ButtonColor, 28, 36);
+            WithIcon(collectionBtn, UiIcons.Grid(), 28, 80);
             Region((RectTransform)collectionBtn.transform, 0.5f, 0, 1, 1, 0, 0);
             ((RectTransform)collectionBtn.transform).offsetMin = new Vector2(4, 8);
             ((RectTransform)collectionBtn.transform).offsetMax = new Vector2(-8, -8);
 
             // ---------- Tela inicial (por cima de tudo) ----------
-            var start = BuildStartScreen(canvasGO.transform, out var startButton, out var startTitle, out var startThumb);
+            var start = BuildStartScreen(canvasGO.transform, out var startButton, out var startTitle, out var startEmblem);
 
             // ---------- Scripts de UI + ligações ----------
             var info = canvasGO.AddComponent<InfoPanelUI>();
@@ -365,6 +384,9 @@ namespace MuseuAR.EditorTools
             Wire(info, "detailScroll", dScroll);
             Wire(info, "audioButton", audioBtn);
             Wire(info, "audioButtonLabel", audioBtn.GetComponentInChildren<TextMeshProUGUI>());
+            Wire(info, "audioButtonIcon", audioIcon);
+            Wire(info, "playIcon", UiIcons.Play());
+            Wire(info, "pauseIcon", UiIcons.Pause());
             Wire(info, "audioProgressFill", barFill.rectTransform);
             Wire(info, "closeButton", closeBtn);
             Wire(info, "relatedHeaderText", relatedHeader);
@@ -385,13 +407,17 @@ namespace MuseuAR.EditorTools
             Wire(modes, "hintText", hintText);
             Wire(modes, "visitModeButton", visitBtn);
             Wire(modes, "collectionModeButton", collectionBtn);
+            WireColor(modes, "selectedButtonColor", AccentColor);
+            WireColor(modes, "normalButtonColor", WithAlpha(ButtonColor, 0f));
+            WireColor(modes, "selectedTextColor", StartScreenArt.Ink);
+            WireColor(modes, "normalTextColor", StartScreenArt.TextMuted);
 
             var startUI = canvasGO.AddComponent<StartScreenUI>();
             Wire(startUI, "root", start);
             Wire(startUI, "startButton", startButton);
             Wire(startUI, "catalog", catalog);
             Wire(startUI, "titleText", startTitle);
-            Wire(startUI, "thumbnailTemplate", startThumb);
+            Wire(startUI, "floatTarget", startEmblem);
             Wire(modes, "startScreen", startUI);
 
             if (desktop) Wire(desktop, "infoPanel", info);
@@ -404,76 +430,94 @@ namespace MuseuAR.EditorTools
             "Toque nos pontos para descobrir curiosidades",
         };
 
-        /// <summary>Tela cheia com nome do museu, miniaturas das peças, passos de uso e botão "Iniciar".</summary>
-        static GameObject BuildStartScreen(Transform canvas, out Button startButton, out TextMeshProUGUI title, out GameObject thumbTemplate)
+        /// <summary>
+        /// Tela cheia, visual fosco e discreto: fundo em degradê suave, emblema "AR", nome do museu,
+        /// passos de uso em cartões e botão "Iniciar" em cor sólida, sem brilho. Cores em StartScreenArt.
+        /// </summary>
+        static GameObject BuildStartScreen(Transform canvas, out Button startButton, out TextMeshProUGUI title, out RectTransform emblem)
         {
-            var background = Panel("TelaInicial", canvas, new Color(0.06f, 0.06f, 0.08f, 1f));
-            Region(background.rectTransform, 0, 0, 1, 1, 0, 0);
-            background.gameObject.AddComponent<CanvasGroup>();
+            var root = NewRect("TelaInicial", canvas);
+            Region(root, 0, 0, 1, 1, 0, 0);
+            root.gameObject.AddComponent<CanvasGroup>();
 
-            var content = NewRect("Conteudo", background.transform);
+            // Fundo: cobre a tela inteira mantendo a proporção 9:16
+            var backgroundMask = NewRect("Fundo", root);
+            Region(backgroundMask, 0, 0, 1, 1, 0, 0);
+            backgroundMask.gameObject.AddComponent<RectMask2D>();
+            var background = Panel("Degrade", backgroundMask, Color.white);
+            background.sprite = StartScreenArt.Background();
+            background.raycastTarget = true;   // bloqueia toques na RA por trás da tela
+            var fit = background.gameObject.AddComponent<AspectRatioFitter>();
+            fit.aspectMode = AspectRatioFitter.AspectMode.EnvelopeParent;
+            fit.aspectRatio = 720f / 1280f;
+
+            var content = NewRect("Conteudo", root);
             Region(content, 0, 0, 1, 1, 0, 0);
             content.gameObject.AddComponent<SafeAreaFitter>();
 
-            var eyebrow = Label("Chamada", content, "Realidade aumentada", 26, FontStyles.Bold | FontStyles.UpperCase, TextAlignmentOptions.Center);
-            eyebrow.color = AccentColor;
-            eyebrow.characterSpacing = 8;
-            StretchTop(eyebrow.rectTransform, 220, 40, 80, 80);
+            // Emblema: círculo fosco com contorno fino e "AR"
+            emblem = NewRect("Emblema", content);
+            Place(emblem, new Vector2(0.5f, 1f), new Vector2(0, -240), new Vector2(240, 240));
+            var outline = Panel("Contorno", emblem, StartScreenArt.Outline, 120);
+            outline.raycastTarget = false;
+            Region(outline.rectTransform, 0, 0, 1, 1, 0, 0);
+            var disc = Panel("Circulo", emblem, StartScreenArt.Surface, 116);
+            disc.raycastTarget = false;
+            Region(disc.rectTransform, 0, 0, 1, 1, 4, 4);
+            var mark = Label("Texto", disc.transform, "AR", 84, FontStyles.Bold, TextAlignmentOptions.Center);
+            mark.color = StartScreenArt.Sand;
+            Region(mark.rectTransform, 0, 0, 1, 1, 0, 0);
+
+            var eyebrow = Label("Chamada", content, "Realidade aumentada", 24, FontStyles.Bold | FontStyles.UpperCase, TextAlignmentOptions.Center);
+            eyebrow.color = StartScreenArt.TextMuted;
+            eyebrow.characterSpacing = 10;
+            StretchTop(eyebrow.rectTransform, 584, 40, 80, 80);
 
             title = Label("Titulo", content, "Museu AR", 96, FontStyles.Bold, TextAlignmentOptions.Center);
+            title.color = StartScreenArt.Text;
             title.enableAutoSizing = true;
             title.fontSizeMin = 56;
             title.fontSizeMax = 96;
-            StretchTop(title.rectTransform, 268, 124, 60, 60);
+            StretchTop(title.rectTransform, 628, 124, 60, 60);
 
-            var subtitle = Label("Subtitulo", content, "Veja em 3D as peças que não podem ser tocadas", 34, FontStyles.Normal, TextAlignmentOptions.Center);
-            subtitle.color = MutedText;
-            StretchTop(subtitle.rectTransform, 400, 100, 120, 120);
+            var subtitle = Label("Subtitulo", content, "Veja em 3D as peças que não podem ser tocadas", 32, FontStyles.Normal, TextAlignmentOptions.Center);
+            subtitle.color = StartScreenArt.TextMuted;
+            StretchTop(subtitle.rectTransform, 760, 100, 120, 120);
 
-            // Miniaturas das peças (preenchidas pelo StartScreenUI a partir do catálogo)
-            var row = NewRect("Miniaturas", content);
-            StretchTop(row, 548, 200, 40, 40);
-            var rowLayout = row.gameObject.AddComponent<HorizontalLayoutGroup>();
-            rowLayout.childAlignment = TextAnchor.MiddleCenter;
-            rowLayout.spacing = 24;
-            rowLayout.childControlWidth = false;
-            rowLayout.childControlHeight = false;
-            rowLayout.childForceExpandWidth = false;
-            rowLayout.childForceExpandHeight = false;
-            var thumbFrame = Panel("MiniaturaTemplate", row, ButtonColor, 32);
-            thumbFrame.rectTransform.sizeDelta = new Vector2(200, 200);
-            thumbFrame.gameObject.AddComponent<Mask>().showMaskGraphic = true;
-            var photo = Panel("Foto", thumbFrame.transform, Color.white);
-            photo.raycastTarget = false;
-            photo.preserveAspect = true;
-            Region(photo.rectTransform, 0, 0, 1, 1, 0, 0);
-            thumbTemplate = thumbFrame.gameObject;
-
-            // Como usar: 3 passos numerados
+            // Como usar: 3 passos em cartões discretos, números em tons foscos
+            Color[] badgeColors = { StartScreenArt.Sage, StartScreenArt.Rose, StartScreenArt.Sand };
             for (int i = 0; i < StartSteps.Length; i++)
             {
-                var card = Panel($"Passo{i + 1}", content, new Color(1f, 1f, 1f, 0.06f), 28);
-                Place(card.rectTransform, new Vector2(0.5f, 1f), new Vector2(0, -(820 + i * 144)), new Vector2(CardWidth - 48, 124));
-                var badge = Panel("Numero", card.transform, AccentColor, 36);
-                Place(badge.rectTransform, new Vector2(0f, 0.5f), new Vector2(26, 0), new Vector2(72, 72));
-                var number = Label("Texto", badge.transform, (i + 1).ToString(), 36, FontStyles.Bold, TextAlignmentOptions.Center);
-                number.color = new Color(0.1f, 0.08f, 0.05f);
+                var card = Panel($"Passo{i + 1}", content, StartScreenArt.Surface, 34);
+                Place(card.rectTransform, new Vector2(0.5f, 1f), new Vector2(0, -(960 + i * 156)), new Vector2(CardWidth - 64, 130));
+                var badge = Panel("Numero", card.transform, badgeColors[i], 38);
+                Place(badge.rectTransform, new Vector2(0f, 0.5f), new Vector2(28, 0), new Vector2(76, 76));
+                var number = Label("Texto", badge.transform, (i + 1).ToString(), 38, FontStyles.Bold, TextAlignmentOptions.Center);
+                number.color = StartScreenArt.Ink;
                 Region(number.rectTransform, 0, 0, 1, 1, 0, 0);
                 var text = Label("Texto", card.transform, StartSteps[i], 30);
+                text.color = StartScreenArt.Text;
                 Region(text.rectTransform, 0, 0, 1, 1, 0, 0);
-                text.rectTransform.offsetMin = new Vector2(124, 8);
-                text.rectTransform.offsetMax = new Vector2(-28, -8);
+                text.rectTransform.offsetMin = new Vector2(132, 8);
+                text.rectTransform.offsetMax = new Vector2(-32, -8);
             }
 
-            startButton = MakeButton("BtnIniciar", content, "Iniciar", AccentColor, 44, 64);
-            startButton.GetComponentInChildren<TextMeshProUGUI>().color = new Color(0.1f, 0.08f, 0.05f);
-            Place((RectTransform)startButton.transform, new Vector2(0.5f, 0f), new Vector2(0, 150), new Vector2(640, 128));
+            // Botão "Iniciar": cor sólida fosca, sem brilho
+            startButton = MakeButton("BtnIniciar", content, "Iniciar", StartScreenArt.Sand, 42, 60);
+            var colors = startButton.colors;
+            colors.highlightedColor = Color.white;
+            colors.pressedColor = new Color(0.85f, 0.85f, 0.85f, 1f);
+            startButton.colors = colors;
+            var buttonLabel = startButton.GetComponentInChildren<TextMeshProUGUI>();
+            buttonLabel.color = StartScreenArt.Ink;
+            buttonLabel.characterSpacing = 2;
+            Place((RectTransform)startButton.transform, new Vector2(0.5f, 0f), new Vector2(0, 168), new Vector2(600, 120));
 
             var note = Label("Aviso", content, "Permita o acesso à câmera quando o app pedir.", 24, FontStyles.Normal, TextAlignmentOptions.Center);
-            note.color = MutedText;
-            Place(note.rectTransform, new Vector2(0.5f, 0f), new Vector2(0, 80), new Vector2(CardWidth, 44));
+            note.color = StartScreenArt.TextDim;
+            Place(note.rectTransform, new Vector2(0.5f, 0f), new Vector2(0, 84), new Vector2(CardWidth, 44));
 
-            return background.gameObject;
+            return root.gameObject;
         }
 
         // ================= Assets =================
@@ -587,6 +631,25 @@ namespace MuseuAR.EditorTools
             so.ApplyModifiedPropertiesWithoutUndo();
         }
 
+        static void WireColor(Object target, string field, Color value)
+        {
+            var so = new SerializedObject(target);
+            var prop = so.FindProperty(field);
+            if (prop == null)
+            {
+                Debug.LogWarning($"[Museu AR] Campo '{field}' não encontrado em {target.GetType().Name}.");
+                return;
+            }
+            prop.colorValue = value;
+            so.ApplyModifiedPropertiesWithoutUndo();
+        }
+
+        static Color WithAlpha(Color color, float alpha)
+        {
+            color.a = alpha;
+            return color;
+        }
+
         static void EnsureEventSystem()
         {
             var eventSystem = Object.FindAnyObjectByType<EventSystem>();
@@ -669,7 +732,7 @@ namespace MuseuAR.EditorTools
             tmp.fontSize = size;
             tmp.fontStyle = style;
             tmp.alignment = align;
-            tmp.color = Color.white;
+            tmp.color = StartScreenArt.Text;
             tmp.raycastTarget = false;
             return tmp;
         }
@@ -682,6 +745,38 @@ namespace MuseuAR.EditorTools
             var label = Label("Texto", image.transform, text, fontSize, FontStyles.Bold, TextAlignmentOptions.Center);
             Region(label.rectTransform, 0, 0, 1, 1, 12, 6);
             return button;
+        }
+
+        /// <summary>
+        /// Coloca um ícone no botão, na mesma cor do texto. Com texto: ícone à esquerda (a "pad" da borda)
+        /// e texto logo depois. Sem texto: ícone centralizado (botões redondos, como o de fechar).
+        /// </summary>
+        static Image WithIcon(Button button, Sprite icon, float size, float pad = 20f)
+        {
+            var label = button.GetComponentInChildren<TextMeshProUGUI>();
+            var image = Panel("Icone", button.transform, label.color);
+            image.sprite = icon;
+            image.raycastTarget = false;
+            image.preserveAspect = true;
+            if (string.IsNullOrEmpty(label.text))
+            {
+                Place(image.rectTransform, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(size, size));
+            }
+            else
+            {
+                Place(image.rectTransform, new Vector2(0f, 0.5f), new Vector2(pad, 0), new Vector2(size, size));
+                label.alignment = TextAlignmentOptions.MidlineLeft;
+                label.rectTransform.offsetMin = new Vector2(pad + size + 12f, label.rectTransform.offsetMin.y);
+            }
+            return image;
+        }
+
+        /// <summary>Cor do texto e do ícone de um botão.</summary>
+        static void SetContentColor(Button button, Color color)
+        {
+            foreach (var text in button.GetComponentsInChildren<TextMeshProUGUI>(true)) text.color = color;
+            var icon = button.transform.Find("Icone");
+            if (icon) icon.GetComponent<Image>().color = color;
         }
 
         static ScrollRect MakeScroll(Transform parent, out RectTransform content, float spacing)

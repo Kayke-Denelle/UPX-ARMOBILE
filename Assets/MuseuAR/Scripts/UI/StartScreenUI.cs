@@ -7,7 +7,7 @@ using UnityEngine.UI;
 namespace MuseuAR
 {
     /// <summary>
-    /// Tela inicial: nome do museu, miniaturas das peças, como usar e o botão "Iniciar".
+    /// Tela inicial: nome do museu, como usar e o botão "Iniciar" (emblema com leve flutuação).
     /// Enquanto ela está aberta, o AppModeController mantém a RA parada.
     /// </summary>
     public class StartScreenUI : MonoBehaviour
@@ -17,12 +17,15 @@ namespace MuseuAR
         [SerializeField] MuseumCatalog catalog;
         [Tooltip("Recebe o nome do museu (MuseumCatalog.museumName).")]
         [SerializeField] TMP_Text titleText;
-        [Tooltip("Modelo de miniatura: um clone por peça do catálogo. A imagem fica no filho \"Foto\".")]
-        [SerializeField] GameObject thumbnailTemplate;
-        [SerializeField] int maxThumbnails = 4;
         [SerializeField] float fadeDuration = 0.25f;
 
+        [Header("Animação")]
+        [Tooltip("Sobe e desce devagar (emblema). 0 = parado.")]
+        [SerializeField] RectTransform floatTarget;
+        [SerializeField] float floatDistance = 5f;
+
         Action onStart;
+        Vector2 floatBasePosition;
 
         public bool IsOpen => root && root.activeSelf;
 
@@ -30,7 +33,13 @@ namespace MuseuAR
         {
             if (startButton) startButton.onClick.AddListener(Begin);
             if (titleText && catalog && !string.IsNullOrWhiteSpace(catalog.museumName)) titleText.text = catalog.museumName;
-            BuildThumbnails();
+            if (floatTarget) floatBasePosition = floatTarget.anchoredPosition;
+        }
+
+        void Update()
+        {
+            if (!IsOpen || !floatTarget) return;
+            floatTarget.anchoredPosition = floatBasePosition + Vector2.up * (Mathf.Sin(Time.unscaledTime * 1.2f) * floatDistance);
         }
 
         public void Show(Action onStart)
@@ -66,26 +75,6 @@ namespace MuseuAR
                 group.interactable = true;
             }
             root.SetActive(false);
-        }
-
-        void BuildThumbnails()
-        {
-            if (!thumbnailTemplate) return;
-            thumbnailTemplate.SetActive(false);
-            if (!catalog) return;
-
-            int count = 0;
-            foreach (var item in catalog.items)
-            {
-                if (!item || !item.thumbnail || count >= maxThumbnails) continue;
-                var thumb = Instantiate(thumbnailTemplate, thumbnailTemplate.transform.parent);
-                thumb.name = $"Miniatura [{item.displayName}]";
-                var photo = thumb.transform.Find("Foto");
-                var image = photo ? photo.GetComponent<Image>() : null;
-                if (image) image.sprite = item.thumbnail;
-                thumb.SetActive(true);
-                count++;
-            }
         }
     }
 }

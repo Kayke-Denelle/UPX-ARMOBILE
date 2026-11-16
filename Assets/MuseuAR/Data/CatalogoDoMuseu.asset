@@ -16,4 +16,8 @@ MonoBehaviour:
   items:
   - {fileID: 11400000, guid: 14a5c0be5964e5642b411f8121647ce5, type: 2}
   - {fileID: 11400000, guid: 64d9e52ab7a9f83408775ec301c3e9b2, type: 2}
-  qrContent: MUSEUAR:{id}
+  - {fileID: 11400000, guid: c1afd5fd684e95146bd9659135cf4033, type: 2}
+  - {fileID: 11400000, guid: 0e6e5c88fc6a43146ae8bfcc64d67511, type: 2}
+  - {fileID: 11400000, guid: 68ccc99cd68c9824baff0cbbf5d8a2f6, type: 2}
+  - {fileID: 11400000, guid: bdd6edda3c9b98542a79f7528ff55f53, type: 2}
+  qrContent: https://github.com/Kayke-Denelle/UPX-ARMOBILE/releases/latest#{id}

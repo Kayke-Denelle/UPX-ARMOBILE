@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf60ec0652902ad4b80f31a2eb496952, type: 3}
+  m_Name: Fruteira
+  m_EditorClassIdentifier: Assembly-CSharp::MuseuAR.MuseumItemData
+  id: fruteira-pedra
+  displayName: Fruteira de pedra
+  period: "Per\xEDodo a definir"
+  origin: 
+  material: Pedra polida
+  description: "Ta\xE7a rasa sobre um p\xE9, esculpida em pedra e decorada com gomos em relevo. Pe\xE7as assim enfeitavam mesas e aparadores.\n\nToque nos pontos para conhecer a pe\xE7a."
+  referenceImageName: placa-fruteira
+  modelPrefab: {fileID: 5512930284970698560, guid: 6367f9e4258040f4088ff4db4114c128, type: 3}
+  initialScale: 1
+  spawnOffset: {x: 0, y: 0.02, z: 0}
+  spawnRotation: {x: 0, y: 0, z: 0}
+  introNarration: {fileID: 0}
+  thumbnail: {fileID: -1024534393311723872, guid: 088f00284f842ff41a8da700105f81fb, type: 3}
+  relatedItems:
+  - {fileID: 11400000, guid: 0e6e5c88fc6a43146ae8bfcc64d67511, type: 2}

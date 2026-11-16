@@ -43,7 +43,9 @@ O app tem dois modos:
 | **Visita** | Aponta a câmera para a placa com QR code da vitrine e a peça aparece sobre a placa. | Ver de todos os ângulos a peça que está atrás do vidro. |
 | **Acervo** | Escolhe uma peça num catálogo e a posiciona numa mesa ou no chão. | Ver peças da reserva técnica e peças correlacionadas. |
 
-![Modo Visita com o vaso, pontos de interesse e painel de informações](docs/images/tela-visita-vaso.png)
+![Modo Visita com o vaso de barro, pontos de interesse e painel de informações](docs/images/tela-visita-vaso-barro.png)
+
+O acervo atual tem **6 peças**: vaso de gargalo longo, documento antigo, vaso de barro, urna com frisos florais, fruteira de pedra e par de facas.
 
 ---
 
@@ -99,8 +101,8 @@ Desenvolver um aplicativo de Realidade Aumentada que reconheça uma placa ao lad
 | RF08 | Modo Acervo | Catálogo com miniaturas; a peça é posicionada numa superfície | ✅ |
 | RF09 | Áudio narrado | Tocador com play/pausa e barra de progresso | 🚧 (pronto, faltam os áudios) |
 | RF10 | Placas com QR code | Geração automática de uma placa por peça | ✅ |
-| RF11 | Link no QR code | QR abrir o site/download do app | 🚧 (hoje contém um identificador) |
-| RF12 | Tela inicial | Nome do museu, miniaturas das peças, 3 passos de uso e botão "Iniciar"; a RA só liga depois do toque | ✅ |
+| RF11 | Link no QR code | QR leva à página de download do app (GitHub Releases) | ✅ |
+| RF12 | Tela inicial | Visual fosco e discreto (degradê suave em grafite), emblema "AR", nome do museu, 3 passos de uso e botão "Iniciar"; a RA só liga depois do toque | ✅ |
 | RF13 | Acessibilidade e idiomas | Legendas, tamanho de fonte, PT/EN/ES | ⬜ |
 
 **Legenda:** ✅ Implementado · 🚧 Em desenvolvimento · ⬜ Planejado · ❌ Cancelado
@@ -266,8 +268,13 @@ UPX-ARMOBILE/
 │   │   ├── Scenes/        MuseuAR.unity (cena do app)
 │   │   └── Scripts/       código do app e ferramentas de editor
 │   ├── Peças/
-│   │   ├── Vaso/          modelo, material, objeto pronto (prefab), ficha, placa
-│   │   └── Ancient_Paper/ modelo, texturas, objeto pronto (prefab), ficha, placa
+│   │   ├── Vaso/          vaso de gargalo longo
+│   │   ├── Ancient_Paper/ documento antigo
+│   │   ├── VasoBarro/     vaso de barro
+│   │   ├── Vas008/        urna com frisos florais
+│   │   ├── Vas010/        fruteira de pedra
+│   │   └── Faca/          par de facas
+│   │                      (cada pasta: modelo, texturas, material, objeto pronto (prefab), ficha, placa, miniatura)
 │   ├── MobileARTemplateAssets/, Samples/, XR/   (modelo de projeto AR Mobile da Unity)
 │   └── Settings/          URP
 │
@@ -277,6 +284,8 @@ UPX-ARMOBILE/
 ├── docs/
 │   ├── documents/guia-de-conteudo.md
 │   └── images/
+│
+├── ModelosOriginais/  arquivos baixados (.zip, .rar, .blend), fora da Unity
 │
 ├── .gitattributes   (arquivos grandes via Git LFS)
 ├── .gitignore
@@ -371,7 +380,7 @@ cd UPX-ARMOBILE
 2. Na aba **Game**, escolha uma resolução em retrato (ex.: 1080x1920).
 3. Clique em **Play** e depois dentro da Game view.
 4. Na tela inicial, clique em **Iniciar** (ou aperte **Enter**).
-5. Aperte **1** (vaso) ou **2** (documento) para simular o QR code de cada peça. Arraste para girar, use a roda do mouse para ampliar e clique nos pontos.
+5. Aperte **1** a **6** para simular o QR code de cada peça, na ordem do catálogo (1 = vaso de gargalo longo … 6 = par de facas). Arraste para girar, use a roda do mouse para ampliar e clique nos pontos.
 
 A lista completa de atalhos está no [guia de conteúdo](docs/documents/guia-de-conteudo.md#4-testando-no-pc-xr-simulation).
 
@@ -379,7 +388,7 @@ A lista completa de atalhos está no [guia de conteúdo](docs/documents/guia-de-
 
 1. Menu **Museu AR › 4. Gerar APK (Android)** → `Builds/MuseuAR.apk`.
 2. Copie o APK para o celular e instale (permita "instalar apps desconhecidos").
-3. Imprima as placas com 15 cm de largura (seção 17).
+3. Imprima as folhas A4 de `docs/placas/` em tamanho real (seção 17).
 
 Alternativa com cabo: ative a *Depuração USB* e use **File › Build Profiles › Build And Run**.
 
@@ -387,12 +396,16 @@ Alternativa com cabo: ative a *Depuração USB* e use **File › Build Profiles 
 
 ## 17. Como Utilizar a Aplicação
 
-1. Imprima a placa da peça com **15 cm de largura**, em papel fosco:
+1. Imprima a folha A4 da peça, pronta em **`docs/placas/`** (nome da peça, instruções e a placa com **15 cm**), em tamanho real (100%) e papel fosco. Os arquivos das placas sozinhas ficam em:
 
 | Peça | Placa |
 |---|---|
 | Vaso de gargalo longo | `Assets/Peças/Vaso/placa-vaso.png` |
 | Documento antigo | `Assets/Peças/Ancient_Paper/placa-papel.png` |
+| Vaso de barro | `Assets/Peças/VasoBarro/placa-vaso-barro.png` |
+| Urna com frisos florais | `Assets/Peças/Vas008/placa-urna.png` |
+| Fruteira de pedra | `Assets/Peças/Vas010/placa-fruteira.png` |
+| Par de facas | `Assets/Peças/Faca/placa-facas.png` |
 
 2. Abra o app e autorize a câmera.
 3. Na **tela inicial**, toque em **Iniciar**.
@@ -462,7 +475,7 @@ flowchart LR
 ```text
 Abrir app
     ↓
-Tela inicial — nome do museu, peças, 3 passos de uso → [ Iniciar ]
+Tela inicial — emblema, nome do museu, 3 passos de uso → [ Iniciar ]
     ↓
 Modo Visita: câmera — "Aponte a câmera para o QR code ao lado da peça"
     ↓
@@ -479,15 +492,13 @@ Barra inferior: [ Visita | Acervo ] alterna os modos a qualquer momento
 
 ## 21. Interface
 
-A interface foi desenhada para celular em pé. O app abre numa **tela inicial** com o nome do museu, as peças do acervo, como usar e o botão **Iniciar**; a câmera e o reconhecimento só começam depois do toque. Na experiência, o cabeçalho fica no topo, os painéis embaixo e o centro da tela livre para a peça. Os painéis encolhem para caber o conteúdo.
+A interface foi desenhada para celular em pé. O app abre numa **tela inicial** de visual fosco e discreto (fundo em degradê suave azul-grafite, emblema "AR", passos de uso em cartões e botão **Iniciar** em cor sólida, sem brilho); a câmera e o reconhecimento só começam depois do toque. Na experiência, o cabeçalho fica no topo, os painéis embaixo e o centro da tela livre para a peça. Os painéis encolhem para caber o conteúdo.
 
-| Tela inicial | Modo Visita — vaso |
-|---|---|
-| ![Tela inicial](docs/images/tela-inicial.png) | ![Vaso](docs/images/tela-visita-vaso.png) |
+| Tela inicial | Modo Visita — urna | Modo Acervo |
+|---|---|---|
+| ![Tela inicial](docs/images/tela-inicial.png) | ![Vaso de barro](docs/images/tela-visita-vaso-barro.png) | ![Acervo](docs/images/tela-acervo.png) |
 
-| Pontos de interesse — documento | Modo Acervo |
-|---|---|
-| ![Documento antigo](docs/images/tela-documento-hotspots.png) | ![Acervo](docs/images/tela-acervo.png) |
+Toda a interface usa a mesma paleta fosca da tela inicial: painéis em azul-grafite, destaques em areia, textos em branco quente e cinza suave. Os botões têm ícones desenhados no próprio projeto (informações, pontos, resetar, fechar, tocar/pausar, ver em 3D, visita e acervo): os principais são areia sólida e os secundários, grafite. Os pontos de interesse seguem a mesma paleta: areia para os ainda não vistos e verde-sálvia para os já visitados.
 
 > Capturas feitas no Editor da Unity com XR Simulation (resolução 1080x1920). O fundo cinza é a sala simulada.
 
@@ -500,11 +511,11 @@ A interface foi desenhada para celular em pé. O app abre numa **tela inicial** 
 | Teste | Procedimento | Resultado esperado | Resultado obtido | Status |
 |---|---|---|---|---|
 | Compilação | Abrir o projeto na Unity | Sem erros de compilação | Sem erros | ✅ |
-| Tela inicial | Play no Editor | Tela aberta com as peças; RA parada (sem reconhecer placas) | Aberta, 2 miniaturas, rastreamento desligado | ✅ |
+| Tela inicial | Play no Editor | Tela aberta; RA parada (sem reconhecer placas) | Aberta; peças ocultas até o toque em Iniciar | ✅ |
 | Botão Iniciar | Tocar em Iniciar | Tela fecha; Modo Visita e câmera ativos | Fechou; Modo Visita; rastreamento ligado | ✅ |
 | Reconhecimento (simulado) | Tecla 1 (vaso) / 2 (documento) | Peça aparece com os pontos | Vaso com 4 pontos exibido | ✅ |
 | Pontos de interesse | Tocar num ponto | Painel abre; ponto fica verde; progresso atualiza | "Descobertas: 2/4"; pontos verdes | ✅ |
-| Modo Acervo | Trocar para Acervo | Catálogo com as peças e miniaturas | 2 peças exibidas; menu ajusta a altura | ✅ |
+| Modo Acervo | Trocar para Acervo | Catálogo com as peças e miniaturas | 6 peças exibidas com miniaturas; lista rolável | ✅ |
 | Interface em retrato | Captura 1080x1920 | Peça visível entre cabeçalho e painel | Ver seção 21 | ✅ |
 | Leitura dos QR codes | Ler as placas com o leitor ZXing | Conteúdo correto | Todas corretas, também reduzidas a 256 px | ✅ |
 | QR com links longos | Gerar e ler textos de 24 a 138 caracteres | Conteúdo idêntico | 4/4 idênticos (versões 2 a 8) | ✅ |
@@ -520,7 +531,7 @@ A interface foi desenhada para celular em pé. O app abre numa **tela inicial** 
 |---|---|---|---|---|---|
 | C01 | Instalação | Instalar `MuseuAR.apk` (1.1.0) | App instala e abre | Instalado; pediu permissão de câmera na primeira abertura | 🧪 |
 | C02 | Serviço de RA | Primeira abertura do app | Google Play Services for AR disponível | Serviço já instalado e atualizado | 🧪 |
-| C03 | Tela inicial | Abrir o app | Tela inicial com as 2 peças e botão Iniciar | Exibida em ~2 s | 🧪 |
+| C03 | Tela inicial | Abrir o app | Tela inicial com o emblema e o botão Iniciar | Exibida em ~2 s | 🧪 |
 | C04 | Reconhecimento — vaso | Apontar para `placa-vaso` a ~40 cm | Vaso aparece sobre a placa | Reconhecido em ~1,5 s; peça estável | 🧪 |
 | C05 | Reconhecimento — documento | Apontar para `placa-papel` a ~40 cm | Documento aparece sobre a placa | Reconhecido em ~1,8 s; peça estável | 🧪 |
 | C06 | Distância | Aproximar e afastar de 20 cm a 1,5 m | Reconhece na faixa de uso | Reconhece de ~25 cm a ~1,2 m | 🧪 |
@@ -554,11 +565,11 @@ A interface foi desenhada para celular em pé. O app abre numa **tela inicial** 
 - **Somente Android**: o ARKit está instalado, mas o build para iPhone exige um Mac com Xcode.
 - **Somente celulares compatíveis com ARCore**, com Android 10 ou superior.
 - O reconhecimento depende de **boa iluminação**, de placa **fosca** e impressa com **15 cm**.
-- O QR code contém um **identificador provisório** (`MUSEUAR:<id>`); o link definitivo ainda não foi definido.
-- **Textos provisórios**: vaso e documento têm período "a definir" e curiosidades gerais sobre cerâmica e papel.
+- O QR code leva à página de download do app no GitHub (`.../releases/latest#<id>`). Se o museu tiver um site próprio, basta trocar o campo **Qr Content** e gerar as placas e o APK de novo.
+- **Textos provisórios**: todas as peças têm período "a definir" e curiosidades gerais sobre o material e a técnica de cada uma.
 - **Sem narrações em áudio**: o tocador está pronto, mas nenhuma peça tem áudio gravado.
 - Peças largas (como o documento) exigem que o visitante se afaste ~1 m para ver todos os rótulos.
-- Três modelos recebidos não puderam ser usados sem conversão: `Spear_Primitive_2018.max`, `golden pendant.max2011.max` (formato do 3ds Max) e `IGS_File.igs` (CAD).
+- Quatro modelos recebidos não puderam ser usados sem conversão: `Spear_Primitive_2018.max`, `golden pendant.max2011.max` (3ds Max), `IGS_File.igs` (CAD) e `DUSTY_CLAY_VASE_TEXTURE.blend` (exige o Blender instalado; está em `ModelosOriginais/`).
 - As placas são empacotadas dentro do app: mudar uma placa exige gerar o APK de novo.
 
 ---
@@ -581,6 +592,8 @@ A interface foi desenhada para celular em pé. O app abre numa **tela inicial** 
 | Recurso | Link |
 |---|---|
 | Código-fonte | <https://github.com/Kayke-Denelle/UPX-ARMOBILE> |
+| Download do APK | <https://github.com/Kayke-Denelle/UPX-ARMOBILE/releases/latest> |
+| Placas para imprimir | [docs/placas](docs/placas) |
 | Guia de conteúdo | [docs/documents/guia-de-conteudo.md](docs/documents/guia-de-conteudo.md) |
 | Histórico de versões | [CHANGELOG.md](CHANGELOG.md) |
 | Dispositivos ARCore | <https://developers.google.com/ar/devices> |
@@ -598,7 +611,7 @@ A interface foi desenhada para celular em pé. O app abre numa **tela inicial** 
 | Modo Visita (Image Tracking) e Modo Acervo (planos) | *Preencher* | ✅ |
 | Pontos de interesse, painel e correlacionadas | *Preencher* | ✅ |
 | Interface compacta para celular | *Preencher* | ✅ |
-| Peças reais (vaso e documento) | *Preencher* | ✅ |
+| Peças do acervo (6 peças) | *Preencher* | ✅ |
 | Placas com QR code | *Preencher* | ✅ |
 | Build Android (APK) | *Preencher* | ✅ |
 | Testes em celular (POCO X7 Pro) | Equipe | 🚧 roteiro pronto, resultados simulados |
@@ -672,6 +685,14 @@ test: valida placas impressas em iluminação baixa
 **Causa:** memória do Windows esgotada — arquivo de paginação fixo e pequeno (5,5 GB) para 16 GB de RAM, com a Unity usando mais de 4 GB.  
 **Solução:** aumentar o arquivo de paginação (ou deixá-lo gerenciado pelo Windows), fechar outros programas durante o build e gerar o APK de novo para um build sem erros.
 
+Efeito colateral observado: o shader dos marcadores (`URP/Unlit`) ficou com um erro salvo no cache e os pontos apareciam **rosa**. Limpar o cache desse shader e reimportá-lo resolveu.
+
+### Problema 7 — Modelos baixados com texturas e formatos incompatíveis
+
+**Problema:** a faca veio sem textura, o `vase.obj` veio cinza e o `.blend` não abriu.  
+**Causa:** o `.mtl` da faca aponta para pastas de outro computador (`C:\Users\...`); o `vase.obj` pede um `vase.mtl` que não veio junto; arquivos `.blend` só abrem na Unity com o Blender instalado.  
+**Solução:** `.mtl` das facas corrigido (a parte que usa `texture.jpg` mantém a textura; madeira, aço e latão, cujas texturas não vieram no arquivo, viraram materiais de cor sólida); material fosco de barro criado para o vaso; `.blend` guardado em `ModelosOriginais/` até ser exportado como `.fbx`.
+
 ---
 
 ## 30. Melhorias Futuras
@@ -696,7 +717,7 @@ test: valida placas impressas em iluminação baixa
 | Unity 6 | Software | Licença Personal (gratuita para uso educacional) |
 | AR Foundation / ARCore | Software | Gratuitos |
 | Git, Git LFS, GitHub | Software / serviço | Gratuitos (cota LFS do plano gratuito) |
-| Modelos 3D | Conteúdo | Obtidos na internet (verificar licença de cada modelo) |
+| Modelos 3D | Conteúdo | Obtidos na internet; urna e fruteira da TripRay (arquivo `LICENCA-TripRay.txt` em cada pasta). Verificar a licença de cada modelo |
 | Impressão das placas | Material | Papel fosco, 15 cm por placa |
 | Smartphone Android com ARCore | Hardware | Equipamento da equipe |
 | Notebook (Ryzen 7, GTX 1650) | Hardware | Equipamento da equipe |

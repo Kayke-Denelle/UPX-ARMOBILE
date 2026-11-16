@@ -15,10 +15,10 @@ MonoBehaviour:
   lineMaterial: {fileID: 2100000, guid: 2df800b8a9820c046bfc34e3750edb7f, type: 2}
   markerMaterial: {fileID: 2100000, guid: ea2f5fc3e17776a45847bee942d89a2c, type: 2}
   font: {fileID: 0}
-  arrowColor: {r: 1, g: 0.78, b: 0.2, a: 1}
-  visitedColor: {r: 0.35, g: 0.9, b: 0.6, a: 1}
-  labelColor: {r: 1, g: 1, b: 1, a: 1}
-  labelOutlineColor: {r: 0, g: 0, b: 0, a: 0.9}
+  arrowColor: {r: 0.831, g: 0.659, b: 0.416, a: 1}
+  visitedColor: {r: 0.561, g: 0.702, b: 0.659, a: 1}
+  labelColor: {r: 0.925, g: 0.906, b: 0.871, a: 1}
+  labelOutlineColor: {r: 0.078, g: 0.094, b: 0.122, a: 0.9}
   labelOutlineWidth: 0.25
   markerSize: 0.014
   tapRadius: 0.035
