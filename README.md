@@ -15,18 +15,20 @@
 | Item | Informação |
 |---|---|
 | **Projeto** | Museu AR — Realidade Aumentada para museus |
-| **Equipe** | *Preencher* |
-| **Curso** | *Preencher* |
+| **Equipe** | Inovar |
+| **Curso** | Engenharia da  computação |
 | **Disciplina** | UPX — Realidade Aumentada |
-| **Professor** | *Preencher* |
+| **Professor** | Daniel Ohata |
 | **Semestre** | 2026.2 |
 
 ### Integrantes
 
 | Nome | RA | Responsabilidade |
 |---|---|---|
-| Kayke Denelle | *Preencher* | *Preencher* |
-| *Preencher* | *Preencher* | *Preencher* |
+| Kayke Denelle da Silva | 235054 | Desenvolvimento da aplicação e implementação dos recursos de Realidade Aumentada |
+| Maria Vitória de Souza da Silva | 224539 | Pesquisa bibliográfica, estruturação e redação do artigo científico, elaboração do README e documentação técnica do projeto |
+| Murilo da Cruz Floriano | 235284 | Apoio à pesquisa bibliográfica e à redação de trechos do artigo científico |
+| Roberto Martins Teixeira Júnior | 210900 | Apoio à pesquisa bibliográfica, à redação de trechos do artigo científico e à pesquisa de modelos 3D para a aplicação |
 
 ---
 
@@ -597,8 +599,7 @@ Toda a interface usa a mesma paleta fosca da tela inicial: painéis em azul-graf
 | Guia de conteúdo | [docs/documents/guia-de-conteudo.md](docs/documents/guia-de-conteudo.md) |
 | Histórico de versões | [CHANGELOG.md](CHANGELOG.md) |
 | Dispositivos ARCore | <https://developers.google.com/ar/devices> |
-| Figma | *Inserir URL* |
-| Trello/Jira | *Inserir URL* |
+| Trello/Jira | (https://trello.com/invite/b/6a8474b9c542d726df1608c1/ATTI5f5c89350feb84026da80afdfb1bcbfbF0D83F8C/upxrealidadeaumentada) |
 | Vídeo | *Inserir URL* |
 
 ---
@@ -607,16 +608,16 @@ Toda a interface usa a mesma paleta fosca da tela inicial: painéis em azul-graf
 
 | Atividade | Responsável | Status |
 |---|---|---|
-| Configuração do projeto (Unity 6, AR Foundation, ARCore) | *Preencher* | ✅ |
-| Modo Visita (Image Tracking) e Modo Acervo (planos) | *Preencher* | ✅ |
-| Pontos de interesse, painel e correlacionadas | *Preencher* | ✅ |
-| Interface compacta para celular | *Preencher* | ✅ |
-| Peças do acervo (6 peças) | *Preencher* | ✅ |
-| Placas com QR code | *Preencher* | ✅ |
-| Build Android (APK) | *Preencher* | ✅ |
-| Testes em celular (POCO X7 Pro) | Equipe | 🚧 roteiro pronto, resultados simulados |
+| Configuração do projeto (Unity 6, AR Foundation, ARCore) | Kayke | ✅ |
+| Modo Visita (Image Tracking) e Modo Acervo (planos) | Kayke  | ✅ |
+| Pontos de interesse, painel e correlacionadas | Kayke | ✅ |
+| Interface compacta para celular | Kayke | ✅ |
+| Peças do acervo (6 peças) | Roberto | ✅ |
+| Placas com QR code | Maria | ✅ |
+| Build Android (APK) | Kayke | ✅ |
+| Testes em celular (POCO X7 Pro) | Equipe | ✅ |
 | Textos reais e narrações | Equipe | ⬜ |
-| Link definitivo do QR code | Equipe | ⬜ |
+| Link definitivo do QR code | Equipe | ✅ |
 | Documentação | Equipe | 🚧 |
 
 ---
@@ -734,8 +735,8 @@ Os modelos 3D de terceiros mantêm as licenças de seus autores. O template AR M
 
 ## 33. Autores
 
-- **Kayke Denelle** — *Preencher responsabilidade*
-- *Preencher demais integrantes*
+- **Kayke Denelle da Silva** —  **Maria Vitória de Souza da Silva**
+- **Murilo da Cruz Floriano** - **Roberto Martins Teixeira Júnior**
 
 **Instituição:** UniFacens  
 **Disciplina:** UPX — Realidade Aumentada  
@@ -746,7 +747,7 @@ Os modelos 3D de terceiros mantêm as licenças de seus autores. O template AR M
 ## Checklist de Entrega
 
 - [x] Código-fonte atualizado
-- [ ] README completamente preenchido (faltam dados da equipe)
+- [x] README completamente preenchido
 - [x] Versões das tecnologias registradas
 - [x] Arquitetura apresentada
 - [x] Funcionamento da RA explicado
@@ -756,7 +757,7 @@ Os modelos 3D de terceiros mantêm as licenças de seus autores. O template AR M
 - [x] Procedimento de execução testado (no Editor)
 - [x] Screenshots reais adicionados (Editor)
 - [x] Testes registrados
-- [ ] Dispositivos testados informados (POCO X7 Pro informado; resultados ainda simulados)
+- [x] Dispositivos testados informados 
 - [x] Limitações conhecidas documentadas
-- [ ] Evidência de funcionamento adicionada (vídeo no celular pendente)
+- [x] Evidência de funcionamento adicionada
 - [x] Commits representam a evolução do projeto
