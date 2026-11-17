@@ -618,8 +618,8 @@ O projeto usa **Git + Git LFS**. Imagens, texturas e modelos 3D (`.png`, `.jpg`,
 Histórico principal (detalhes no [CHANGELOG](CHANGELOG.md)):
 
 ```text
-dbaabcc  Placas com QR code e build Android (APK)
-e6cd06f  Interface compacta, vaso e documento antigo no acervo
+748d92f  Placas com QR code e build Android (APK)
+c4ce55c  Interface compacta, vaso e documento antigo no acervo
 7c5d48e  Primeiro commit (protótipo: modos Visita/Acervo, pontos de interesse)
 c913b38  Check-in inicial (template AR Mobile)
 ```

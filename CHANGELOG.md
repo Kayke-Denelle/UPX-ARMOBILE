@@ -57,7 +57,7 @@ APK no repositório: [`apk/MuseuAR.apk`](apk/MuseuAR.apk) (44 MB). Os QR codes a
 - README reorganizado no modelo da disciplina UPX — Realidade Aumentada.
 - Guia de conteúdo em `docs/documents/guia-de-conteudo.md` e capturas em `docs/images/`.
 
-## 2026-10-20 — Placas com QR code e build Android (`dbaabcc`)
+## 2026-10-20 — Placas com QR code e build Android (`748d92f`)
 
 ### Adicionado
 - Gerador de QR code no editor (`QrCode.cs`), sem dependências externas.
@@ -73,7 +73,7 @@ APK no repositório: [`apk/MuseuAR.apk`](apk/MuseuAR.apk) (44 MB). Os QR codes a
 - 4/4 placas lidas corretamente pelo leitor ZXing; links de até 138 caracteres testados.
 - APK gerado sem erros (43 MB).
 
-## 2026-10-19 — Interface compacta e novas peças (`e6cd06f`)
+## 2026-10-19 — Interface compacta e novas peças (`c4ce55c`)
 
 ### Adicionado
 - Peças **Vaso de gargalo longo** e **Documento antigo** em `Assets/Peças`, com material, pontos de interesse, ficha, placa e miniatura.
