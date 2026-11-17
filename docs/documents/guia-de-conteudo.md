@@ -49,7 +49,7 @@ Os arquivos baixados (`.zip`, `.rar`, `.blend`) ficam em **`ModelosOriginais/`**
    - Ajuste `initialScale` (modelos em cm → `0.01`), `spawnOffset` e `spawnRotation` se necessário.
 4. **Catálogo:** arraste a ficha para **`Assets/MuseuAR/Data/CatalogoDoMuseu`**.
 5. **Placa:** use **Museu AR › 3. Gerar placas com QR code**. A placa é criada ao lado da ficha.
-6. **Miniatura (opcional):** um `Sprite` no campo `thumbnail` da ficha aparece no menu do Modo Acervo.
+6. **Miniatura (opcional):** um `Sprite` no campo `thumbnail` da ficha (usado no menu do Modo Acervo, hoje desligado).
 
 **Áudio:** narrações curtas (30–60 s) em `.mp3`/`.ogg`. Para protótipo, um gerador de voz (TTS) resolve. Na importação, use *Load Type: Streaming* ou *Compressed In Memory*.
 
@@ -92,8 +92,7 @@ No Play, o Unity simula um celular dentro de uma sala 3D. O componente `DesktopS
 | Tocar (ponto, botão, superfície) | **Clique** esquerdo |
 | Arrastar o dedo (girar a peça) | **Arrastar** com o botão esquerdo, ou setas **← →** |
 | Pinça (zoom) | **Roda do mouse**, ou **+ / −** |
-| Tocar na superfície (Modo Acervo) | Clique no chão; sem superfície detectada, o app usa uma *mesa virtual* 60 cm abaixo da câmera |
-| Botões da tela | **I** sobre a peça · **Esc** fechar painel · **P** pontos · **R** resetar · **M** trocar modo |
+| Botões da tela | **I** sobre a peça · **Esc** fechar painel · **P** pontos · **R** resetar |
 | — | **H** mostra/esconde a ajuda |
 
 O aviso *"Could not find reference image…"* no Console é esperado: vem das imagens da sala simulada.

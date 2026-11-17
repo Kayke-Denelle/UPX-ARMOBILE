@@ -35,6 +35,10 @@ namespace MuseuAR
 
         [Header("Início")]
         [SerializeField] ARMode startMode = ARMode.Visita;
+        [Tooltip("Desligado: o app usa só o Modo Visita (QR code das placas) e ignora pedidos de trocar para o Acervo.")]
+        [SerializeField] bool collectionModeEnabled = true;
+
+        public bool CollectionModeEnabled => collectionModeEnabled;
         [Tooltip("Opcional. Com tela inicial, a experiência só começa ao tocar em \"Iniciar\".")]
         [SerializeField] StartScreenUI startScreen;
 
@@ -107,6 +111,7 @@ namespace MuseuAR
 
         public void SetMode(ARMode mode)
         {
+            if (!collectionModeEnabled) mode = ARMode.Visita;
             Mode = mode;
             bool visit = mode == ARMode.Visita;
 
@@ -148,7 +153,7 @@ namespace MuseuAR
         /// <summary>Abre uma peça direto no Modo Acervo, pronta para ser posicionada (usado pelos correlacionados).</summary>
         public void OpenInCollection(MuseumItemData item)
         {
-            if (!item) return;
+            if (!item || !collectionModeEnabled) return;
             if (Mode != ARMode.Acervo) SetMode(ARMode.Acervo);
             if (catalogMenu) catalogMenu.Hide();
             if (freePlacement) freePlacement.SelectItem(item);

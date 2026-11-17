@@ -36,14 +36,11 @@
 
 O **Museu AR** é um aplicativo Android que usa Realidade Aumentada para mostrar em 3D peças de museu que o visitante não pode tocar.
 
-Ao lado de cada vitrine fica uma **placa com QR code**. O visitante aponta a câmera do app para a placa e a peça aparece em 3D sobre ela. Ele pode **girar** e **ampliar** a peça e tocar em **pontos de interesse** marcados por setas e rótulos. Cada ponto abre um painel com uma curiosidade, um detalhe ou uma técnica. Alguns pontos levam a **peças correlacionadas**, que podem ser vistas em 3D no Modo Acervo.
+Ao lado de cada vitrine fica uma **placa com QR code**. O visitante aponta a câmera do app para a placa e a peça aparece em 3D sobre ela. Ele pode **girar** e **ampliar** a peça e tocar em **pontos de interesse** marcados por setas e rótulos. Cada ponto abre um painel com uma curiosidade, um detalhe ou uma técnica.
 
-O app tem dois modos:
+O app funciona **somente pelo QR code**: cada peça aparece quando o visitante aponta a câmera para a placa da vitrine. Não há catálogo para escolher peças fora da visita.
 
-| Modo | Como funciona | Para quê |
-|---|---|---|
-| **Visita** | Aponta a câmera para a placa com QR code da vitrine e a peça aparece sobre a placa. | Ver de todos os ângulos a peça que está atrás do vidro. |
-| **Acervo** | Escolhe uma peça num catálogo e a posiciona numa mesa ou no chão. | Ver peças da reserva técnica e peças correlacionadas. |
+> Versões até a 1.2.0 tinham também um **Modo Acervo** (escolher a peça num catálogo e posicioná-la numa mesa). Ele foi retirado na 1.3.0 para manter a experiência focada nas placas; o código continua no projeto e pode ser religado (constante `CollectionModeEnabled` em `MuseuARSceneBuilder.cs`).
 
 ![Modo Visita com o vaso de barro, pontos de interesse e painel de informações](docs/images/tela-visita-vaso-barro.png)
 
@@ -74,7 +71,7 @@ Desenvolver um aplicativo de Realidade Aumentada que reconheça uma placa ao lad
 - Reconhecer placas impressas por **Image Tracking** e posicionar a peça sobre elas.
 - Permitir girar e ampliar a peça com gestos (arrastar e pinça).
 - Exibir **pontos de interesse** (marcador, seta e rótulo 3D) e um painel com texto e áudio.
-- Permitir posicionar peças do catálogo numa superfície (**Plane Detection**).
+- Manter a experiência focada nas placas: cada peça é acessada pelo QR code da sua vitrine.
 - Separar conteúdo e código: a equipe do museu cadastra peças sem programar.
 - Gerar as placas com QR code automaticamente a partir do catálogo.
 - Gerar o APK e testar em um dispositivo Android.
@@ -98,9 +95,9 @@ Desenvolver um aplicativo de Realidade Aumentada que reconheça uma placa ao lad
 | RF03 | Girar e ampliar | Arrastar gira a peça; pinça amplia ou reduz | ✅ |
 | RF04 | Pontos de interesse | Marcador pulsante, seta e rótulo 3D em pontos da peça | ✅ |
 | RF05 | Painel de informações | Título, categoria e texto da curiosidade ou da peça | ✅ |
-| RF06 | Peças correlacionadas | Botão "Ver em 3D" abre a peça relacionada no Modo Acervo | ✅ (nenhuma relação cadastrada no momento) |
+| RF06 | Peças correlacionadas | Botão "Ver em 3D" abria a peça relacionada no Modo Acervo | ❌ (retirado com o Modo Acervo na 1.3.0) |
 | RF07 | Progresso | Pontos visitados ficam verdes; contador "Descobertas: 2/4" | ✅ |
-| RF08 | Modo Acervo | Catálogo com miniaturas; a peça é posicionada numa superfície | ✅ |
+| RF08 | Modo Acervo | Catálogo com miniaturas; a peça era posicionada numa superfície | ❌ (retirado na 1.3.0; app só por QR code) |
 | RF09 | Áudio narrado | Tocador com play/pausa e barra de progresso | 🚧 (pronto, faltam os áudios) |
 | RF10 | Placas com QR code | Geração automática de uma placa por peça | ✅ |
 | RF11 | Link no QR code | QR leva à página de download do app (GitHub Releases) | ✅ |
@@ -168,9 +165,9 @@ flowchart TB
     subgraph App["Aplicativo"]
         INICIO["Tela inicial<br/>botão Iniciar"]
         UI["Interface<br/>cabeçalho, painel, menu do acervo"]
-        MODOS["Controle de modos<br/>Visita / Acervo"]
+        MODOS["Controle da experiência<br/>tela inicial e dicas"]
         TOQUE["Leitura de gestos<br/>toque, arrastar, pinça"]
-        RA["Posicionamento da peça<br/>sobre a placa ou na mesa"]
+        RA["Posicionamento da peça<br/>sobre a placa"]
         PECA["Peça na cena<br/>girar, ampliar, manter em pé"]
         HS["Pontos de interesse<br/>marcador, seta, rótulo"]
         AUDIO["Narração em áudio"]
@@ -196,12 +193,11 @@ flowchart TB
 ```text
 Visitante
    ↓
-Interface (tela inicial, cabeçalho, painel, barra de modos)
+Interface (tela inicial, cabeçalho, painel de informações)
    ↓
-Controle da experiência (modos Visita/Acervo, peça na cena)
+Controle da experiência (tela inicial, peça na cena)
    ↓
-Biblioteca de realidade aumentada (reconhecimento de imagens,
-detecção de superfícies, projeção do toque na cena)
+Biblioteca de realidade aumentada (reconhecimento das placas)
    ↓
 Serviço de RA do Android (ARCore)
    ↓
@@ -217,7 +213,6 @@ Placa com QR code ao lado da vitrine
 ### 11.1 Técnicas utilizadas
 
 - **Reconhecimento de imagens** (*Image Tracking*, Modo Visita): cada placa impressa está cadastrada na biblioteca `PlacasAR` com o tamanho real (15 cm). A placa tem uma **moldura ilustrada**, rica em cantos e contraste, que o ARCore rastreia, e um **QR code** no centro, legível pela câmera comum do celular.
-- **Detecção de superfícies e projeção do toque** (*Plane Detection* e *Raycast*, Modo Acervo): o app detecta superfícies horizontais e posiciona a peça onde o visitante toca.
 
 ### 11.2 Fluxo técnico
 
@@ -238,7 +233,7 @@ sequenceDiagram
     V->>P: Arrasta ou faz pinça
     P->>P: Gira ou amplia
     V->>I: Toca num ponto
-    I->>V: Mostra texto, áudio e peças relacionadas
+    I->>V: Mostra texto e áudio
 ```
 
 1. O app inicia a câmera e o rastreamento de imagens.
@@ -254,7 +249,7 @@ sequenceDiagram
 - marcador pulsante (amarelo → verde depois de visitado);
 - seta ligando o rótulo ao ponto;
 - rótulo 3D sempre virado para o visitante;
-- painel com categoria, título, texto, áudio e peças correlacionadas;
+- painel com categoria, título, texto e áudio;
 - cabeçalho com nome, período, material e progresso.
 
 ---
@@ -315,16 +310,16 @@ UPX-ARMOBILE/
 | `Data/MuseumItemData.cs` | Ficha da peça (nome, período, modelo, áudio, placa, correlacionadas) |
 | `Data/MuseumCatalog.cs` | Lista de peças e conteúdo do QR code |
 | `AR/ImageTrackingSpawner.cs` | Reconhece placas e cria a peça correspondente (Modo Visita) |
-| `AR/FreePlacementController.cs` | Posiciona a peça numa superfície detectada (Modo Acervo) |
+| `AR/FreePlacementController.cs` | Posiciona a peça numa superfície (Modo Acervo — desligado na 1.3.0) |
 | `Exhibit/ExhibitController.cs` | Peça na cena: girar, ampliar, manter em pé, pontos visitados |
 | `Exhibit/HotspotPoint.cs` | Dados de um ponto de interesse (título, texto, áudio, posição do rótulo) |
 | `Exhibit/HotspotView.cs` | Desenha marcador, seta e rótulo 3D |
 | `Interaction/TouchInputRouter.cs` | Toque, arrastar e pinça (e mouse no PC) |
 | `Interaction/DesktopSimulator.cs` | Atalhos para testar no PC sem celular |
 | `Narration/NarrationPlayer.cs` | Toca as narrações em áudio |
-| `UI/InfoPanelUI.cs` | Cabeçalho, painel de informações e correlacionadas |
-| `UI/CatalogMenuUI.cs` | Menu do acervo com miniaturas |
-| `Core/AppModeController.cs` | Troca entre Visita e Acervo e mostra as dicas |
+| `UI/InfoPanelUI.cs` | Cabeçalho e painel de informações (texto e áudio) |
+| `UI/CatalogMenuUI.cs` | Menu do acervo com miniaturas (Modo Acervo — desligado na 1.3.0) |
+| `Core/AppModeController.cs` | Controla a experiência (tela inicial, Modo Visita) e mostra as dicas |
 | `Editor/QrCode.cs` | Gerador de QR code (sem dependências externas) |
 | `Editor/QrPlateGenerator.cs` | Gera as placas com QR code e registra na biblioteca AR |
 | `Editor/MuseuARSceneBuilder.cs` | Monta a cena e a interface |
@@ -388,7 +383,7 @@ A lista completa de atalhos está no [guia de conteúdo](docs/documents/guia-de-
 
 ### No celular (Android)
 
-1. **APK pronto:** baixe [`apk/MuseuAR.apk`](apk/MuseuAR.apk) (versão 1.2.0) ou a página [Releases](https://github.com/Kayke-Denelle/UPX-ARMOBILE/releases/latest). Para gerar de novo: menu **Museu AR › 4. Gerar APK (Android)** → `Builds/MuseuAR.apk`.
+1. **APK pronto:** baixe [`apk/MuseuAR.apk`](apk/MuseuAR.apk) (versão 1.3.0) ou a página [Releases](https://github.com/Kayke-Denelle/UPX-ARMOBILE/releases/latest). Para gerar de novo: menu **Museu AR › 4. Gerar APK (Android)** → `Builds/MuseuAR.apk`.
 2. Copie o APK para o celular e instale (permita "instalar apps desconhecidos").
 3. Imprima as folhas A4 de `docs/placas/` em tamanho real (seção 17).
 
@@ -414,7 +409,6 @@ Alternativa com cabo: ative a *Depuração USB* e use **File › Build Profiles 
 4. No **Modo Visita**, aponte para a placa a 30–50 cm.
 5. A peça aparece sobre a placa. **Arraste** para girar e faça **pinça** para ampliar.
 6. Toque nos **pontos amarelos** para ler as curiosidades. Pontos visitados ficam verdes.
-7. No **Modo Acervo** (barra inferior), escolha uma peça no catálogo e toque numa mesa para posicioná-la.
 
 ![Placa com QR code do vaso](Assets/Pe%C3%A7as/Vaso/placa-vaso.png)
 
@@ -434,12 +428,10 @@ flowchart TD
     E --> F[Visitante gira e amplia]
     E --> G[Visitante toca num ponto]
     G --> H[Painel com curiosidade]
-    H --> I{Tem peça relacionada?}
-    I -- Sim --> J[Botão Ver em 3D: Modo Acervo]
-    J --> K[Toca na mesa: peça posicionada]
-    I -- Não --> G
-    K --> L[Fim]
-    F --> L
+    H --> I{Quer ver outra peça?}
+    I -- Sim --> C
+    I -- Não --> L[Fim]
+    F --> G
 ```
 
 ---
@@ -456,8 +448,6 @@ flowchart LR
         UC1(["Ver peça em 3D pela placa"])
         UC2(["Girar e ampliar a peça"])
         UC3(["Ler ou ouvir curiosidades"])
-        UC4(["Ver peça relacionada"])
-        UC5(["Escolher peça no acervo"])
     end
 
     subgraph Editor["Editor do projeto (sem programação)"]
@@ -466,7 +456,7 @@ flowchart LR
         UC8(["Gerar o instalador do app"])
     end
 
-    V --- UC0 & UC1 & UC2 & UC3 & UC4 & UC5
+    V --- UC0 & UC1 & UC2 & UC3
     M --- UC6 & UC7 & UC8
 ```
 
@@ -485,9 +475,9 @@ Placa reconhecida → Peça 3D + cabeçalho
     ↓
 Toque num ponto → Painel de informações
     ↓
-"Ver em 3D" → Modo Acervo → toque na mesa → peça posicionada
+Apontar para outra placa → outra peça aparece
 
-Barra inferior: [ Visita | Acervo ] alterna os modos a qualquer momento
+Não há barra de modos nem catálogo: toda peça é aberta pelo QR code da vitrine.
 ```
 
 ---
@@ -496,11 +486,11 @@ Barra inferior: [ Visita | Acervo ] alterna os modos a qualquer momento
 
 A interface foi desenhada para celular em pé. O app abre numa **tela inicial** de visual fosco e discreto (fundo em degradê suave azul-grafite, emblema "AR", passos de uso em cartões e botão **Iniciar** em cor sólida, sem brilho); a câmera e o reconhecimento só começam depois do toque. Na experiência, o cabeçalho fica no topo, os painéis embaixo e o centro da tela livre para a peça. Os painéis encolhem para caber o conteúdo.
 
-| Tela inicial | Modo Visita — urna | Modo Acervo |
-|---|---|---|
-| ![Tela inicial](docs/images/tela-inicial.png) | ![Vaso de barro](docs/images/tela-visita-vaso-barro.png) | ![Acervo](docs/images/tela-acervo.png) |
+| Tela inicial | Modo Visita — vaso de barro |
+|---|---|
+| ![Tela inicial](docs/images/tela-inicial.png) | ![Vaso de barro](docs/images/tela-visita-vaso-barro.png) |
 
-Toda a interface usa a mesma paleta fosca da tela inicial: painéis em azul-grafite, destaques em areia, textos em branco quente e cinza suave. Os botões têm ícones desenhados no próprio projeto (informações, pontos, resetar, fechar, tocar/pausar, ver em 3D, visita e acervo): os principais são areia sólida e os secundários, grafite. Os pontos de interesse seguem a mesma paleta: areia para os ainda não vistos e verde-sálvia para os já visitados.
+Toda a interface usa a mesma paleta fosca da tela inicial: painéis em azul-grafite, destaques em areia, textos em branco quente e cinza suave. Os botões têm ícones desenhados no próprio projeto (informações, pontos, resetar, fechar, tocar/pausar): os principais são areia sólida e os secundários, grafite. Sem a barra de modos, o painel de informações fica rente à borda inferior e sobra mais tela para a peça. Os pontos de interesse seguem a mesma paleta: areia para os ainda não vistos e verde-sálvia para os já visitados.
 
 > Capturas feitas no Editor da Unity com XR Simulation (resolução 1080x1920). O fundo cinza é a sala simulada.
 
@@ -517,21 +507,21 @@ Toda a interface usa a mesma paleta fosca da tela inicial: painéis em azul-graf
 | Botão Iniciar | Tocar em Iniciar | Tela fecha; Modo Visita e câmera ativos | Fechou; Modo Visita; rastreamento ligado | ✅ |
 | Reconhecimento (simulado) | Tecla 1 (vaso) / 2 (documento) | Peça aparece com os pontos | Vaso com 4 pontos exibido | ✅ |
 | Pontos de interesse | Tocar num ponto | Painel abre; ponto fica verde; progresso atualiza | "Descobertas: 2/4"; pontos verdes | ✅ |
-| Modo Acervo | Trocar para Acervo | Catálogo com as peças e miniaturas | 6 peças exibidas com miniaturas; lista rolável | ✅ |
+| Só QR code (1.3.0) | Pedir troca para o Modo Acervo | App continua no Modo Visita; sem barra de modos nem "Ver em 3D" | Pedido ignorado; barra e catálogo ausentes | ✅ |
 | Interface em retrato | Captura 1080x1920 | Peça visível entre cabeçalho e painel | Ver seção 21 | ✅ |
 | Leitura dos QR codes | Ler as placas com o leitor ZXing | Conteúdo correto | Todas corretas, também reduzidas a 256 px | ✅ |
 | QR com links longos | Gerar e ler textos de 24 a 138 caracteres | Conteúdo idêntico | 4/4 idênticos (versões 2 a 8) | ✅ |
-| Build Android | Menu "4. Gerar APK" | APK gerado sem erros | `MuseuAR.apk` 1.2.0 (44 MB) em 3 min 3 s; 2 avisos de shader por falta de memória no PC, só na variante de sombra das setas (não usada pelo app) | ✅ |
+| Build Android | Menu "4. Gerar APK" | APK gerado sem erros | `MuseuAR.apk` 1.3.0 (44 MB) em 3 min 44 s; 2 avisos de shader por falta de memória no PC, só na variante de sombra das setas (não usada pelo app) | ✅ |
 
 ### 22.2 Testes no celular — Xiaomi POCO X7 Pro
 
 > ⚠️ **Dados simulados (mock).** Os resultados desta tabela são **ilustrativos** e ainda **não foram medidos** no aparelho. Eles servem de roteiro de teste e devem ser **substituídos pelos resultados reais** (e o marcador 🧪 trocado por ✅, 🚧 ou ❌) antes da entrega.
 
-**Condições previstas:** APK versão 1.1.0 · placas impressas com 15 cm em papel fosco · sala com luz ambiente · celular na mão, em pé.
+**Condições previstas:** APK versão 1.3.0 · placas impressas com 15 cm em papel fosco · sala com luz ambiente · celular na mão, em pé.
 
 | ID | Teste | Procedimento | Resultado esperado | Resultado obtido | Status |
 |---|---|---|---|---|---|
-| C01 | Instalação | Instalar `MuseuAR.apk` (1.1.0) | App instala e abre | Instalado; pediu permissão de câmera na primeira abertura | 🧪 |
+| C01 | Instalação | Instalar `MuseuAR.apk` (1.3.0) | App instala e abre | Instalado; pediu permissão de câmera na primeira abertura | 🧪 |
 | C02 | Serviço de RA | Primeira abertura do app | Google Play Services for AR disponível | Serviço já instalado e atualizado | 🧪 |
 | C03 | Tela inicial | Abrir o app | Tela inicial com o emblema e o botão Iniciar | Exibida em ~2 s | 🧪 |
 | C04 | Reconhecimento — vaso | Apontar para `placa-vaso` a ~40 cm | Vaso aparece sobre a placa | Reconhecido em ~1,5 s; peça estável | 🧪 |
@@ -543,7 +533,6 @@ Toda a interface usa a mesma paleta fosca da tela inicial: painéis em azul-graf
 | C10 | Gestos | Arrastar e fazer pinça | Gira e amplia | Rotação e zoom suaves | 🧪 |
 | C11 | Pontos de interesse | Tocar nos 4 pontos do vaso | Painel abre; pontos ficam verdes; "Tudo descoberto! 4/4" | Funcionou nos 4 pontos | 🧪 |
 | C11b | Visual dos pontos | Observar marcadores, setas e rótulos | Marcadores amarelos/verdes e setas visíveis (sem cor rosa) | Exibidos corretamente | 🧪 |
-| C12 | Modo Acervo | Escolher peça e tocar numa mesa | Superfície detectada; peça posicionada | Mesa detectada em ~3 s; peça posicionada | 🧪 |
 | C13 | Desempenho | 5 min de uso contínuo | Sem travamentos | Fluido, sem travamentos; aquecimento leve | 🧪 |
 | C14 | Bateria | 10 min de uso contínuo | Consumo aceitável | ~3% de bateria | 🧪 |
 
@@ -556,7 +545,7 @@ Toda a interface usa a mesma paleta fosca da tela inicial: painéis em azul-graf
 | Dispositivo | Sistema | Versão | Resultado |
 |---|---|---|---|
 | Editor Unity (XR Simulation) | Windows 11 | Unity 6000.6.0f1 | Funcionamento verificado (seção 22.1) |
-| Xiaomi POCO X7 Pro | Android 15 (HyperOS 2) | APK 1.1.0 | 🧪 Dados simulados (seção 22.2) — teste real pendente |
+| Xiaomi POCO X7 Pro | Android 15 (HyperOS 2) | APK 1.3.0 | 🧪 Dados simulados (seção 22.2) — teste real pendente |
 
 ---
 
@@ -609,7 +598,7 @@ Toda a interface usa a mesma paleta fosca da tela inicial: painéis em azul-graf
 | Atividade | Responsável | Status |
 |---|---|---|
 | Configuração do projeto (Unity 6, AR Foundation, ARCore) | Kayke | ✅ |
-| Modo Visita (Image Tracking) e Modo Acervo (planos) | Kayke  | ✅ |
+| Modo Visita (Image Tracking pelas placas com QR code) | Kayke  | ✅ |
 | Pontos de interesse, painel e correlacionadas | Kayke | ✅ |
 | Interface compacta para celular | Kayke | ✅ |
 | Peças do acervo (6 peças) | Roberto | ✅ |

@@ -2,6 +2,16 @@
 
 Histórico das principais versões do **Museu AR**.
 
+## [1.3.0] — 2026-11-16 (versionCode 4)
+
+### Removido
+- **Modo Acervo**: o app funciona só pelo QR code das placas. Saíram a barra Visita/Acervo, o menu do acervo e o botão "Ver em 3D" das peças relacionadas (que abria a peça nesse modo).
+- Atalho **M** (trocar modo) no simulador de PC.
+
+### Alterado
+- Painel de informações rente à borda inferior (não há mais barra de modos), deixando mais tela para a peça.
+- O código do Modo Acervo continua no projeto: para religar, `CollectionModeEnabled = true` em `MuseuARSceneBuilder.cs` e **Museu AR › Reconstruir interface**.
+
 ## [1.2.0] — 2026-11-16 (versionCode 3)
 
 APK no repositório: [`apk/MuseuAR.apk`](apk/MuseuAR.apk) (44 MB). Os QR codes apontam para <https://github.com/Kayke-Denelle/UPX-ARMOBILE/releases/latest>.

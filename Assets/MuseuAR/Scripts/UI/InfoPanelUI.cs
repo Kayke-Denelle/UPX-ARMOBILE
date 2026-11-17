@@ -44,6 +44,8 @@ namespace MuseuAR
         [SerializeField] TMP_Text relatedHeaderText;
         [Tooltip("Botão modelo, no mesmo container do título. Um clone é criado por peça relacionada.")]
         [SerializeField] Button relatedButtonTemplate;
+        [Tooltip("Mostra o \"Veja também\". O botão abre a peça no Modo Acervo, então fica desligado sem esse modo.")]
+        [SerializeField] bool showRelatedItems = true;
 
         [Header("Comportamento")]
         [Tooltip("Começa a narração automaticamente ao abrir uma curiosidade.")]
@@ -205,7 +207,7 @@ namespace MuseuAR
             relatedButtons.Clear();
 
             var current = ExhibitController.Active ? ExhibitController.Active.Data : null;
-            if (related != null && relatedButtonTemplate)
+            if (showRelatedItems && related != null && relatedButtonTemplate)
             {
                 foreach (var item in related)
                 {

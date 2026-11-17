@@ -216,7 +216,15 @@ namespace MuseuAR.EditorTools
         const float Margin = 24f;
         const float CardWidth = 1032f;
         const float ModeBarHeight = 88f;
-        const float SheetBottom = Margin + ModeBarHeight + 16f;   // painéis de baixo ficam acima da barra de modos
+        /// <summary>
+        /// Modo Acervo (catálogo + posicionar a peça numa mesa). Desligado: o app usa só o QR code das placas;
+        /// a barra Visita/Acervo, o menu do acervo e o "Ver em 3D" das peças relacionadas não são criados.
+        /// Para religar: true aqui e "Museu AR › Reconstruir interface".
+        /// </summary>
+        const bool CollectionModeEnabled = false;
+
+        // Painéis de baixo ficam acima da barra de modos (quando ela existe)
+        const float SheetBottom = CollectionModeEnabled ? Margin + ModeBarHeight + 16f : Margin;
 
         static void BuildUI(MuseumCatalog catalog, FreePlacementController placement, AppModeController modes, DesktopSimulator desktop)
         {
@@ -309,7 +317,78 @@ namespace MuseuAR.EditorTools
             barFill.rectTransform.offsetMin = Vector2.zero;
             barFill.rectTransform.offsetMax = Vector2.zero;
 
-            // ---------- Menu do acervo (embaixo) ----------
+            // ---------- Menu do acervo (só com o Modo Acervo ligado) ----------
+            CatalogMenuUI catalogUI = null;
+            if (CollectionModeEnabled) catalogUI = BuildCatalogMenu(safe, canvasGO, catalog, placement);
+
+            // ---------- Dica (flutua abaixo da área do cabeçalho) ----------
+            var hint = Panel("Dica", safe, WithAlpha(StartScreenArt.BackgroundBottom, 0.88f), 40);
+            hint.raycastTarget = false;
+            Place(hint.rectTransform, new Vector2(0.5f, 1f), new Vector2(0, -244), new Vector2(920, 96));
+            var hintText = Label("Texto", hint.transform, "Aponte a câmera para o QR code", 26, FontStyles.Normal, TextAlignmentOptions.Center);
+            hintText.enableAutoSizing = true;
+            hintText.fontSizeMin = 18;
+            hintText.fontSizeMax = 26;
+            Region(hintText.rectTransform, 0, 0, 1, 1, 32, 8);
+
+            // ---------- Barra de modos Visita/Acervo (só com o Modo Acervo ligado) ----------
+            Button visitBtn = null, collectionBtn = null;
+            if (CollectionModeEnabled) BuildModeBar(safe, out visitBtn, out collectionBtn);
+
+            // ---------- Tela inicial (por cima de tudo) ----------
+            var start = BuildStartScreen(canvasGO.transform, out var startButton, out var startTitle, out var startEmblem);
+
+            // ---------- Scripts de UI + ligações ----------
+            var info = canvasGO.AddComponent<InfoPanelUI>();
+            Wire(info, "headerRoot", header.gameObject);
+            Wire(info, "itemTitleText", title);
+            Wire(info, "itemSubtitleText", subtitle);
+            Wire(info, "progressText", progress);
+            Wire(info, "itemInfoButton", infoBtn);
+            Wire(info, "toggleHotspotsButton", pointsBtn);
+            Wire(info, "resetViewButton", resetBtn);
+            Wire(info, "detailRoot", detail.gameObject);
+            Wire(info, "detailTitleText", dTitle);
+            Wire(info, "detailKindText", dKind);
+            Wire(info, "detailBodyText", dBody);
+            Wire(info, "detailScroll", dScroll);
+            Wire(info, "audioButton", audioBtn);
+            Wire(info, "audioButtonLabel", audioBtn.GetComponentInChildren<TextMeshProUGUI>());
+            Wire(info, "audioButtonIcon", audioIcon);
+            Wire(info, "playIcon", UiIcons.Play());
+            Wire(info, "pauseIcon", UiIcons.Pause());
+            Wire(info, "audioProgressFill", barFill.rectTransform);
+            Wire(info, "closeButton", closeBtn);
+            Wire(info, "relatedHeaderText", relatedHeader);
+            Wire(info, "relatedButtonTemplate", relatedTemplate);
+            WireBool(info, "showRelatedItems", CollectionModeEnabled);   // "Ver em 3D" abre a peça no Modo Acervo
+
+            WireBool(modes, "collectionModeEnabled", CollectionModeEnabled);
+            Wire(modes, "freePlacement", placement);
+            Wire(modes, "catalogMenu", catalogUI);
+            Wire(modes, "hintRoot", hint.gameObject);
+            Wire(modes, "hintText", hintText);
+            Wire(modes, "visitModeButton", visitBtn);
+            Wire(modes, "collectionModeButton", collectionBtn);
+            WireColor(modes, "selectedButtonColor", AccentColor);
+            WireColor(modes, "normalButtonColor", WithAlpha(ButtonColor, 0f));
+            WireColor(modes, "selectedTextColor", StartScreenArt.Ink);
+            WireColor(modes, "normalTextColor", StartScreenArt.TextMuted);
+
+            var startUI = canvasGO.AddComponent<StartScreenUI>();
+            Wire(startUI, "root", start);
+            Wire(startUI, "startButton", startButton);
+            Wire(startUI, "catalog", catalog);
+            Wire(startUI, "titleText", startTitle);
+            Wire(startUI, "floatTarget", startEmblem);
+            Wire(modes, "startScreen", startUI);
+
+            if (desktop) Wire(desktop, "infoPanel", info);
+        }
+
+        /// <summary>Menu do Modo Acervo: lista das peças com miniatura e seta.</summary>
+        static CatalogMenuUI BuildCatalogMenu(RectTransform safe, GameObject canvasGO, MuseumCatalog catalog, FreePlacementController placement)
+        {
             var catalogPanel = Panel("MenuAcervo", safe, PanelColor, 28);
             Place(catalogPanel.rectTransform, new Vector2(0.5f, 0f), new Vector2(0, SheetBottom), new Vector2(CardWidth, 760));
             var cTitle = Label("Titulo", catalogPanel.transform, "Acervo digital", 34, FontStyles.Bold);
@@ -341,57 +420,6 @@ namespace MuseuAR.EditorTools
             chevron.preserveAspect = true;
             Place(chevron.rectTransform, new Vector2(1f, 0.5f), new Vector2(-24, 0), new Vector2(26, 26));
 
-            // ---------- Dica (flutua abaixo da área do cabeçalho) ----------
-            var hint = Panel("Dica", safe, WithAlpha(StartScreenArt.BackgroundBottom, 0.88f), 40);
-            hint.raycastTarget = false;
-            Place(hint.rectTransform, new Vector2(0.5f, 1f), new Vector2(0, -244), new Vector2(920, 96));
-            var hintText = Label("Texto", hint.transform, "Aponte a câmera para o QR code", 26, FontStyles.Normal, TextAlignmentOptions.Center);
-            hintText.enableAutoSizing = true;
-            hintText.fontSizeMin = 18;
-            hintText.fontSizeMax = 26;
-            Region(hintText.rectTransform, 0, 0, 1, 1, 32, 8);
-
-            // ---------- Barra de modos (rodapé, controle segmentado) ----------
-            var modeBar = Panel("BarraModos", safe, PanelColor, ModeBarHeight * 0.5f);
-            Place(modeBar.rectTransform, new Vector2(0.5f, 0f), new Vector2(0, Margin), new Vector2(640, ModeBarHeight));
-            var visitBtn = MakeButton("BtnModoVisita", modeBar.transform, "Visita", ButtonColor, 28, 36);
-            WithIcon(visitBtn, UiIcons.Scan(), 30, 88);
-            Region((RectTransform)visitBtn.transform, 0, 0, 0.5f, 1, 0, 0);
-            ((RectTransform)visitBtn.transform).offsetMin = new Vector2(8, 8);
-            ((RectTransform)visitBtn.transform).offsetMax = new Vector2(-4, -8);
-            var collectionBtn = MakeButton("BtnModoAcervo", modeBar.transform, "Acervo", ButtonColor, 28, 36);
-            WithIcon(collectionBtn, UiIcons.Grid(), 28, 80);
-            Region((RectTransform)collectionBtn.transform, 0.5f, 0, 1, 1, 0, 0);
-            ((RectTransform)collectionBtn.transform).offsetMin = new Vector2(4, 8);
-            ((RectTransform)collectionBtn.transform).offsetMax = new Vector2(-8, -8);
-
-            // ---------- Tela inicial (por cima de tudo) ----------
-            var start = BuildStartScreen(canvasGO.transform, out var startButton, out var startTitle, out var startEmblem);
-
-            // ---------- Scripts de UI + ligações ----------
-            var info = canvasGO.AddComponent<InfoPanelUI>();
-            Wire(info, "headerRoot", header.gameObject);
-            Wire(info, "itemTitleText", title);
-            Wire(info, "itemSubtitleText", subtitle);
-            Wire(info, "progressText", progress);
-            Wire(info, "itemInfoButton", infoBtn);
-            Wire(info, "toggleHotspotsButton", pointsBtn);
-            Wire(info, "resetViewButton", resetBtn);
-            Wire(info, "detailRoot", detail.gameObject);
-            Wire(info, "detailTitleText", dTitle);
-            Wire(info, "detailKindText", dKind);
-            Wire(info, "detailBodyText", dBody);
-            Wire(info, "detailScroll", dScroll);
-            Wire(info, "audioButton", audioBtn);
-            Wire(info, "audioButtonLabel", audioBtn.GetComponentInChildren<TextMeshProUGUI>());
-            Wire(info, "audioButtonIcon", audioIcon);
-            Wire(info, "playIcon", UiIcons.Play());
-            Wire(info, "pauseIcon", UiIcons.Pause());
-            Wire(info, "audioProgressFill", barFill.rectTransform);
-            Wire(info, "closeButton", closeBtn);
-            Wire(info, "relatedHeaderText", relatedHeader);
-            Wire(info, "relatedButtonTemplate", relatedTemplate);
-
             var catalogUI = canvasGO.AddComponent<CatalogMenuUI>();
             Wire(catalogUI, "catalog", catalog);
             Wire(catalogUI, "placement", placement);
@@ -400,27 +428,24 @@ namespace MuseuAR.EditorTools
             Wire(catalogUI, "listContainer", cContent);
             Wire(catalogUI, "itemButtonTemplate", template);
             Wire(catalogUI, "closeButton", cClose);
+            return catalogUI;
+        }
 
-            Wire(modes, "freePlacement", placement);
-            Wire(modes, "catalogMenu", catalogUI);
-            Wire(modes, "hintRoot", hint.gameObject);
-            Wire(modes, "hintText", hintText);
-            Wire(modes, "visitModeButton", visitBtn);
-            Wire(modes, "collectionModeButton", collectionBtn);
-            WireColor(modes, "selectedButtonColor", AccentColor);
-            WireColor(modes, "normalButtonColor", WithAlpha(ButtonColor, 0f));
-            WireColor(modes, "selectedTextColor", StartScreenArt.Ink);
-            WireColor(modes, "normalTextColor", StartScreenArt.TextMuted);
-
-            var startUI = canvasGO.AddComponent<StartScreenUI>();
-            Wire(startUI, "root", start);
-            Wire(startUI, "startButton", startButton);
-            Wire(startUI, "catalog", catalog);
-            Wire(startUI, "titleText", startTitle);
-            Wire(startUI, "floatTarget", startEmblem);
-            Wire(modes, "startScreen", startUI);
-
-            if (desktop) Wire(desktop, "infoPanel", info);
+        /// <summary>Barra Visita/Acervo no rodapé (controle segmentado).</summary>
+        static void BuildModeBar(RectTransform safe, out Button visitBtn, out Button collectionBtn)
+        {
+            var modeBar = Panel("BarraModos", safe, PanelColor, ModeBarHeight * 0.5f);
+            Place(modeBar.rectTransform, new Vector2(0.5f, 0f), new Vector2(0, Margin), new Vector2(640, ModeBarHeight));
+            visitBtn = MakeButton("BtnModoVisita", modeBar.transform, "Visita", ButtonColor, 28, 36);
+            WithIcon(visitBtn, UiIcons.Scan(), 30, 88);
+            Region((RectTransform)visitBtn.transform, 0, 0, 0.5f, 1, 0, 0);
+            ((RectTransform)visitBtn.transform).offsetMin = new Vector2(8, 8);
+            ((RectTransform)visitBtn.transform).offsetMax = new Vector2(-4, -8);
+            collectionBtn = MakeButton("BtnModoAcervo", modeBar.transform, "Acervo", ButtonColor, 28, 36);
+            WithIcon(collectionBtn, UiIcons.Grid(), 28, 80);
+            Region((RectTransform)collectionBtn.transform, 0.5f, 0, 1, 1, 0, 0);
+            ((RectTransform)collectionBtn.transform).offsetMin = new Vector2(4, 8);
+            ((RectTransform)collectionBtn.transform).offsetMax = new Vector2(-8, -8);
         }
 
         static readonly string[] StartSteps =
@@ -628,6 +653,19 @@ namespace MuseuAR.EditorTools
                 return;
             }
             prop.objectReferenceValue = value;
+            so.ApplyModifiedPropertiesWithoutUndo();
+        }
+
+        static void WireBool(Object target, string field, bool value)
+        {
+            var so = new SerializedObject(target);
+            var prop = so.FindProperty(field);
+            if (prop == null)
+            {
+                Debug.LogWarning($"[Museu AR] Campo '{field}' não encontrado em {target.GetType().Name}.");
+                return;
+            }
+            prop.boolValue = value;
             so.ApplyModifiedPropertiesWithoutUndo();
         }
 

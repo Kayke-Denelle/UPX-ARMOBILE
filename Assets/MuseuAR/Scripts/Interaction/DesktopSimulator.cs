@@ -91,7 +91,7 @@ namespace MuseuAR
                     SimulatePlate(i);
             }
 
-            if (keyboard.mKey.wasPressedThisFrame && modes)
+            if (keyboard.mKey.wasPressedThisFrame && modes && modes.CollectionModeEnabled)
                 modes.SetMode(modes.Mode == ARMode.Visita ? ARMode.Acervo : ARMode.Visita);
 
             if (keyboard.iKey.wasPressedThisFrame && infoPanel) infoPanel.ShowActiveItemDetails();
@@ -153,12 +153,12 @@ namespace MuseuAR
                 "  + W A S D (Q desce, E sobe, Shift corre)\n" +
                 "  e mova o mouse para olhar\n\n" +
                 "<b>Modo Visita</b> (simular o QR code):" + catalogLines + "\n\n" +
-                "<b>Clique</b> = tocar (pontos, botões, mesa)\n" +
+                "<b>Clique</b> = tocar (pontos e botões)\n" +
                 "<b>Arrastar (esquerdo)</b> ou <b>← →</b> = girar peça\n" +
                 "<b>Roda do mouse</b> ou <b>+ −</b> = zoom\n" +
                 "<b>I</b> = sobre a peça   <b>Esc</b> = fechar painel\n" +
                 "<b>P</b> = mostrar/ocultar pontos   <b>R</b> = resetar\n" +
-                "<b>M</b> = trocar Modo Visita / Acervo\n\n" +
+                (modes && modes.CollectionModeEnabled ? "<b>M</b> = trocar Modo Visita / Acervo\n" : "") + "\n" +
                 "<i>Dica: na Game view, use resolução 1080x1920 (retrato).</i>";
 
             float width = 330 * scale;
