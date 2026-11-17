@@ -36,7 +36,7 @@
 
 O **Museu AR** é um aplicativo Android que usa Realidade Aumentada para mostrar em 3D peças de museu que o visitante não pode tocar.
 
-Ao lado de cada vitrine fica uma **placa com QR code**. O visitante aponta a câmera do app para a placa e a peça aparece em 3D sobre ela. Ele pode **girar** e **ampliar** a peça e tocar em **pontos de interesse** marcados por setas e rótulos. Cada ponto abre um painel com uma curiosidade, um detalhe ou uma técnica.
+Ao lado de cada vitrine fica uma **placa com QR code**. O visitante aponta a câmera do app para a placa e a peça aparece em 3D sobre ela. Ele pode **girar** e **ampliar** a peça e tocar em **pontos de interesse** marcados por setas e rótulos. Cada ponto abre um painel com uma curiosidade, um detalhe ou uma técnica. Ao terminar, o botão **Próxima peça** limpa a tela para ele ler o QR code da vitrine seguinte.
 
 O app funciona **somente pelo QR code**: cada peça aparece quando o visitante aponta a câmera para a placa da vitrine. Não há catálogo para escolher peças fora da visita.
 
@@ -103,6 +103,7 @@ Desenvolver um aplicativo de Realidade Aumentada que reconheça uma placa ao lad
 | RF11 | Link no QR code | QR leva à página de download do app (GitHub Releases) | ✅ |
 | RF12 | Tela inicial | Visual fosco e discreto (degradê suave em grafite), emblema "AR", nome do museu, 3 passos de uso e botão "Iniciar"; a RA só liga depois do toque | ✅ |
 | RF13 | Acessibilidade e idiomas | Legendas, tamanho de fonte, PT/EN/ES | ⬜ |
+| RF14 | Próxima peça | Botão no cabeçalho limpa a tela (peça, painel e áudio) para escanear o QR code de outra vitrine; a peça dispensada só volta se a placa for apontada de novo | ✅ |
 
 **Legenda:** ✅ Implementado · 🚧 Em desenvolvimento · ⬜ Planejado · ❌ Cancelado
 
@@ -383,7 +384,7 @@ A lista completa de atalhos está no [guia de conteúdo](docs/documents/guia-de-
 
 ### No celular (Android)
 
-1. **APK pronto:** baixe [`apk/MuseuAR.apk`](apk/MuseuAR.apk) (versão 1.3.0) ou a página [Releases](https://github.com/Kayke-Denelle/UPX-ARMOBILE/releases/latest). Para gerar de novo: menu **Museu AR › 4. Gerar APK (Android)** → `Builds/MuseuAR.apk`.
+1. **APK pronto:** baixe [`apk/MuseuAR.apk`](apk/MuseuAR.apk) (versão 1.4.0) ou a página [Releases](https://github.com/Kayke-Denelle/UPX-ARMOBILE/releases/latest). Para gerar de novo: menu **Museu AR › 4. Gerar APK (Android)** → `Builds/MuseuAR.apk`.
 2. Copie o APK para o celular e instale (permita "instalar apps desconhecidos").
 3. Imprima as folhas A4 de `docs/placas/` em tamanho real (seção 17).
 
@@ -429,7 +430,8 @@ flowchart TD
     E --> G[Visitante toca num ponto]
     G --> H[Painel com curiosidade]
     H --> I{Quer ver outra peça?}
-    I -- Sim --> C
+    I -- Sim --> P[Toca em Próxima peça: tela limpa]
+    P --> C
     I -- Não --> L[Fim]
     F --> G
 ```
@@ -490,7 +492,7 @@ A interface foi desenhada para celular em pé. O app abre numa **tela inicial** 
 |---|---|
 | ![Tela inicial](docs/images/tela-inicial.png) | ![Vaso de barro](docs/images/tela-visita-vaso-barro.png) |
 
-Toda a interface usa a mesma paleta fosca da tela inicial: painéis em azul-grafite, destaques em areia, textos em branco quente e cinza suave. Os botões têm ícones desenhados no próprio projeto (informações, pontos, resetar, fechar, tocar/pausar): os principais são areia sólida e os secundários, grafite. Sem a barra de modos, o painel de informações fica rente à borda inferior e sobra mais tela para a peça. Os pontos de interesse seguem a mesma paleta: areia para os ainda não vistos e verde-sálvia para os já visitados.
+Toda a interface usa a mesma paleta fosca da tela inicial: painéis em azul-grafite, destaques em areia, textos em branco quente e cinza suave. Os botões têm ícones desenhados no próprio projeto (informações, pontos, resetar, fechar, tocar/pausar, escanear): os principais são areia sólida e os secundários, grafite. No canto do cabeçalho, o botão areia **Próxima peça** tira a peça da tela para o visitante ler o QR code da próxima vitrine. Sem a barra de modos, o painel de informações fica rente à borda inferior e sobra mais tela para a peça. Os pontos de interesse seguem a mesma paleta: areia para os ainda não vistos e verde-sálvia para os já visitados.
 
 > Capturas feitas no Editor da Unity com XR Simulation (resolução 1080x1920). O fundo cinza é a sala simulada.
 
@@ -508,20 +510,21 @@ Toda a interface usa a mesma paleta fosca da tela inicial: painéis em azul-graf
 | Reconhecimento (simulado) | Tecla 1 (vaso) / 2 (documento) | Peça aparece com os pontos | Vaso com 4 pontos exibido | ✅ |
 | Pontos de interesse | Tocar num ponto | Painel abre; ponto fica verde; progresso atualiza | "Descobertas: 2/4"; pontos verdes | ✅ |
 | Só QR code (1.3.0) | Pedir troca para o Modo Acervo | App continua no Modo Visita; sem barra de modos nem "Ver em 3D" | Pedido ignorado; barra e catálogo ausentes | ✅ |
+| Próxima peça (1.4.0) | Com o vaso na tela, tocar em **Próxima peça** (ou tecla N) e depois simular outra placa | Tela limpa e dica "Aponte a câmera para o QR code"; a próxima peça aparece normalmente | Peça, cabeçalho e painel saíram; dica exibida; a fruteira apareceu e ficou só ela na cena | ✅ |
 | Interface em retrato | Captura 1080x1920 | Peça visível entre cabeçalho e painel | Ver seção 21 | ✅ |
 | Leitura dos QR codes | Ler as placas com o leitor ZXing | Conteúdo correto | Todas corretas, também reduzidas a 256 px | ✅ |
 | QR com links longos | Gerar e ler textos de 24 a 138 caracteres | Conteúdo idêntico | 4/4 idênticos (versões 2 a 8) | ✅ |
-| Build Android | Menu "4. Gerar APK" | APK gerado sem erros | `MuseuAR.apk` 1.3.0 (44 MB) em 3 min 44 s; 2 avisos de shader por falta de memória no PC, só na variante de sombra das setas (não usada pelo app) | ✅ |
+| Build Android | Menu "4. Gerar APK" | APK gerado sem erros | `MuseuAR.apk` 1.4.0 (44 MB) em 4 min 13 s; 2 avisos de shader por falta de memória no PC, só na variante de sombra das setas (não usada pelo app) | ✅ |
 
 ### 22.2 Testes no celular — Xiaomi POCO X7 Pro
 
 > ⚠️ **Dados simulados (mock).** Os resultados desta tabela são **ilustrativos** e ainda **não foram medidos** no aparelho. Eles servem de roteiro de teste e devem ser **substituídos pelos resultados reais** (e o marcador 🧪 trocado por ✅, 🚧 ou ❌) antes da entrega.
 
-**Condições previstas:** APK versão 1.3.0 · placas impressas com 15 cm em papel fosco · sala com luz ambiente · celular na mão, em pé.
+**Condições previstas:** APK versão 1.4.0 · placas impressas com 15 cm em papel fosco · sala com luz ambiente · celular na mão, em pé.
 
 | ID | Teste | Procedimento | Resultado esperado | Resultado obtido | Status |
 |---|---|---|---|---|---|
-| C01 | Instalação | Instalar `MuseuAR.apk` (1.3.0) | App instala e abre | Instalado; pediu permissão de câmera na primeira abertura | 🧪 |
+| C01 | Instalação | Instalar `MuseuAR.apk` (1.4.0) | App instala e abre | Instalado; pediu permissão de câmera na primeira abertura | 🧪 |
 | C02 | Serviço de RA | Primeira abertura do app | Google Play Services for AR disponível | Serviço já instalado e atualizado | 🧪 |
 | C03 | Tela inicial | Abrir o app | Tela inicial com o emblema e o botão Iniciar | Exibida em ~2 s | 🧪 |
 | C04 | Reconhecimento — vaso | Apontar para `placa-vaso` a ~40 cm | Vaso aparece sobre a placa | Reconhecido em ~1,5 s; peça estável | 🧪 |
@@ -532,6 +535,7 @@ Toda a interface usa a mesma paleta fosca da tela inicial: painéis em azul-graf
 | C09 | Placa fora do quadro | Aproximar a câmera da peça | Peça continua visível | Peça mantida na posição | 🧪 |
 | C10 | Gestos | Arrastar e fazer pinça | Gira e amplia | Rotação e zoom suaves | 🧪 |
 | C11 | Pontos de interesse | Tocar nos 4 pontos do vaso | Painel abre; pontos ficam verdes; "Tudo descoberto! 4/4" | Funcionou nos 4 pontos | 🧪 |
+| C12 | Próxima peça | Com o vaso na tela, tocar em **Próxima peça** e apontar para `placa-urna-frisos-florais` | Vaso some; urna aparece; o vaso só volta se a placa dele for apontada de novo | Troca em ~2 s, sem a peça anterior reaparecer | 🧪 |
 | C11b | Visual dos pontos | Observar marcadores, setas e rótulos | Marcadores amarelos/verdes e setas visíveis (sem cor rosa) | Exibidos corretamente | 🧪 |
 | C13 | Desempenho | 5 min de uso contínuo | Sem travamentos | Fluido, sem travamentos; aquecimento leve | 🧪 |
 | C14 | Bateria | 10 min de uso contínuo | Consumo aceitável | ~3% de bateria | 🧪 |
@@ -545,7 +549,7 @@ Toda a interface usa a mesma paleta fosca da tela inicial: painéis em azul-graf
 | Dispositivo | Sistema | Versão | Resultado |
 |---|---|---|---|
 | Editor Unity (XR Simulation) | Windows 11 | Unity 6000.6.0f1 | Funcionamento verificado (seção 22.1) |
-| Xiaomi POCO X7 Pro | Android 15 (HyperOS 2) | APK 1.3.0 | 🧪 Dados simulados (seção 22.2) — teste real pendente |
+| Xiaomi POCO X7 Pro | Android 15 (HyperOS 2) | APK 1.4.0 | 🧪 Dados simulados (seção 22.2) — teste real pendente |
 
 ---
 

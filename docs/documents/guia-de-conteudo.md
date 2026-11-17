@@ -92,7 +92,7 @@ No Play, o Unity simula um celular dentro de uma sala 3D. O componente `DesktopS
 | Tocar (ponto, botão, superfície) | **Clique** esquerdo |
 | Arrastar o dedo (girar a peça) | **Arrastar** com o botão esquerdo, ou setas **← →** |
 | Pinça (zoom) | **Roda do mouse**, ou **+ / −** |
-| Botões da tela | **I** sobre a peça · **Esc** fechar painel · **P** pontos · **R** resetar |
+| Botões da tela | **I** sobre a peça · **Esc** fechar painel · **P** pontos · **R** resetar · **N** próxima peça (limpa a tela) |
 | — | **H** mostra/esconde a ajuda |
 
 O aviso *"Could not find reference image…"* no Console é esperado: vem das imagens da sala simulada.

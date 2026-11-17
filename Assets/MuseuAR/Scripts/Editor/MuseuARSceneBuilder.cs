@@ -248,12 +248,17 @@ namespace MuseuAR.EditorTools
             var header = Panel("CabecalhoPeca", safe, PanelColor, 28);
             Place(header.rectTransform, new Vector2(0.5f, 1f), new Vector2(0, -Margin), new Vector2(CardWidth, 196));
             var title = Label("Titulo", header.transform, "Nome da peça", 40, FontStyles.Bold);
-            StretchTop(title.rectTransform, 18, 54, 32, 32);
+            StretchTop(title.rectTransform, 18, 54, 32, 312);
             title.overflowMode = TextOverflowModes.Ellipsis;
             var subtitle = Label("Subtitulo", header.transform, "Período · Origem · Material", 26);
             subtitle.color = MutedText;
             subtitle.overflowMode = TextOverflowModes.Ellipsis;
-            StretchTop(subtitle.rectTransform, 72, 36, 32, 32);
+            StretchTop(subtitle.rectTransform, 72, 36, 32, 312);
+            // Botão principal: tira a peça da tela para escanear a próxima placa (areia sólida, como o "Iniciar")
+            var nextBtn = MakeButton("BtnProximaPeca", header.transform, "Próxima peça", AccentColor, 24, 30);
+            WithIcon(nextBtn, UiIcons.Scan(), 26, 22);
+            SetContentColor(nextBtn, StartScreenArt.Ink);
+            Place((RectTransform)nextBtn.transform, new Vector2(1f, 1f), new Vector2(-20, -20), new Vector2(276, 60));
             // Botões secundários: grafite, ícone + texto
             var infoBtn = MakeButton("BtnSobre", header.transform, "Sobre a peça", ButtonColor, 24, 28);
             WithIcon(infoBtn, UiIcons.Info(), 26);
@@ -368,6 +373,7 @@ namespace MuseuAR.EditorTools
             Wire(modes, "catalogMenu", catalogUI);
             Wire(modes, "hintRoot", hint.gameObject);
             Wire(modes, "hintText", hintText);
+            Wire(modes, "nextPieceButton", nextBtn);
             Wire(modes, "visitModeButton", visitBtn);
             Wire(modes, "collectionModeButton", collectionBtn);
             WireColor(modes, "selectedButtonColor", AccentColor);

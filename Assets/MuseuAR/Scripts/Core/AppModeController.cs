@@ -28,6 +28,8 @@ namespace MuseuAR
         [SerializeField] TMP_Text hintText;
         [SerializeField] Button visitModeButton;
         [SerializeField] Button collectionModeButton;
+        [Tooltip("Botão \"Próxima peça\": tira da tela a peça escaneada para ler outra placa.")]
+        [SerializeField] Button nextPieceButton;
         [SerializeField] Color selectedButtonColor = new Color(0.831f, 0.659f, 0.416f, 1f);   // areia
         [SerializeField] Color normalButtonColor = new Color(0.227f, 0.267f, 0.337f, 0f);
         [SerializeField] Color selectedTextColor = new Color(0.106f, 0.122f, 0.153f, 1f);
@@ -49,6 +51,7 @@ namespace MuseuAR
         {
             if (visitModeButton) visitModeButton.onClick.AddListener(() => SetMode(ARMode.Visita));
             if (collectionModeButton) collectionModeButton.onClick.AddListener(() => SetMode(ARMode.Acervo));
+            if (nextPieceButton) nextPieceButton.onClick.AddListener(ScanNext);
         }
 
         void OnEnable()
@@ -141,9 +144,7 @@ namespace MuseuAR
                 else catalogMenu.Show();
             }
 
-            ShowHint(visit
-                ? "Aponte a câmera para o QR code ao lado da peça"
-                : "Escolha uma peça do acervo");
+            ShowHint(visit ? VisitHint : "Escolha uma peça do acervo");
 
             Tint(visitModeButton, visit);
             Tint(collectionModeButton, !visit);
@@ -151,6 +152,24 @@ namespace MuseuAR
         }
 
         /// <summary>Abre uma peça direto no Modo Acervo, pronta para ser posicionada (usado pelos correlacionados).</summary>
+        const string VisitHint = "Aponte a câmera para o QR code ao lado da peça";
+
+        /// <summary>Disparado quando o visitante limpa a tela para escanear outra placa.</summary>
+        public event System.Action ScanNextRequested;
+
+        /// <summary>
+        /// Botão "Próxima peça": tira da tela a peça escaneada (e o painel), para o visitante ler outra placa.
+        /// A placa dispensada só volta se for apontada de novo.
+        /// </summary>
+        public void ScanNext()
+        {
+            if (NarrationPlayer.Instance) NarrationPlayer.Instance.Stop();
+            if (imageSpawner) imageSpawner.DismissAll();
+            ExhibitController.ClearActive();
+            if (Mode == ARMode.Visita) ShowHint(VisitHint);
+            ScanNextRequested?.Invoke();
+        }
+
         public void OpenInCollection(MuseumItemData item)
         {
             if (!item || !collectionModeEnabled) return;

@@ -2,6 +2,15 @@
 
 Histórico das principais versões do **Museu AR**.
 
+## [1.4.0] — 2026-11-16 (versionCode 5)
+
+### Adicionado
+- Botão **Próxima peça** no cabeçalho (areia, com ícone de escanear): limpa a tela (peça, painel e áudio) para o visitante ler o QR code da próxima vitrine. A peça dispensada só volta se a placa dela for apontada de novo.
+- Atalho **N** no simulador de PC (mesma função do botão).
+
+### Alterado
+- Captura `docs/images/tela-visita-vaso-barro.png` refeita com o botão novo.
+
 ## [1.3.0] — 2026-11-16 (versionCode 4)
 
 ### Removido

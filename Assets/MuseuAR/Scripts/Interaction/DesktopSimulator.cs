@@ -37,20 +37,22 @@ namespace MuseuAR
 
         void OnEnable()
         {
-            if (modes) modes.ModeChanged += OnModeChanged;
+            if (modes) { modes.ModeChanged += OnModeChanged; modes.ScanNextRequested += OnScanNext; }
             FreePlacementController.ItemSelected += OnItemSelected;
             ImageTrackingSpawner.ItemRecognized += ClearPendingHint;
         }
 
         void OnDisable()
         {
-            if (modes) modes.ModeChanged -= OnModeChanged;
+            if (modes) { modes.ModeChanged -= OnModeChanged; modes.ScanNextRequested -= OnScanNext; }
             FreePlacementController.ItemSelected -= OnItemSelected;
             ImageTrackingSpawner.ItemRecognized -= ClearPendingHint;
             FreePlacementController.UseVirtualTable = false;
         }
 
         // As dicas padrão falam de "celular"; no PC trocamos pelo atalho certo.
+        void OnScanNext() => pendingHint = "PC: aperte 1, 2, 3... para simular o QR code de outra peça";
+
         void OnModeChanged(ARMode mode)
         {
             pendingHint = mode == ARMode.Visita
@@ -94,6 +96,7 @@ namespace MuseuAR
             if (keyboard.mKey.wasPressedThisFrame && modes && modes.CollectionModeEnabled)
                 modes.SetMode(modes.Mode == ARMode.Visita ? ARMode.Acervo : ARMode.Visita);
 
+            if (keyboard.nKey.wasPressedThisFrame && modes) modes.ScanNext();
             if (keyboard.iKey.wasPressedThisFrame && infoPanel) infoPanel.ShowActiveItemDetails();
             if (keyboard.escapeKey.wasPressedThisFrame && infoPanel) infoPanel.CloseDetails();
 
@@ -158,6 +161,7 @@ namespace MuseuAR
                 "<b>Roda do mouse</b> ou <b>+ −</b> = zoom\n" +
                 "<b>I</b> = sobre a peça   <b>Esc</b> = fechar painel\n" +
                 "<b>P</b> = mostrar/ocultar pontos   <b>R</b> = resetar\n" +
+                "<b>N</b> = próxima peça (limpa a tela)\n" +
                 (modes && modes.CollectionModeEnabled ? "<b>M</b> = trocar Modo Visita / Acervo\n" : "") + "\n" +
                 "<i>Dica: na Game view, use resolução 1080x1920 (retrato).</i>";
 

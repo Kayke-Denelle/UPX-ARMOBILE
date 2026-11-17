@@ -32,6 +32,8 @@ namespace MuseuAR
             public ARTrackedImage image;
             public ExhibitController exhibit;
             public bool wasTracking;
+            /// <summary>Dispensada pelo botão "Próxima peça": só volta se o visitante apontar para a placa de novo.</summary>
+            public bool dismissed;
         }
 
         readonly Dictionary<TrackableId, Entry> entries = new Dictionary<TrackableId, Entry>();
@@ -78,6 +80,19 @@ namespace MuseuAR
 
         void HandleImage(ARTrackedImage image)
         {
+            if (entries.TryGetValue(image.trackableId, out var dismissedEntry) && dismissedEntry.dismissed)
+            {
+                // O ARCore continua rastreando a placa depois que a câmera sai dela ("Limited").
+                // A peça dispensada só volta quando a placa é vista de novo (Limited -> Tracking).
+                bool trackingNow = image.trackingState == TrackingState.Tracking;
+                if (!trackingNow || dismissedEntry.wasTracking)
+                {
+                    dismissedEntry.wasTracking = trackingNow;
+                    return;
+                }
+                entries.Remove(image.trackableId);
+            }
+
             if (!entries.TryGetValue(image.trackableId, out var entry))
             {
                 entry = new Entry { image = image };
@@ -145,6 +160,24 @@ namespace MuseuAR
             foreach (var entry in entries.Values)
                 if (entry.exhibit) Destroy(entry.exhibit.gameObject);
             entries.Clear();
+            foreach (var exhibit in simulated.Values)
+                if (exhibit) Destroy(exhibit.transform.parent.gameObject);
+            simulated.Clear();
+        }
+
+        /// <summary>
+        /// Botão "Próxima peça": tira da tela as peças já escaneadas para o visitante ler outra placa.
+        /// Cada placa dispensada só volta se for apontada de novo; as outras aparecem normalmente.
+        /// </summary>
+        public void DismissAll()
+        {
+            foreach (var entry in entries.Values)
+            {
+                if (entry.exhibit) Destroy(entry.exhibit.gameObject);
+                entry.exhibit = null;
+                entry.dismissed = true;
+                entry.wasTracking = entry.image && entry.image.trackingState == TrackingState.Tracking;
+            }
             foreach (var exhibit in simulated.Values)
                 if (exhibit) Destroy(exhibit.transform.parent.gameObject);
             simulated.Clear();
